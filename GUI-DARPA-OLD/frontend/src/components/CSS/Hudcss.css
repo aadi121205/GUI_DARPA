@@ -1,0 +1,283 @@
+.hud {
+    /* background-color: #9d8484; */
+    position: absolute;
+    width: 42vw;
+    left: 57vw;
+    height: 50vh;
+    border: 3px solid black;
+  
+  }
+  .content {
+    display: flex;
+    flex-direction: row;
+  }
+  .lines {
+    /* margin-left: 10vw;
+    margin-right: 0vw; */
+    /* margin: auto; */
+    top: 0vh;
+    /* position:absolute; */
+    width: 50px;
+    height: 10px;
+    background: #095484;
+    margin-right: 0;
+    margin-left: 59px;
+    margin-right: 60px;
+    background-image: linear-gradient(to right, #ccc, #095484, #ccc);
+  }
+  .lines:hover {
+    margin-left: 59px;
+    margin-right: 60px;
+    width: 80px;
+    background-image: linear-gradient(to right, #ccc, #a4d42b, #ccc);
+  
+    /* margin-left: 8vw; */
+    /* margin: auto; */
+    /* margin-right: 0; */
+  }
+  .lines1 {
+    /* margin-left: 10vw;
+    margin-right: 0vw; */
+    /* margin: auto; */
+    top: 0vh;
+    /* position:absolute; */
+    width: 80px;
+    height: 10px;
+    background: #095484;
+    margin-right: 0;
+    margin-left: 59px;
+    margin-right: 60px;
+    background-image: linear-gradient(to right, #ccc, #095484, #ccc);
+  }
+  .lines1:hover {
+    margin-left: 59px;
+    margin-right: 60px;
+    width: 100px;
+    background-image: linear-gradient(to right, #ccc, #a4d42b, #ccc);
+  
+    /* margin-left: 8vw; */
+    /* margin: auto; */
+    /* margin-right: 0; */
+  }
+  .heightindicator {
+    display: grid;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    left: 20px;
+    margin-bottom: auto;
+    margin-top: auto;
+  }
+  .numberindicator {
+    margin-left: 59px;
+    margin-right: 60px;
+    left: 25vw;
+    position: absolute;
+  }
+  .heightindibox {
+    /* background-color: #824040; */
+    top: 16vh;
+    position: sticky;
+    width: auto;
+    margin: auto;
+    z-index: 15;
+  }
+  
+  /* iske niche mai roll controller ko design karne jaa rha hu */
+  .roll-container {
+    width: 25vw;
+    height: 25vh;
+    border: 4px solid black;
+    margin: -20px auto;
+    position: relative;
+    border-radius: 50%;
+  }
+  .imiginary-center {
+    width: 22.5vw;
+    height: 22vh;
+    background-color: rgb(253, 252, 252);
+    border-radius: 50%;
+    position: absolute;
+    top: 1vh;
+    left: 1vw;
+    z-index: 9;
+  }
+  .roll-scale {
+    width: 0.4vw;
+    height: 39vh;
+    background-image: linear-gradient(to right, #293509, #e01212, #472727);
+    position: absolute;
+    left: 12vw;
+    top: -2.5vh;
+    transform: rotate(-60deg);
+  }
+  .roll-scale-1 {
+    transform: rotate(-63deg);
+    top: -2vh;
+    left: 10.7vw;
+  }
+  .roll-scale1:hover {
+    width: 0.5vw;
+    height: 38vh;
+    background-color: rgb(155, 78, 78);
+    position: absolute;
+    left: 12vw;
+    top: 6px;
+    transform: rotate(-60deg);
+  }
+  
+  .roll-scale-2 {
+    transform: rotate(-52.5deg);
+    left: 11vw;
+    top: -2vh;
+  }
+  .roll-scale-3 {
+    transform: rotate(-42deg);
+    top: -1vh;
+    left: 11vw;
+  }
+  .roll-scale-4 {
+    transform: rotate(-31.5deg);
+    top: 0vh;
+    left: 11vw;
+  }
+  .roll-scale-5 {
+    transform: rotate(-21deg);
+    top: 0vh;
+    left: 11vw;
+  }
+  
+  .roll-scale-6 {
+    transform: rotate(-10.5deg);
+    top: 0.3vh;
+    left: 11vw;
+  }
+  .roll-scale-7 {
+    transform: rotate(0deg);
+    top: 0.2vh;
+    left: 12vw;
+  }
+  
+  .roll-scale-8 {
+    transform: rotate(10.5deg);
+    top: 0vh;
+    left: 12.5vw;
+  }
+  .roll-scale-9 {
+    transform: rotate(21deg);
+    top: 0vh;
+    left: 13vw;
+  }
+  .roll-scale-10 {
+    transform: rotate(31.5deg);
+    top: -0.5vh;
+    left: 13vw;
+  
+  }
+  .roll-scale-11 {
+    transform: rotate(42deg);
+    left: 13vw;
+    top: -1.3vh;
+  }
+  .roll-scale-12 {
+    transform: rotate(52.5deg);
+    top: -2vh;
+    left: 13vw;
+  }
+  .roll-scale-13 {
+    transform: rotate(63deg);
+    top: -1.4vh;
+    left: 13.5vw;
+  }
+  
+  .bottom-hide {
+    height: 27vh;
+    width: 29vw;
+    background-color: #fdfafa;
+    position: absolute;
+    top: 12vh;
+    left: -2vw;
+    z-index: 11;
+  }
+  /* .angle-left-hide{
+    height: 100px;
+    width: 100px;
+    transform: rotate(-60deg);
+    z-index: 11;
+    position: absolute;
+    top: 53px;
+    left: -30px;
+    background-color: #fff;
+  
+  }
+  .angle-right-hide{
+    height: 100px;
+    width: 100px;
+    transform: rotate(60deg);
+    z-index: 11;
+    position: absolute;
+    top: 53px;
+    left: 83px;
+    background-color: #fff;
+  
+  } */
+  .yaw-controller {
+    background-color: rgb(250, 247, 247);
+    height: 100px;
+    width: 100%;
+  }
+  .yaw-scale{
+    width: 0.5vw;
+    background-image: linear-gradient(to right,black ,white, rgb(3, 0, 0));
+    height: 8vh;
+    position: absolute;
+    top: 0vh;
+  }
+  .yaw-scale-1{
+    height: 3.5vh;
+    left: 3vw;
+  }
+  .yaw-scale-2{
+    height: 5vh;
+    left: 6vw;
+  }
+  .yaw-scale-3{
+    height: 3.5vh;
+    left: 9vw;
+  }
+  .yaw-scale-4{
+    height: 5vh;
+    left: 12vw;
+  }.yaw-scale-5{
+    height: 3.5vh;
+    left: 15vw;
+  }.yaw-scale-6{
+    height: 5vh;
+    left: 18vw;
+  }.yaw-scale-7{
+    height: 6vh;
+    left: 21vw;
+  }.yaw-scale-8{
+    height: 5vh;
+    left: 24vw;
+  }
+  .yaw-scale-9{
+    height: 3.5vh;
+    left: 27vw;
+  }
+  .yaw-scale-10{
+    height: 5vh;
+    left: 30vw;
+  }
+  .yaw-scale-11{
+    height: 3.5vh;
+    left: 33vw;
+  }
+  .yaw-scale-12{
+    height: 5vh;
+    left: 36vw;
+  }
+  .yaw-scale-13{
+    height: 3.5vh;
+    left: 39vw;
+  }

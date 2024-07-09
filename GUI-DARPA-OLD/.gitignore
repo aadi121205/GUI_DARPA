@@ -1,0 +1,10 @@
+# Frontend ignores:
+frontend/node_modules
+
+# Backend ignores
+backend/node_modules
+
+#python ignores
+/Python/Weights
+/Python/__pycache__
+/Python/Missions

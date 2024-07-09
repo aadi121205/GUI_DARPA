@@ -1,0 +1,48 @@
+/* Speedometer.css */
+
+.speedometer {
+    text-align: center;
+  }
+  
+  .speed-display {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .semicircle {
+    width: 300px;
+    height: 150px;
+    border: 2px solid black;
+    border-radius: 150px 150px 0 0;
+    position: relative;
+    overflow: visible;
+    background-color: lightgray;
+    margin: 0 auto;
+  }
+  
+  .needle {
+    position: absolute;
+    width: 2px;
+    height: 75px;
+    background-color: red;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom;
+  }
+  
+  .speed-slider {
+    position: absolute;
+    width: 100%;
+    margin: 0;
+    bottom: 0;
+    left: 0;
+  }
+  
+  .point {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+  }
+  
