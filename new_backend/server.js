@@ -25,6 +25,9 @@ io.on('connection', (socket) => {
     io.emit('schedule',pathPlan(data))
     console.log('emitted the schedule')
   })
+  socket.on('inferance',(data)=>{
+    console.log(data)
+  })
 
 
   // Handle disconnection

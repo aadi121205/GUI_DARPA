@@ -2,6 +2,8 @@ import socketio
 from utils import decode_image,schedule_reciever
 import cv2
 import matplotlib.pyplot as plt
+from random_json import imitate_json as imitate_json
+import random
 # Create a Socket.IO client
 sio = socketio.Client()
 device_id='ugv_1'
@@ -24,10 +26,16 @@ def schedule(data):
         if dict['device_id']==device_id:
             dict['data']['map']=decode_image(dict['data']['map'])
             schedule_reciever(dict['data'])
+    while True:
+            if random.random()>0.9999999:
+                dict=imitate_json(device_id)
+                dict['system']=device_id
+                sio.emit('inferance',dict)
             
 
 # Connect to the server
 sio.connect('http://localhost:8000')
+
 
 # Wait for events
 sio.wait()

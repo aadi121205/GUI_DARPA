@@ -3,6 +3,8 @@ import socketio
 # from PIL import Image
 import base64
 import cv2
+from random_json import imitate_json as imitiate_json
+import random
 img=cv2.imread('sample/map.jpg')
 print(img.shape)
 _,img=cv2.imencode('.jpg',img)
@@ -33,6 +35,11 @@ def schedule(data):
     for dict in data:
         if dict['device_id']==device_id:
             schedule_reciever(dict)
+    while True:
+            if random.random()>0.9999999:
+                dict=imitiate_json(device_id)
+                dict['system']=device_id
+                sio.emit('inferance',dict)
             
 
 # Connect to the server
