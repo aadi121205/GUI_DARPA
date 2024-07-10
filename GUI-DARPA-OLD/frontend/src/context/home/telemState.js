@@ -5,7 +5,7 @@ import { SocketContext } from "../socketContext";
 const TelemState = ({ children }) => {
   const { socket } = useContext(SocketContext);
   const [telemetryData, setTelemetryData] = useState({});
-  const [rover_telem_data, set_rover_telem] = useState({});
+  const [telemetryData_rover, setTelemetryData_rover] = useState({});
   const [OdlcData, setOdlcData] = useState({});
   const [roll, setroll] = useState("");
   const [pitch, setpitch] = useState("");
@@ -19,12 +19,17 @@ const TelemState = ({ children }) => {
   const goto_command = () => {
     socket.emit("mission_goto");
   };
-  const start_rover_telem = () => {
-    socket.emit("start_rover_telem");
+  const goto_command_rover = () => {
+    socket.emit("mission_goto_rover");
   };
-
-  const stop_rover_telem = () => {
-    socket.emit("stop_rover_telem");
+  const auto_command = () => {
+    socket.emit("mission_auto_rover");
+  };
+  const stop_Telem_rover = () => {
+    socket.emit("stop_Telem_rover");
+  };
+  const start_Telem_rover = () => {
+    socket.emit("start_Telem_rover");
   };
   const start_Telem = () => {
     socket.emit("startTelem");
@@ -41,12 +46,25 @@ const TelemState = ({ children }) => {
   const disarmUav = () => {
     socket.emit("disarmingBackend");
   };
+  const disarmUgv = () => {
+    socket.emit("disarmingBackend_rover");
+  };
   const setGimbalPoint = () => {
     const data = { roll, pitch, yaw };
     socket.emit("set_gimbal_point", data);
   };
+  const setGimbalPoint_rover = () => {
+    const data = { roll, pitch, yaw };
+    socket.emit("set_gimbal_point_rover", data);
+  };
   const downloadMission = () => {
     socket.emit("downloadMission");
+  };
+  const downloadMission_rover = () => {
+    socket.emit("downloadMission_rover");
+  };
+  const readMission_rover = () => {
+    socket.emit("readMission_rover");
   };
   const readMission = () => {
     socket.emit("readMission");
@@ -54,11 +72,17 @@ const TelemState = ({ children }) => {
   const uploadMission = () => {
     socket.emit("uploadMission");
   };
+  const uploadMission_rover = () => {
+    socket.emit("uploadMission_rover");
+  };
   const saveMission = () => {
     socket.emit("saveMission");
   };
-  const armRover = () => {
-    socket.emit("armRover");
+  const saveMission_rover = () => {
+    socket.emit("saveMission_rover");
+  };
+  const armUgv = () => {
+    socket.emit("armingBackend_rover");
   };
   const stopRover = () => {
     setButton(true);
@@ -66,6 +90,12 @@ const TelemState = ({ children }) => {
   };
   const RTL = () => {
     socket.emit("setRTL");
+  };
+  const RTL_rover = () => {
+    socket.emit("setRTL_rover");
+  };
+  const STOP_rover = () => {
+    socket.emit("setSTOP_rover");
   };
   const landUAV = () => {
     socket.emit("landUAV");
@@ -80,9 +110,21 @@ const TelemState = ({ children }) => {
     socket.emit('stopvideo');
     console.log("stop emit")
   }
+  const startvideo_rover = () =>{
+    socket.emit('startvideo_rover');
+    console.log("emit video start_rover")
+  }
+
+  const stopvideo_rover = () =>{
+    socket.emit('stopvideo_rover');
+    console.log("stop emit_rover")
+  }
 
   useEffect(() => {
     socket.on("video_image",(payload)=>{
+      setimage(payload)
+    })
+    socket.on("video_image_rover",(payload)=>{
       setimage(payload)
     })
     socket.on("updateOdlc", (data) => {
@@ -98,6 +140,12 @@ const TelemState = ({ children }) => {
         settimeofflight(timeofflight + 1);
       }
       setTelemetryData((prevData) => {
+        return { ...prevData, ...data };
+      });
+    });
+    socket.on("telemetryServer_rover", (data) => {
+      settimeofflight(timeofflight + 1);
+      setTelemetryData_rover((prevData) => {
         return { ...prevData, ...data };
       });
     });
@@ -122,13 +170,6 @@ const TelemState = ({ children }) => {
       // this.render()
     });
 
-    // Rover
-    socket.on("telemetryServer_rover", (data) => {
-      set_rover_telem((prevData) => {
-        return { ...prevData, ...data };
-      });
-    });
-
     // socket.on("image", (frame) => {
     //   console.log("data", frame);
     // });
@@ -138,12 +179,22 @@ const TelemState = ({ children }) => {
     <telemContext.Provider
       value={{
         goto_command,
+        auto_command,
         landUAV,
         RTL,
+        RTL_rover,
+        STOP_rover,
         button,
+        goto_command_rover,
+        setGimbalPoint_rover,
+        downloadMission_rover,
+        readMission_rover,
+        uploadMission_rover,
+        saveMission_rover,
         stopRover,
-        armRover,
-        rover_telem_data,
+        armUgv,
+        disarmUgv,
+        telemetryData_rover,
         telemetryData,
         start_Telem,
         stop_Telem,
@@ -165,10 +216,12 @@ const TelemState = ({ children }) => {
         mode,
         timeofflight,
         pointsdata,
-        start_rover_telem,
-        stop_rover_telem,
+        start_Telem_rover,
+        stop_Telem_rover,
         startvideo,
         stopvideo,
+        startvideo_rover,
+        stopvideo_rover,
         image
       }}
     >

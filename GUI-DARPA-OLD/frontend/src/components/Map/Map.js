@@ -13,8 +13,9 @@ export default function Map() {
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
   const [zoom, setZoom] = useState(15.3);
-  const { telemetryData } = React.useContext(telemContext);
+  const { telemetryData, telemetryData_rover } = React.useContext(telemContext);
   const [marker,setMarker] = useState(null)
+  const [marker_rover, setMarker_rover] = useState(null);
 
   useEffect(() => {
     //Initialize the map once
@@ -96,8 +97,20 @@ export default function Map() {
     .setLngLat([telemetryData.longitude, telemetryData.latitude])
     .addTo(map.current);
     setMarker(markerObject)
+
+    if (marker_rover) {
+      marker_rover.remove();
+    }
+    if (telemetryData_rover && telemetryData_rover.latitude && telemetryData_rover.longitude) {
+      const markerElement_rover = document.createElement("div");
+      markerElement_rover.className = "marker-rover";
+      const markerObject_rover = new mapboxgl.Marker(markerElement_rover)
+        .setLngLat([telemetryData_rover.longitude, telemetryData_rover.latitude])
+        .addTo(map.current);
+      setMarker_rover(markerObject_rover);
+    }
     
-  }, [lat, lng, zoom, telemetryData]);
+  }, [lat, lng, zoom, telemetryData, telemetryData_rover]);
 
   return (
     <div>
@@ -105,6 +118,8 @@ export default function Map() {
         <div className="sidebar">
           Longitude: {telemetryData.longitude} | Latitude:{" "}
           {telemetryData.latitude} | Zoom: {zoom}
+          <br />
+          rover Longitude: {telemetryData_rover?.longitude} | Latitude: {telemetryData_rover?.latitude}
           <div id="listings" className="listings"></div>
         </div>
 

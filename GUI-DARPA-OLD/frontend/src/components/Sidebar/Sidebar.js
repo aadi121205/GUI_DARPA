@@ -12,23 +12,32 @@ import telemContext from "../../context/home/telemContext";
 const drawerWidth = 430;
 
 function Sidebar() {
-  const { telemetryData, mode, stop_Telem, start_Telem, timeofflight } =
+  const { telemetryData, telemetryData_rover, mode, stop_Telem, start_Telem, start_Telem_rover, stop_Telem_rover, timeofflight } =
     React.useContext(telemContext);
   const {
     goto_command,
+    goto_command_rover,
+    auto_command,
     flyUav,
     armUav,
+    armUgv,
     disarmUav,
+    disarmUgv,
     downloadMission,
     readMission,
     saveMission,
     uploadMission,
+    uploadMission_rover,
     landUAV,
     RTL,
+    RTL_rover,
+    STOP_rover
   } = React.useContext(telemContext);
   const [telemetryStarted, setTelemetryStarted] = React.useState(false);
+  const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(false);
   // console.log(telemetryData.armed)
   telemetryData.groundspeed = Math.round(telemetryData.groundspeed * 100) / 100;
+  telemetryData_rover.groundspeed = Math.round(telemetryData_rover.groundspeed * 100) / 100;
   const toggleTelemetry = () => {
     if (telemetryStarted) {
       stop_Telem();
@@ -36,6 +45,15 @@ function Sidebar() {
       start_Telem();
     }
     setTelemetryStarted(!telemetryStarted);
+  };
+
+  const toggleTelemetry_rover = () => {
+    if (telemetryStarted_rover) {
+      stop_Telem_rover();
+    } else {
+      start_Telem_rover();
+    }
+    setTelemetryStarted_rover(!telemetryStarted_rover);
   };
 
   return (
@@ -60,40 +78,40 @@ function Sidebar() {
             <div className="col p-3 ">
               <h6>ALTITUDE</h6>
               <h5>
-                <b>{telemetryData.altitude} m</b>
+                <b>{telemetryData_rover.altitude} m</b>
               </h5>
             </div>
             <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
               <h6>MODE</h6>
               <h5>
-                <b>{telemetryData.mode}</b>
+                <b>{telemetryData_rover.mode}</b>
               </h5>
             </div>
             <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
               <h6>VELOCITY</h6>
               <h5>
-                <b>{telemetryData.groundspeed} m/s</b>
+                <b>{telemetryData_rover.groundspeed} m/s</b>
               </h5>
             </div>
             <div className="col p-3 ">
               <h6>BATTERY</h6>
               <h5>
-                <b>{telemetryData.battery} %</b>
+                <b>{telemetryData_rover.battery} %</b>
               </h5>
             </div>
             <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
               <h6>STATUS</h6>
               <h5>
-                <b>{telemetryData.status}</b>
+                <b>{telemetryData_rover.status}</b>
               </h5>
             </div>
             <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
               <h6>THROTTLE</h6>
               <h5>
-                {telemetryData.armed ? (
-                  <b style={{ color: "red" }}>ARMED</b>
+                {telemetryData_rover.armed ? (
+                  <b style={{ color: "green" }}>ARMED</b>
                 ) : (
-                  <b style={{ color: "green" }}>DISARMED</b>
+                  <b style={{ color: "red" }}>DISARMED</b>
                 )}
               </h5>
             </div>
@@ -126,7 +144,7 @@ function Sidebar() {
           </div>
         </div>
         <Divider />
-        <h2 className="text-center mt-2 text-white">Vehicle control</h2>
+        <h3 className="text-center mt-21 text-white">UAV control</h3>
         <div className="container text-center">
           <div className="row row-cols-3 p-2">
             <div className="col p-2">
@@ -134,10 +152,10 @@ function Sidebar() {
                 onClick={toggleTelemetry}
                 type="button"
                 className={`btn w-100 ${
-                  telemetryStarted ? "btn-danger" : "btn-success"
+                  telemetryStarted ? "btn-primary" : "btn-success"
                 }`}
               >
-                {telemetryStarted ? "Stop" : "Telemetry"}
+                {telemetryStarted ? "Telemetry UAV \n Stop" : "Telemetry UAV Start"}
               </button>
             </div>
             <div className="col p-2">
@@ -146,7 +164,7 @@ function Sidebar() {
                 type="button"
                 className="btn btn-success w-100"
               >
-                ARM
+                ARM UAV
               </button>
             </div>
             <div className="col p-2">
@@ -155,7 +173,7 @@ function Sidebar() {
                 type="button"
                 className="btn btn-danger w-100"
               >
-                DISARM
+                DISARM UAV
               </button>
             </div>
             <div className="col p-2">
@@ -173,7 +191,7 @@ function Sidebar() {
                 type="button"
                 className="btn btn-primary w-100"
               >
-                RTL
+                UAV RTL
               </button>
             </div>
             <div className="col p-2">
@@ -219,6 +237,120 @@ function Sidebar() {
             <div className="col p-2">
               <button
                 onClick={uploadMission}
+                type="button"
+                className="btn btn-primary w-100"
+                style={{ height: "50px", padding: "2px" }}
+              >
+                UPLOAD MISSION
+              </button>
+            </div>
+            <div className="col p-2">
+              <button
+                onClick={saveMission}
+                type="button"
+                className="btn btn-primary w-100"
+                style={{ height: "50px", padding: "2px" }}
+              >
+                SAVE &nbsp; &nbsp; MISSION
+              </button>
+            </div>
+          </div>
+        </div>
+        <Divider />
+        <h3 className="text-center mt-21 text-white">ROVER control</h3>
+        <div className="container text-center">
+          <div className="row row-cols-3 p-2">
+            <div className="col p-2">
+              <button
+                onClick={toggleTelemetry_rover}
+                type="button"
+                className={`btn w-100 ${
+                  telemetryStarted_rover ? "btn-primary" : "btn-success"
+                }`}
+              >
+                {telemetryStarted_rover ? "Telemetry UGV \n Stop" : "Telemetry UGV Start"}
+              </button>
+            </div>
+
+            <div className="col p-2">
+              <button
+                onClick={armUgv}
+                type="button"
+                className="btn btn-success w-100"
+              >
+                ARM &nbsp; ROVER
+              </button>
+            </div>
+            <div className="col p-2">
+              <button
+                onClick={disarmUgv}
+                type="button"
+                className="btn btn-danger w-100"
+              >
+                DISARM&nbsp; ROVER
+              </button>
+            </div>
+            <div className="col p-2">
+              <button
+                onClick={STOP_rover}
+                type="button"
+                class="btn btn-secondary"
+                >
+                STOP ROVER
+              </button>
+            </div>
+            <div className="col p-2">
+              <button
+                onClick={RTL_rover}
+                type="button"
+                className="btn btn-primary w-100"
+              >
+                ROVER RTL
+              </button>
+            </div>
+            <div className="col p-2">
+              <button
+                onClick={goto_command_rover}
+                type="button"
+                className="btn btn-primary w-100"
+              >
+                GOTO
+              </button>
+            </div>
+            <div className="col p-2">
+              <button
+                onClick={auto_command}
+                type="button"
+                className="btn btn-primary w-100"
+              >
+                AUTO
+              </button>
+            </div>
+          </div>
+          <div className="row row-cols-3 p-2">
+            <div className="d-flex col p-2 ">
+              <button
+                onClick={downloadMission}
+                type="button"
+                className="btn btn-primary w-100"
+                style={{ height: "50px", padding: "2px" }}
+              >
+                DOWNLOAD MISSION
+              </button>
+            </div>
+            <div className="col p-2">
+              <button
+                onClick={readMission}
+                type="button"
+                className="btn btn-primary w-100"
+                style={{ height: "50px", padding: "2px" }}
+              >
+                READ &nbsp; MISSION
+              </button>
+            </div>
+            <div className="col p-2">
+              <button
+                onClick={uploadMission_rover}
                 type="button"
                 className="btn btn-primary w-100"
                 style={{ height: "50px", padding: "2px" }}
