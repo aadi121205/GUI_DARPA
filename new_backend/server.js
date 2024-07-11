@@ -14,9 +14,9 @@ function pathPlan(data){
 
 }
 
+var GlobalJSON = [];
 function generateGlobalJSON(casualty_data) {
   let ctr = 0;
-  let GlobalJSON = [];
 
   for (let i of casualty_data){
     let json_data = 
@@ -88,7 +88,23 @@ io.on('connection', (socket) => {
 
   })
   socket.on('inferance',(data)=>{
-    console.log(data)
+    // let data=fs.readFileSync('GlobalJSON.json','utf-8')
+    // let jsonData = JSON.parse(data);
+    setInterval(()=>{
+      fs.writeFileSync(`GlobalJSON.json`, JSON.stringify(GlobalJSON, null, 2));
+
+    },3000)
+    for(let casuality of GlobalJSON){
+      // console.log(casuality);
+      // console.log(JSON.stringify(data['lat_long'])==JSON.stringify(casuality['LatLong']));
+      if(JSON.stringify(data['lat_long'])==JSON.stringify(casuality['LatLong'])){
+        casuality['Data'][data['data']['type']]=('time' in data['data'])?{'time':data['data']['time'],'value':data['data']['value']}:data['data']['value'];
+        console.log(`updated global database, recieved data from ${data['UXV_id']}`);
+
+      }
+    }
+
+    // console.log(data)
   })
 
 
