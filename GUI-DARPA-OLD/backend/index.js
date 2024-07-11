@@ -24,6 +24,7 @@ const server = http.createServer(app);
 const io = socketIo(server, defaultParams);
 // Variables 
 let telemetryActive = false;
+let telemetryroverActive = false;
 let counter = 1;
 let flag = false;
 const odlcData = JSON.parse(fs.readFileSync('data.json', 'utf8'));
@@ -33,11 +34,14 @@ const chartData = [
     { name: 2, x: Math.random() * 10, y: Math.random() * 10 }
 ]
 
-// Python namespace
+
 const pythonNamespace = io.of('/python');
+const roverNamespace = io.of('/rover');
 const reactNamespace = io.of('/react');
+
+// Python namespace
 pythonNamespace.on('connection', (socket) => {
-    console.log('A Python client connected');
+    console.log('A Python client connected_UAV');
 
     socket.on('telemetry', (data) => {
         counter = 0
@@ -49,104 +53,163 @@ pythonNamespace.on('connection', (socket) => {
     socket.on("image",(payload)=>{
         reactNamespace.emit('video_image',payload)
     })
+    
+    socket.on('disconnect', () => {
+        console.log('A Python client disconnected');
+    });
+});
+
+// Rover namespace
+roverNamespace.on('connection', (socket) => {
+    console.log('A Python client connected');
+
+    socket.on("image_rover",(payload)=>{
+        reactNamespace.emit('video_image_rover',payload)
+    })
     socket.on('telemetry_rover', (data) => {
         counter = 0
 
         // console.log("Telemetry received:", data);
-        if(telemetryActive){
-
+        if(telemetryroverActive){
             reactNamespace.emit('telemetryServer_rover', data);
         }
     })
 
-    socket.on('disconnect', () => {
+    socket.on('disconnect_rover', () => {
         console.log('A Python client disconnected');
     });
 });
 
 // React namespace
 reactNamespace.on('connection', (socket) => {
-    console.log('A React client connected');
+    console.log('A React client connected_ROVER');
 
     socket.on('startvideo',()=>{
         console.log("Video Started")
         pythonNamespace.emit('start_video')
+    })
+    socket.on('startvideo_rover',()=>{
+        console.log("Video Started")
+        roverNamespace.emit('start_video_rover')
     })
 
     socket.on('stopvideo',()=>{
         console.log("Video stoped")
         pythonNamespace.emit('stop_video')
     })
+    socket.on('stopvideo_rover',()=>{
+        console.log("Video stoped")
+        roverNamespace.emit('stop_video_rover')
+    })
 
-    socket.on('start_rover_telem',()=>{
-        console.log("Telemetry start requested");
-        telemetryActive = true;
+    socket.on('start_Telem_rover',()=>{
+        console.log("Telemetry start requested for ROVER");
+        telemetryroverActive = true;
         console.log("Starting rover telemetry");
     })
-    socket.on('stop_rover_telem',()=>{
-        console.log('RoverTelemetry stopped')
-        telemetryActive= false
-    })
-    socket.on('armRover',()=>{
-        pythonNamespace.emit('arm_rover')
+    socket.on('stop_Telem_rover',()=>{
+        console.log('Rover Telemetry stopped')
+        telemetryroverActive= false
     })
     socket.on('stopRover',()=>{
         console.log('Emergency')
-        pythonNamespace.emit('emergency_stop')
+        roverNamespace.emit('emergency_stop')
     })
     socket.on('startTelem', () => {
-        console.log("Telemetry start requested");
+        console.log("Telemetry start requested for UAV");
         telemetryActive = true;
-        console.log("Starting telemetry");
+        console.log("Starting UAV telemetry");
     });
 
     socket.on('stopTelem', () => {
-        console.log("Telemetry stopped");
+        console.log("Telemetry UAV stopped");
         telemetryActive = false;
     });
     socket.on('downloadMission', () => {
         console.log("Download Command recived");
         pythonNamespace.emit('download_mission');
     });
+    socket.on('downloadMission_rover', () => {
+        console.log("Download Command recived");
+        roverNamespace.emit('download_mission_rover');
+    });
     socket.on('readMission', () => {
         console.log("read Mission command recieved");
         pythonNamespace.emit('readmission');
+    });
+    socket.on('readMission_rover', () => {
+        console.log("read Mission command recieved");
+        roverNamespace.emit('readmission_rover');
     });
     socket.on('uploadMission', () => {
         console.log("upload Mission command recieved");
         pythonNamespace.emit('upload_mission');
     });
+    socket.on('uploadMission_rover', () => {
+        console.log("upload Mission command recieved");
+        roverNamespace.emit('upload_mission_rover');
+    });
     socket.on('saveMission', () => {
         console.log("save Mission command recieved");
         pythonNamespace.emit('save_mission');
+    });
+    socket.on('saveMission_rover', () => {
+        console.log("save Mission command recieved");
+        roverNamespace.emit('save_mission_rover');
     });
     socket.on('takeoffBackend', () => {
         console.log("Recieved takeoff command");
         pythonNamespace.emit('takeoff');
     });
     socket.on('armingBackend', () => {
-        console.log("Recieved arming command");
+        console.log("Recieved arming_UAV command");
         pythonNamespace.emit('arm_drone');
     });
+    socket.on('armingBackend_rover', () => {
+        console.log("Recieved arming_rover command");
+        roverNamespace.emit('arm_rover');
+    });
     socket.on('disarmingBackend', () => {
-        console.log("Recieved disArming command");
+        console.log("Recieved disArming_UAV command");
         pythonNamespace.emit('disarm_drone');
+    });
+    socket.on('disarmingBackend_rover', () => {
+        console.log("Recieved disArming_rover command");
+        roverNamespace.emit('disarm_rover');
     });
 
     socket.on('set_gimbal_point', (data) => {
         console.log("Set the gimbal point to ", data)
         pythonNamespace.emit('gimbal_point', data)
     })
+    socket.on('set_gimbal_point_rover', (data) => {
+        console.log("Set the gimbal point to ", data)
+        roverNamespace.emit('gimbal_point_rover', data)
+    })
     socket.emit('updateOdlc', odlcData);
     socket.on('setRTL',()=>{
-        console.log("rtl")
+        console.log("rtl_UAV")
         pythonNamespace.emit('RTL')
+    })
+    socket.on('setRTL_rover',()=>{
+        console.log("rtl_rover")
+        roverNamespace.emit('RTL_rover')
+    })
+    socket.on('setSTOP_rover',()=>{
+        console.log("stop_rover")
+        roverNamespace.emit('STOP_rover')
     })
     socket.on('landUAV',()=>{
         pythonNamespace.emit('landUav')
     })
     socket.on("mission_goto",()=>{
         pythonNamespace.emit("goto_drone")
+    })
+    socket.on("mission_goto_rover",()=>{
+        roverNamespace.emit("goto_rover")
+    })
+    socket.on("mission_auto_rover",()=>{
+        roverNamespace.emit("auto_rover")
     })
 
     setInterval(() => {

@@ -55,7 +55,7 @@ class DroneController:
 	def connect_uav(self):
 		if not self.uav_connected:
 			try:
-				print("Trying to connect.....")
+				print("Trying to connect UAV.....")
 				self.uav_connection = connect(self.DroneIP, wait_ready=False, timeout=5)
 				print("[UAV.py] Connected to UAV at IP/PORT: " + str(self.DroneIP))
 				self.uav_connected = True
@@ -206,7 +206,7 @@ class DroneController:
 						self.sio.emit('telemetry',telemetry_data,namespace="/python")
 						# print(telemetry_data)
 					except Exception as e:
-						print("[Telem] Telemetry not send ERROR:",str(e))
+						print("[Telem] Telemetry not send ERROR by UAV:",str(e))
 				except Exception as e:
 					print("[Telem] Telemetry Error:",str(e))
 					pass
