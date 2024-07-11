@@ -14,34 +14,41 @@ function pathPlan(data){
 
 }
 
-function generateGlobalJSON() {
-  let json_data = [
-      {
-          "CasualtyID": 0,
-          "LatLong": [0.0, 0.0],
-          "Data": {
-              "severe_hemorrhage": 0,
-              "respiratory_distress": 0,
-              "hr": {
-                  "value": 0,
-                  "time": "00:00:00"
-              },
-              "rr": {
-                  "value": 0,
-                  "time": "00:00:00"
-              },
-              "alertness_motor": 0,
-              "alertness_verbal": 0,
-              "alertness_ocular": 0,
-              "trauma_head": 0,
-              "trauma_torso": 0,
-              "trauma_lower_ext": 0,
-              "trauma_upper_ext": 0
-          }
-      }
-  ];
-  fs.writeFileSync(`GlobalJSON.json`, JSON.stringify(json_data, null, 2));
-  return JSON.stringify(json_data, null, 2);
+function generateGlobalJSON(casualty_data) {
+  let ctr = 0;
+  let GlobalJSON = [];
+
+  for (let i of casualty_data){
+    let json_data = 
+        {
+            "CasualtyID": ctr,
+            "LatLong": i,
+            "Data": {
+                "severe_hemorrhage": 0,
+                "respiratory_distress": 0,
+                "hr": {
+                    "value": 0,
+                    "time": "00:00:00"
+                },
+                "rr": {
+                    "value": 0,
+                    "time": "00:00:00"
+                },
+                "alertness_motor": 0,
+                "alertness_verbal": 0,
+                "alertness_ocular": 0,
+                "trauma_head": 0,
+                "trauma_torso": 0,
+                "trauma_lower_ext": 0,
+                "trauma_upper_ext": 0
+            }
+        };
+    GlobalJSON.push(json_data);
+    ctr+=1;
+  };
+
+  fs.writeFileSync(`GlobalJSON.json`, JSON.stringify(GlobalJSON, null, 2));
+  return JSON.stringify(GlobalJSON, null, 2);
 }
 
 
@@ -56,12 +63,13 @@ io.on('connection', (socket) => {
   socket.on('map_nd_casualities',(data)=>{
     console.log(`recieved map and casualities from ${id_map_ugv[socket.id]}`)
     
-    let generatedJSON = generateGlobalJSON();
+    let generatedJSON = generateGlobalJSON(data["lat_long"]);
     console.log(generatedJSON)
 
     io.emit('schedule',pathPlan(data))
     console.log('emitted the schedule')
   })
+  
   socket.on('frames',(img)=>{
     const base64Data = img.replace(/^data:image\/png;base64,/, ""); // Adjust the regex if your image is not in PNG format
   

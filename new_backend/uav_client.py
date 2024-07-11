@@ -34,37 +34,6 @@ device_id='uav'
             "trauma_upper_ext":value
 """
 
-# Initializing the JSON structure
-json_data = [
-    {
-        "CasualtyID": 1,
-        "LatLong": [0.0, 0.0],
-        "Data": {
-            "severe_hemorrhage": 0,
-            "respiratory_distress": 0,
-            "hr": {
-                "value": 0,
-                "time": "00:00:00"
-            },
-            "rr": {
-                "value": 0,
-                "time": "00:00:00"
-            },
-            "alertness_motor": 0,
-            "alertness_verbal": 0,
-            "alertness_ocular": 0,
-            "trauma_head": 0,
-            "trauma_torso": 0,
-            "trauma_lower_ext": 0,
-            "trauma_upper_ext": 0
-        }
-    },
-]
-
-json_string = json.dumps(json_data, indent=0)
-print(json_string)
-
-
 #sample function
 def schedule_reciever(dict):
     print(f'recieved the schedule :{dict}')
