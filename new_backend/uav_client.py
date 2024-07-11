@@ -1,6 +1,7 @@
 import socketio
 # import io
 # from PIL import Image
+import json
 import base64
 import cv2
 from random_json import imitate_json as imitiate_json
@@ -14,6 +15,54 @@ print('image shape',len(img))
 sio = socketio.Client()
 device_id='uav'
 # Define event handlers
+
+"""
+    Global JSON Format
+        CasualtyID: value: int:1-10
+        LatLong: [x.x,y.y]
+        Data: 
+            "severe_hemorrhage": value,
+            "respiratory_distress":value,
+            "hr": value;time,
+            "rr": value;time,
+            "alertness_motor":value,
+            "alertness_verbal":value,
+            "alertness_ocular":value,
+            "trauma_head":value,
+            "trauma_torso":value,
+            "trauma_lower_ext":value,
+            "trauma_upper_ext":value
+"""
+
+# Initializing the JSON structure
+json_data = [
+    {
+        "CasualtyID": 1,
+        "LatLong": [0.0, 0.0],
+        "Data": {
+            "severe_hemorrhage": 0,
+            "respiratory_distress": 0,
+            "hr": {
+                "value": 0,
+                "time": "00:00:00"
+            },
+            "rr": {
+                "value": 0,
+                "time": "00:00:00"
+            },
+            "alertness_motor": 0,
+            "alertness_verbal": 0,
+            "alertness_ocular": 0,
+            "trauma_head": 0,
+            "trauma_torso": 0,
+            "trauma_lower_ext": 0,
+            "trauma_upper_ext": 0
+        }
+    },
+]
+
+json_string = json.dumps(json_data, indent=0)
+print(json_string)
 
 
 #sample function

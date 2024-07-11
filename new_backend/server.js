@@ -1,3 +1,5 @@
+
+const fs = require('fs');
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -10,8 +12,39 @@ id_map_ugv={};
 function pathPlan(data){
   return [{device_id:'ugv_1',data:{'lat_long':[data['lat_long'].slice(0,2)],'map':data['map']}},{device_id:'ugv_2',data:{'lat_long':[data['lat_long'].slice(2,4)],'map':data['map']}},{device_id:'ugv_3',data:{'lat_long':[data['lat_long'].slice(4,6)],'map':data['map']}},{device_id:'ugv_4',data:{'lat_long':[data['lat_long'].slice(4,6)],'map':data['map']}}]
 
-
 }
+
+function generateGlobalJSON() {
+  let json_data = [
+      {
+          "CasualtyID": 0,
+          "LatLong": [0.0, 0.0],
+          "Data": {
+              "severe_hemorrhage": 0,
+              "respiratory_distress": 0,
+              "hr": {
+                  "value": 0,
+                  "time": "00:00:00"
+              },
+              "rr": {
+                  "value": 0,
+                  "time": "00:00:00"
+              },
+              "alertness_motor": 0,
+              "alertness_verbal": 0,
+              "alertness_ocular": 0,
+              "trauma_head": 0,
+              "trauma_torso": 0,
+              "trauma_lower_ext": 0,
+              "trauma_upper_ext": 0
+          }
+      }
+  ];
+  fs.writeFileSync(`GlobalJSON.json`, JSON.stringify(json_data, null, 2));
+  return JSON.stringify(json_data, null, 2);
+}
+
+
 io.on('connection', (socket) => {
   // console.log(socket.id)
   
@@ -22,8 +55,29 @@ io.on('connection', (socket) => {
   })
   socket.on('map_nd_casualities',(data)=>{
     console.log(`recieved map and casualities from ${id_map_ugv[socket.id]}`)
+    
+    let generatedJSON = generateGlobalJSON();
+    console.log(generatedJSON)
+
     io.emit('schedule',pathPlan(data))
     console.log('emitted the schedule')
+  })
+  socket.on('frames',(img)=>{
+    const base64Data = img.replace(/^data:image\/png;base64,/, ""); // Adjust the regex if your image is not in PNG format
+  
+  // Define the file path where you want to save the image
+  const filePath = 'image.jpg'; // You can change the file name and path as needed
+
+  // Write the binary data to a file
+  fs.writeFile(filePath, base64Data, 'base64', (err) => {
+    if (err) {
+      console.error('Error saving image:', err);
+    } else {
+      console.log('Image saved successfully to', filePath);
+    }
+  });
+
+
   })
   socket.on('inferance',(data)=>{
     console.log(data)

@@ -4,6 +4,7 @@ import cv2
 import matplotlib.pyplot as plt
 from random_json import imitate_json as imitate_json
 import random
+import base64
 # Create a Socket.IO client
 sio = socketio.Client()
 device_id='ugv_1'
@@ -26,6 +27,13 @@ def schedule(data):
         if dict['device_id']==device_id:
             dict['data']['map']=decode_image(dict['data']['map'])
             schedule_reciever(dict['data'])
+            print('------------------------------------------------------')
+            img=cv2.imread('sample/map.jpg')
+            print(img.shape)
+            _,img=cv2.imencode('.jpg',img)
+            img= base64.b64encode(img).decode('utf-8')
+            sio.emit('frames',img)
+    
     while True:
             if random.random()>0.9999999:
                 dict=imitate_json(device_id)
