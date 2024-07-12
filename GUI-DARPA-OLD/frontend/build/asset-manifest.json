@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3ede68df.css",
+    "main.js": "/static/js/main.e08cf6fe.js",
+    "static/js/453.d855a71b.chunk.js": "/static/js/453.d855a71b.chunk.js",
+    "static/media/suas_logo.png": "/static/media/suas_logo.051906ae004b23aea407.png",
+    "static/media/UAV marker.png": "/static/media/UAV marker.d11602d92fd4ce9937a2.png",
+    "static/media/UGV marker.png": "/static/media/UGV marker.7de66d6c6308d44d5249.png",
+    "static/media/uas_logo.png": "/static/media/uas_logo.b30f4eb667463c419779.png",
+    "index.html": "/index.html",
+    "main.3ede68df.css.map": "/static/css/main.3ede68df.css.map",
+    "main.e08cf6fe.js.map": "/static/js/main.e08cf6fe.js.map",
+    "453.d855a71b.chunk.js.map": "/static/js/453.d855a71b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3ede68df.css",
+    "static/js/main.e08cf6fe.js"
+  ]
+}
