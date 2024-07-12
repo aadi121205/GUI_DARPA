@@ -13,6 +13,18 @@ start_sitl_instance() {
     gnome-terminal -- bash -c "cd $instance_dir; sim_vehicle.py -v ArduCopter -I$instance_id --out=udp:127.0.0.1:$port; exec bash"
 }
 
+start_sitl_instance_rov() {
+    local instance_id=$1
+    local port=$((9760 + instance_id * 10))
+    local instance_dir="instance_$instance_id"
+
+    # Create a separate directory for each instance
+    mkdir -p $instance_dir
+
+    # Start the SITL instance in a new gnome-terminal window
+    gnome-terminal -- bash -c "cd $instance_dir; sim_vehicle.py -v ArduCopter -I$instance_id --out=udp:127.0.0.1:$port; exec bash"
+}
+
 # Number of instances to start
 num_instances=3
 
@@ -23,6 +35,10 @@ for ((i=0; i<$num_instances; i++)); do
 done
 
 echo "Started $num_instances SITL instances in new terminals."
+
+for ((i=0; i<$num_instances; i++)); do
+    start_sitl_instance_rov $i
+    sleep 5  # Small delay to avoid
 
 # Optionally, start MAVProxy for each instance in a new terminal
 start_mavproxy_instance() {
