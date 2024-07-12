@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import suas_logo from "../../Assets/suas_logo.png";
+import suas_logo from "../../Assets/darpa_logo.png";
 import uas_logo from "../../Assets/uas_logo.png";
 import OdlcDragbar from "../OdlcDragbar"
 import Modal from "../Modal"
@@ -101,13 +101,13 @@ function Header() {
               <OdlcDragbar/>
           </Box>
           <Box sx={{ flexGrow: 0}}>
-            <Tooltip title="SUAS 2024">
+            <Tooltip title="DARPA 2024">
               <Box
                 component="img"
                 sx={{
                   height: 50,
                 }}
-                alt="SUAS"
+                alt="DARPA"
                 src={suas_logo}
               />
             </Tooltip>

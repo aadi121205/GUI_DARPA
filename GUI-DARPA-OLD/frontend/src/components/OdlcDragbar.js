@@ -37,7 +37,7 @@ export default function SwipeableTemporaryDrawer() {
         alignItems: 'center',
       }}
     >
-      <h2>Odlc Display</h2>
+      <h2>Casualty Display</h2>
     </Box>
   );
 
