@@ -17,7 +17,7 @@ start_sitl_instance() {
 # Start 3 instances of ArduRover
 num_rover_instances=3
 for ((i=0; i<$num_rover_instances; i++)); do
-    start_sitl_instance "ArduRover" $i
+    start_sitl_instance "Rover" $i
     sleep 5  # Small delay to avoid race conditions
 done
 
