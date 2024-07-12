@@ -1,53 +1,36 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import Button from '@mui/material/Button';
-import { MdOpenInBrowser } from "react-icons/md";
-import { TbArrowAutofitDown } from "react-icons/tb";
-import telemContext from "../context/home/telemContext";
 import Divider from "@mui/material/Divider";
+import telemContext from "../context/home/telemContext";
 
-
-
-export default function SwipeableTemporaryDrawer() {
+export default function SwipeableTemporaryDrawer2() {
   const [state, setState] = React.useState({
     bottom: false,
   });
-  const [index,setIndex] = React.useState(0)
-  const [logo,setlogo] = React.useState(false)
+  const [index, setIndex] = React.useState(0);
+  const [logo, setLogo] = React.useState(false);
 
-  const toggleDrawer = () => {
-    setIndex(index+1)
-    console.log(index)
-    if(index%2===0){
-        setState({ ...state, bottom: !state.bottom });
-        setlogo(true)
-    }
-    else{
-        setState({ ...state, bottom: !state.bottom });
-        setlogo(false)
-    }
-  };
   const { telemetryData, telemetryData_rover, mode, stop_Telem, start_Telem, start_Telem_rover, stop_Telem_rover, timeofflight } =
-  React.useContext(telemContext);
+    React.useContext(telemContext);
   const {
-  goto_command,
-  goto_command_rover,
-  auto_command,
-  flyUav,
-  armUav,
-  armUgv,
-  disarmUav,
-  disarmUgv,
-  downloadMission,
-  readMission,
-  saveMission,
-  uploadMission,
-  uploadMission_rover,
-  landUAV,
-  RTL,
-  RTL_rover,
-  STOP_rover
+    goto_command,
+    goto_command_rover,
+    auto_command,
+    flyUav,
+    armUav,
+    armUgv,
+    disarmUav,
+    disarmUgv,
+    downloadMission,
+    readMission,
+    saveMission,
+    uploadMission,
+    uploadMission_rover,
+    landUAV,
+    RTL,
+    RTL_rover,
+    STOP_rover
   } = React.useContext(telemContext);
   const [telemetryStarted, setTelemetryStarted] = React.useState(false);
   const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(false);
@@ -70,21 +53,24 @@ export default function SwipeableTemporaryDrawer() {
     setTelemetryStarted_rover(!telemetryStarted_rover);
   };
 
+  const toggleDrawer = () => {
+    setIndex(index + 1);
+    console.log(index);
+    setState({ ...state, bottom: !state.bottom });
+  };
 
   const drawerContent2 = (
     <Box
       sx={{
         width: '100vw', // Set width to 100% of viewport width
-        height: '35vh', // Set height to 92.7% of viewport height
+        height: '92.7vh', // Set height to 92.7% of viewport height
         backgroundColor: '#0D101B', // Set background color to black
         color: 'white', // Set text color to white
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        borderBottom: '100px',
-        padding: '20px',
-        margin: '0px',
+        borderBottom: '100px'
       }}
     >
       <div style={{ width: '100%', height: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -154,6 +140,38 @@ export default function SwipeableTemporaryDrawer() {
                   className="btn btn-primary w-100"
                 >
                   GOTO
+                </button>
+              </div>
+            </div>
+            <div className="row row-cols-3 p-2">
+              <div className="d-flex col p-2 ">
+                <button
+                  onClick={downloadMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  DOWNLOAD MISSION
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={readMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  READ &nbsp; MISSION
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={uploadMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  UPLOAD MISSION
                 </button>
               </div>
             </div>
@@ -229,11 +247,41 @@ export default function SwipeableTemporaryDrawer() {
                 </button>
               </div>
             </div>
+            <div className="row row-cols-3 p-2">
+              <div className="d-flex col p-2 ">
+                <button
+                  onClick={downloadMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  DOWNLOAD MISSION
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={readMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  READ &nbsp; MISSION
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={uploadMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  UPLOAD MISSION
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <Divider />
-      <br />
       <div style={{ width: '100%', height: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <div style={{ flex: 1 }}>
           <h3 className="text-center mt-21 text-white">ROVER-1 control</h3>
@@ -302,6 +350,38 @@ export default function SwipeableTemporaryDrawer() {
                   className="btn btn-primary w-100"
                 >
                   AUTO
+                </button>
+              </div>
+            </div>
+            <div className="row row-cols-3 p-2">
+              <div className="d-flex col p-2 ">
+                <button
+                  onClick={downloadMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  DOWNLOAD MISSION
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={readMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  READ &nbsp; MISSION
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={uploadMission_rover}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  UPLOAD MISSION
                 </button>
               </div>
             </div>
@@ -379,6 +459,38 @@ export default function SwipeableTemporaryDrawer() {
                 </button>
               </div>
             </div>
+            <div className="row row-cols-3 p-2">
+              <div className="d-flex col p-2 ">
+                <button
+                  onClick={downloadMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  DOWNLOAD MISSION
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={readMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  READ &nbsp; MISSION
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={uploadMission_rover}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  UPLOAD MISSION
+                </button>
+              </div>
+            </div>
           </div>
           <Divider/>
         </div>
@@ -452,46 +564,47 @@ export default function SwipeableTemporaryDrawer() {
                 </button>
               </div>
             </div>
+            <div className="row row-cols-3 p-2">
+              <div className="d-flex col p-2 ">
+                <button
+                  onClick={downloadMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  DOWNLOAD MISSION
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={readMission}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  READ &nbsp; MISSION
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={uploadMission_rover}
+                  type="button"
+                  className="btn btn-primary w-100"
+                  style={{ height: "50px", padding: "2px" }}
+                >
+                  UPLOAD MISSION
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </Box>
   );
-  const drawerContent = (
-    <Box
-      sx={{
-        width: '100vw', // Set width to 100% of viewport width
-        height: '100px', // Adjust height as needed
-        backgroundColor: '#0D101B', // Set background color to black
-        color: 'white', // Set text color to white
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <h2>Controls Display</h2>
-    </Box>
-  );
 
   return (
     <div>
-      <Button onClick={toggleDrawer}>
-        {!logo ? (
-            <MdOpenInBrowser style={{ fontSize: 30, color: "white" }} />
-        ):(
-            <TbArrowAutofitDown style={{ fontSize: 30, color: "white" }} />
-        )}
-      </Button>
-      <SwipeableDrawer
-        anchor="bottom"
-        open={state.bottom}
-        onClose={toggleDrawer}
-        onOpen={toggleDrawer}
-      >
-                {drawerContent}
-
         {drawerContent2}
-      </SwipeableDrawer>
-    </div>
+        </div>
   );
 }

@@ -72,7 +72,22 @@ export default function Modal() {
             <img
               src={imageSrc}
               alt="Camera Feed"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              style={{ width: "50%", height: "50%", objectFit: "cover" }}
+            />
+            <img
+              src={imageSrc}
+              alt="Camera Feed"
+              style={{ width: "50%", height: "50%", objectFit: "cover" }}
+            />
+                        <img
+              src={imageSrc}
+              alt="Camera Feed"
+              style={{ width: "50%", height: "50%", objectFit: "cover" }}
+            />
+            <img
+              src={imageSrc}
+              alt="Camera Feed"
+              style={{ width: "50%", height: "50%", objectFit: "cover" }}
             />
             <Button
               onClick={handleOpen}

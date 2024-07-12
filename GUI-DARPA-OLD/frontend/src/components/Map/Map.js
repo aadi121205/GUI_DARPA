@@ -14,7 +14,7 @@ export default function Map() {
   const [lat, setLat] = useState(28.750449);
   const [lng_rover, setLng_rover] = useState(77.11695);
   const [lat_rover, setLat_rover] = useState(28.750449);
-  const [zoom, setZoom] = useState(15.3);
+  const [zoom, setZoom] = useState(16.3);
   const { telemetryData} = React.useContext(telemContext);
   const { telemetryData_rover} = React.useContext(telemContext);
   const [marker,setMarker] = useState(null)

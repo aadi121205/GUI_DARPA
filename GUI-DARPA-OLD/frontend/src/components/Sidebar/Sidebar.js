@@ -500,10 +500,6 @@ function Sidebar() {
         </div>
         </div>
         <Divider />
-        <h3 className="text-center mt-21 text-white">SELECT controls</h3>
-        <div>
-
-        </div>
       </Box>
     </Drawer>
   );
