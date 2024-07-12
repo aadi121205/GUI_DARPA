@@ -500,6 +500,41 @@ function Sidebar() {
         </div>
         </div>
         <Divider />
+        <div className="container text-center">
+          <div className="row row-cols-3 p-2">
+            <div className="col p-2">
+              <button
+                onClick={() => {
+                  toggleTelemetry_rover();
+                  toggleTelemetry();
+                }}                type="button"
+                className={`btn w-100 ${
+                  telemetryStarted ? "btn-primary" : "btn-success"
+                }`}
+              >
+                {telemetryStarted ? "Telemetry \n Stop" : "Telemetry Start"}
+              </button>
+            </div>
+            <div className="col p-2">
+                  <button onClick={() => {
+                    arm_uav();
+                    armUgv();
+                }}  type="button" className="btn btn-success w-100">
+                    ARM ALL
+                  </button>
+                </div>
+                <div className="col p-2">
+                  <button
+                    onClick={STOP_rover}
+                    type="button"
+                    class="btn btn-secondary w-100"
+                  >
+                    DISARM ALL
+                  </button>
+                </div>
+          </div>
+        </div>
+        <Divider />
       </Box>
     </Drawer>
   );
