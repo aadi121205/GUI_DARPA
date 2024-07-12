@@ -68,8 +68,10 @@ function Sidebar() {
       }}
     >
       <Toolbar />
-      <Box sx={{ overflow: "auto" }}>\
-      <h3 className="text-center mt-21 text-white">ROVER control</h3>
+      <Divider />
+      <br></br>
+      <Box sx={{ overflow: "hidden" }}>
+      <h3 className="text-center mt-21 text-white">OVERALL control</h3>
         <div className="container text-center">
           <div className="row row-cols-3 p-2">
             <div className="col p-2">
@@ -83,6 +85,51 @@ function Sidebar() {
                 {telemetryStarted_rover ? "Telemetry UGV \n Stop" : "Telemetry UGV Start"}
               </button>
             </div>
+            <div className="col p-2">
+                  <button
+                    onClick={armUgv}
+                    type="button"
+                    className="btn btn-success w-100"
+                  >
+                    ARM &nbsp; ROVER
+                  </button>
+                </div>
+                <div className="col p-2">
+                  <button
+                    onClick={disarmUgv}
+                    type="button"
+                    className="btn btn-danger w-100"
+                  >
+                    DISARM&nbsp; ROVER
+                  </button>
+                </div>
+                <div className="col p-2">
+                  <button
+                    onClick={STOP_rover}
+                    type="button"
+                    class="btn btn-secondary w-100"
+                  >
+                    STOP ROVER
+                  </button>
+                </div>
+                <div className="col p-2">
+                  <button
+                    onClick={RTL_rover}
+                    type="button"
+                    className="btn btn-primary w-100"
+                  >
+                    ROVER RTL
+                  </button>
+                </div>
+                <div className="col p-2">
+                  <button
+                    onClick={goto_command_rover}
+                    type="button"
+                    className="btn btn-primary w-100"
+                  >
+                    GOTO
+                  </button>
+                </div>
           </div>
         </div>
         <Divider />
@@ -278,7 +325,6 @@ function Sidebar() {
               </h5>
             </div>
           </div>
-
           <div
             className="d-flex justify-content-between align-items-center"
             style={{ minWidth: "200px" }}
@@ -292,7 +338,7 @@ function Sidebar() {
               {mode === "success" && (
                 <>
                   <lottie-player
-                    src="https://lottie.host/4e185203-34b8-4ee9-8353-b4a7e549537d/WXfunQTroA.json"
+                    src="https://lottie.host/5b598c58-da7f-405b-9cf7-e0bb78bc38eb/AvDeOYQ5xa.json"
                     background="##1A2731"
                     speed="1"
                     style={{ width: "50px", height: "50px" }}
@@ -365,7 +411,7 @@ function Sidebar() {
               {mode === "success" && (
                 <>
                   <lottie-player
-                    src="https://lottie.host/4e185203-34b8-4ee9-8353-b4a7e549537d/WXfunQTroA.json"
+                    src="https://lottie.host/5b598c58-da7f-405b-9cf7-e0bb78bc38eb/AvDeOYQ5xa.json"
                     background="##1A2731"
                     speed="1"
                     style={{ width: "50px", height: "50px" }}
@@ -438,7 +484,7 @@ function Sidebar() {
               {mode === "success" && (
                 <>
                   <lottie-player
-                    src="https://lottie.host/4e185203-34b8-4ee9-8353-b4a7e549537d/WXfunQTroA.json"
+                    src="https://lottie.host/5b598c58-da7f-405b-9cf7-e0bb78bc38eb/AvDeOYQ5xa.json"
                     background="##1A2731"
                     speed="1"
                     style={{ width: "50px", height: "50px" }}
