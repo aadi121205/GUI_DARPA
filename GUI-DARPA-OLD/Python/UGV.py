@@ -152,31 +152,36 @@ class RoverController:
 
     def send_telemetry_data_rover(self):
         while True:
-            if self.ugv_connected and not self.ugv_connection._heartbeat_timeout:
-                try:
-                    telemetry_data_rover = {
-                        "latitude": self.ugv_connection.location.global_relative_frame.lat,
-                        "longitude": self.ugv_connection.location.global_relative_frame.lon,
-                        "altitude": self.ugv_connection.location.global_relative_frame.alt,
-                        "airspeed": self.ugv_connection.airspeed,
-                        "groundspeed": self.ugv_connection.groundspeed,
-                        "mode": self.ugv_connection.mode.name,
-                        "battery": self.ugv_connection.battery.level,
-                        "armed": self.ugv_connection.armed,
-                        "velocity": self.ugv_connection.velocity,
-                        "status": self.ugv_connection.system_status.state,
-                    }
+            try:
+                if self.ugv_connected and not self.ugv_connection._heartbeat_timeout:
                     try:
-                        self.sio.emit('telemetry_rover', telemetry_data_rover, namespace="/rover")
+                        telemetry_data_rover = {
+                            "latitude": self.ugv_connection.location.global_relative_frame.lat,
+                            "longitude": self.ugv_connection.location.global_relative_frame.lon,
+                            "altitude": self.ugv_connection.location.global_relative_frame.alt,
+                            "airspeed": self.ugv_connection.airspeed,
+                            "groundspeed": self.ugv_connection.groundspeed,
+                            "mode": self.ugv_connection.mode.name,
+                            "battery": self.ugv_connection.battery.level,
+                            "armed": self.ugv_connection.armed,
+                            "velocity": self.ugv_connection.velocity,
+                            "status": self.ugv_connection.system_status.state,
+                        }
+                        try:
+                            self.sio.emit('telemetry_rover', telemetry_data_rover, namespace="/rover")
+                        except Exception as e:
+                            print("[Telem] Telemetry not sent ERROR by rover:", str(e))
+                            self.ugv_connected = False
                     except Exception as e:
-                        print("[Telem] Telemetry not sent ERROR by rover:", str(e))
-                except Exception as e:
-                    print("[Telem] Telemetry Error:", str(e))
-                    pass
-                time.sleep(1)
-            else:
-                self.ugv_connected = False
-                time.sleep(5)
+                        print("[Telem] Telemetry Error:", str(e))
+                        self.ugv_connected = False
+                        pass
+                    time.sleep(1)
+                else:
+                    self.connect_ugv()
+            except Exception as e:
+                print("ROVER 1 not connected")
+                self.connect_ugv()
 
     def arm_rover(self):
         print("Checking basic pre-arm")

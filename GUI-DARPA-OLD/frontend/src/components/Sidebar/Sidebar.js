@@ -71,8 +71,80 @@ function Sidebar() {
     >
       <Toolbar />
       <Box sx={{ overflow: "auto" }}>
-        <h2 className="text-center mt-4 text-white">Command and control</h2>
+      <h2 className="text-center mt-4 text-white">UAV</h2>
         {/*This is the button for checking if the drone is available or not */}
+        <div className="container text-left text-white">
+          <div className="row row-cols-3 p-3">
+            <div className="col p-3 ">
+              <h6>ALTITUDE</h6>
+              <h5>
+                <b>{telemetryData.altitude} m</b>
+              </h5>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+              <h6>MODE</h6>
+              <h5>
+                <b>{telemetryData.mode}</b>
+              </h5>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+              <h6>VELOCITY</h6>
+              <h5>
+                <b>{telemetryData.groundspeed} m/s</b>
+              </h5>
+            </div>
+            <div className="col p-3 ">
+              <h6>BATTERY</h6>
+              <h5>
+                <b>{telemetryData.battery} %</b>
+              </h5>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+              <h6>STATUS</h6>
+              <h5>
+                <b>{telemetryData.status}</b>
+              </h5>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+              <h6>THROTTLE</h6>
+              <h5>
+                {telemetryData.armed ? (
+                  <b style={{ color: "green" }}>ARMED</b>
+                ) : (
+                  <b style={{ color: "red" }}>DISARMED</b>
+                )}
+              </h5>
+            </div>
+          </div>
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ minWidth: "200px" }}
+          >
+            <div className="left">
+              <p className="text-white text-center">
+                <b>Flight time</b> : {timeofflight} seconds
+              </p>
+            </div>
+            <div className="right">
+              {mode === "success" && (
+                <>
+                  <lottie-player
+                    src="https://lottie.host/4e185203-34b8-4ee9-8353-b4a7e549537d/WXfunQTroA.json"
+                    background="##1A2731"
+                    speed="1"
+                    style={{ width: "50px", height: "50px" }}
+                    loop
+                    autoplay
+                    direction="1"
+                    mode="normal"
+                  ></lottie-player>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+        <Divider />
+        <h2 className="text-center mt-4 text-white">ROVER</h2>
         <div className="container text-left text-white">
           <div className="row row-cols-3 p-3">
             <div className="col p-3 ">

@@ -186,34 +186,40 @@ class DroneController:
 	## Sending telem data to the server
 	def send_telemetry_data(self):
 		while True:
-			if (self.uav_connected & (not self.uav_connection._heartbeat_timeout)):
-				# print(self.uav_connection._heartbeat_timeout)
-				try:
-					telemetry_data = {
-					"latitude": self.uav_connection.location.global_relative_frame.lat,
-					"longitude": self.uav_connection.location.global_relative_frame.lon,
-					"altitude": self.uav_connection.location.global_relative_frame.alt,
-					"airspeed": self.uav_connection.airspeed,
-					"groundspeed": self.uav_connection.groundspeed,
-					"mode": self.uav_connection.mode.name,
-					"battery":self.uav_connection.battery.level,
-					"armed":self.uav_connection.armed,
-					"velocity":self.uav_connection.velocity,
-					"status":self.uav_connection.system_status.state,
-					# "gps_health":vehicle.gps_0.status,
-				}
+			try:
+				if (self.uav_connected & (not self.uav_connection._heartbeat_timeout)):
+					# print(self.uav_connection._heartbeat_timeout)
 					try:
-						self.sio.emit('telemetry',telemetry_data,namespace="/python")
-						# print(telemetry_data)
+						telemetry_data = {
+						"latitude": self.uav_connection.location.global_relative_frame.lat,
+						"longitude": self.uav_connection.location.global_relative_frame.lon,
+						"altitude": self.uav_connection.location.global_relative_frame.alt,
+						"airspeed": self.uav_connection.airspeed,
+						"groundspeed": self.uav_connection.groundspeed,
+						"mode": self.uav_connection.mode.name,
+						"battery":self.uav_connection.battery.level,
+						"armed":self.uav_connection.armed,
+						"velocity":self.uav_connection.velocity,
+						"status":self.uav_connection.system_status.state,
+						# "gps_health":vehicle.gps_0.status,
+					}
+						try:
+							self.sio.emit('telemetry',telemetry_data,namespace="/python")
+							# print(telemetry_data)
+						except Exception as e:
+							print("[Telem] Telemetry not send ERROR by UAV:",str(e))
+							self.uav_connected=False
 					except Exception as e:
-						print("[Telem] Telemetry not send ERROR by UAV:",str(e))
-				except Exception as e:
-					print("[Telem] Telemetry Error:",str(e))
-					pass
-				time.sleep(1)
-			else:
-				self.uav_connected=False
-				time.sleep(5)
+						print("[Telem] Telemetry Error:",str(e))
+						self.uav_connected=False
+						pass
+					time.sleep(1)
+				else:
+					self.connect_uav()
+			except Exception as e:
+				print("UAV 1 not connected")
+				self.connect_uav()
+
 				
 
 	def arm_and_takeoff(self,target_altitude):
