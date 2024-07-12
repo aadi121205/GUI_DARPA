@@ -26,7 +26,7 @@ def haversine(lon1, lat1, lon2, lat2):
 class DroneController:
 	def __init__(self,sio):
 		## Initialze the socketio-client
-		self.DroneIP='127.0.0.1:14450'
+		self.DroneIP='127.0.0.1:14550'
 		self.sio = sio
 		self.telem_running = False
 		self.uav_connected= False

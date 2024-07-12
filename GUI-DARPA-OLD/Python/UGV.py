@@ -14,24 +14,25 @@ def haversine(lon1, lat1, lon2, lat2):
     return c * 6371 * 1000
 
 class RoverController:
-    def __init__(self, sio):
-        self.RoverIP = '127.0.0.1:14452'
+    def __init__(self, sio, RoverIP, id):
+        self.RoverIP = RoverIP
         self.sio = sio
+        self.id = id
         self.telem_running = False
         self.ugv_connected = False
         self.ugv_connection = None
         self.cmds = None  # Initialize the cmds attribute
-        self.sio.on('arm_rover', self.on_arm_rover, namespace="/rover")
-        self.sio.on('disarm_rover', self.on_disarm_rover, namespace="/rover")
-        self.sio.on('gimbal_point_rover', self.on_gimbal_point_rover, namespace="/rover")
-        self.sio.on('upload_mission_rover', self.upload_mission_rover, namespace="/rover")
-        self.sio.on('readmission_rover', self.readmission_rover, namespace="/rover")
-        self.sio.on('save_mission_rover', self.save_mission_rover, namespace="/rover")
-        self.sio.on('download_mission_rover', self.download_mission_rover, namespace="/rover")
-        self.sio.on('RTL_rover', self.set_rtl_rover, namespace="/rover")
-        self.sio.on('goto_rover', self.goto_rover, namespace="/rover")
-        self.sio.on('auto_rover', self.auto_rover, namespace="/rover")
-        self.sio.on('STOP_rover', self.set_stop_rover, namespace="/rover")
+        self.sio.on('arm_rover', self.on_arm_rover, namespace="/rover"+str(self.id))
+        self.sio.on('disarm_rover', self.on_disarm_rover, namespace="/rover"+str(self.id))
+        self.sio.on('gimbal_point_rover', self.on_gimbal_point_rover, namespace="/rover"+str(self.id))
+        self.sio.on('upload_mission_rover', self.upload_mission_rover, namespace="/rover"+str(self.id))
+        self.sio.on('readmission_rover', self.readmission_rover, namespace="/rover"+str(self.id))
+        self.sio.on('save_mission_rover', self.save_mission_rover, namespace="/rover"+str(self.id))
+        self.sio.on('download_mission_rover', self.download_mission_rover, namespace="/rover"+str(self.id))
+        self.sio.on('RTL_rover', self.set_rtl_rover, namespace="/rover"+str(self.id))
+        self.sio.on('goto_rover', self.goto_rover, namespace="/rover"+str(self.id))
+        self.sio.on('auto_rover', self.auto_rover, namespace="/rover"+str(self.id))
+        self.sio.on('STOP_rover', self.set_stop_rover, namespace="/rover"+str(self.id))
         self.filename = "mission_rover.txt"
         self.goto_mission = "waypoints.txt"
         self.connect_ugv()
