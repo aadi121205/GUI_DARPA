@@ -1,7 +1,7 @@
 .map-container {
     height: 91.4vh;
     width: 76.5vw;
-    margin: 2px;
+    margin: 20px;
     /* top: 5vh; */
   }
   .sidebar {
@@ -13,7 +13,7 @@
     position: absolute;
     top: 0vh;
     left: 15vw;
-    margin: 12px;
+    margin: 20px;
     border-radius: 4px;
   }
   #map {

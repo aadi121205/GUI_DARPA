@@ -201,10 +201,10 @@ function Sidebar() {
               {mode === "success" && (
                 <>
                   <lottie-player
-                    src="https://lottie.host/4e185203-34b8-4ee9-8353-b4a7e549537d/WXfunQTroA.json"
+                    src="https://lottie.host/272b60dd-462d-42a3-8ed6-fec4143633d6/X4FxBascRI.json"
                     background="##1A2731"
                     speed="1"
-                    style={{ width: "50px", height: "50px" }}
+                    style={{ width: "70px", height: "70px" }}
                     loop
                     autoplay
                     direction="1"
