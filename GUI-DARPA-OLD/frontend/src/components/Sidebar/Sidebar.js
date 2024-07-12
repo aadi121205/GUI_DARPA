@@ -33,9 +33,17 @@ function Sidebar() {
   } = React.useContext(telemContext);
   const [telemetryStarted, setTelemetryStarted] = React.useState(false);
   const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(false);
-  // console.log(telemetryData.armed)
+  const [armed_uav, setArmed_uav] = React.useState(false);
+  const [armed_rover, setArmed_rover] = React.useState(false);
+  const [uav_1, uav_1_flag] = React.useState(false);
+  const [uav_2, uav_2_flag] = React.useState(false);
+  const [rover_1, rover_1_flag] = React.useState(false);
+  const [rover_2, rover_2_flag] = React.useState(false);
+  const [rover_3, rover_3_flag] = React.useState(false);
+
   telemetryData.groundspeed = Math.round(telemetryData.groundspeed * 100) / 100;
   telemetryData_rover.groundspeed = Math.round(telemetryData_rover.groundspeed * 100) / 100;
+  
   const toggleTelemetry = () => {
     if (telemetryStarted) {
       stop_Telem();
@@ -54,6 +62,21 @@ function Sidebar() {
     setTelemetryStarted_rover(!telemetryStarted_rover);
   };
 
+  const arm_uav = () => {
+    if (telemetryData.armed) {
+      disarmUav();
+    } else {
+      armUav();
+    }
+  };
+
+  const arm_rover = () => {
+    if (telemetryData_rover.armed) {
+      disarmUgv();
+    } else {
+      armUgv();
+    }
+  }
   return (
     <Drawer
       variant="permanent"
@@ -71,36 +94,28 @@ function Sidebar() {
       <Divider />
       <br></br>
       <Box sx={{ overflow: "hidden" }}>
-      <h3 className="text-center mt-21 text-white">OVERALL control</h3>
+      <h3 className="text-center mt-21 text-white">OVERALL controls</h3>
         <div className="container text-center">
           <div className="row row-cols-3 p-2">
             <div className="col p-2">
               <button
-                onClick={toggleTelemetry_rover}
-                type="button"
+                onClick={() => {
+                  toggleTelemetry_rover();
+                  toggleTelemetry();
+                }}                type="button"
                 className={`btn w-100 ${
-                  telemetryStarted_rover ? "btn-primary" : "btn-success"
+                  telemetryStarted ? "btn-primary" : "btn-success"
                 }`}
               >
-                {telemetryStarted_rover ? "Telemetry UGV \n Stop" : "Telemetry UGV Start"}
+                {telemetryStarted ? "Telemetry \n Stop" : "Telemetry Start"}
               </button>
             </div>
             <div className="col p-2">
-                  <button
-                    onClick={armUgv}
-                    type="button"
-                    className="btn btn-success w-100"
-                  >
-                    ARM &nbsp; ROVER
-                  </button>
-                </div>
-                <div className="col p-2">
-                  <button
-                    onClick={disarmUgv}
-                    type="button"
-                    className="btn btn-danger w-100"
-                  >
-                    DISARM&nbsp; ROVER
+                  <button onClick={() => {
+                    arm_uav();
+                    armUgv();
+                }}  type="button" className="btn btn-success w-100">
+                    ARM ALL
                   </button>
                 </div>
                 <div className="col p-2">
@@ -109,25 +124,7 @@ function Sidebar() {
                     type="button"
                     class="btn btn-secondary w-100"
                   >
-                    STOP ROVER
-                  </button>
-                </div>
-                <div className="col p-2">
-                  <button
-                    onClick={RTL_rover}
-                    type="button"
-                    className="btn btn-primary w-100"
-                  >
-                    ROVER RTL
-                  </button>
-                </div>
-                <div className="col p-2">
-                  <button
-                    onClick={goto_command_rover}
-                    type="button"
-                    className="btn btn-primary w-100"
-                  >
-                    GOTO
+                    DISARM ALL
                   </button>
                 </div>
           </div>
@@ -501,6 +498,11 @@ function Sidebar() {
         <Divider />
 
         </div>
+        </div>
+        <Divider />
+        <h3 className="text-center mt-21 text-white">SELECT controls</h3>
+        <div>
+
         </div>
       </Box>
     </Drawer>
