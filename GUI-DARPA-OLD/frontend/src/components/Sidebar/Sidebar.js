@@ -2,14 +2,12 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Toolbar from "@mui/material/Toolbar";
-// import List from '@mui/material/List';
 import Divider from "@mui/material/Divider";
-// import Grid from '@mui/material/Grid';
 import telemContext from "../../context/home/telemContext";
-// import { styled } from '@mui/material/styles';
-// import Paper from '@mui/material/Paper';
+// import Lottie from "react-lottie";
+// import animationData from "../../Assets/ugv.json";
 
-const drawerWidth = 430;
+const drawerWidth = 900;
 
 function Sidebar() {
   const { telemetryData, telemetryData_rover, mode, stop_Telem, start_Telem, start_Telem_rover, stop_Telem_rover, timeofflight } =
@@ -70,42 +68,60 @@ function Sidebar() {
       }}
     >
       <Toolbar />
-      <Box sx={{ overflow: "auto" }}>
-      <h2 className="text-center mt-4 text-white">UAV</h2>
-        {/*This is the button for checking if the drone is available or not */}
-        <div className="container text-left text-white">
-          <div className="row row-cols-3 p-3">
-            <div className="col p-3 ">
+      <Box sx={{ overflow: "auto" }}>\
+      <h3 className="text-center mt-21 text-white">ROVER control</h3>
+        <div className="container text-center">
+          <div className="row row-cols-3 p-2">
+            <div className="col p-2">
+              <button
+                onClick={toggleTelemetry_rover}
+                type="button"
+                className={`btn w-100 ${
+                  telemetryStarted_rover ? "btn-primary" : "btn-success"
+                }`}
+              >
+                {telemetryStarted_rover ? "Telemetry UGV \n Stop" : "Telemetry UGV Start"}
+              </button>
+            </div>
+          </div>
+        </div>
+        <Divider />
+        <div className="row row-cols-2 p-2">
+        <div className="container text-center reduced-padding reduced-margin">
+        <h3 className="text-center mt-4 text-white">UAV 1</h3>
+        <div className="container text-left text-white reduced-padding reduced-margin">
+          <div className="row row-cols-3 p-3 reduced-padding reduced-margin">
+            <div className="col p-3 custom-width">
               <h6>ALTITUDE</h6>
               <h5>
                 <b>{telemetryData.altitude} m</b>
               </h5>
             </div>
-            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width reduced-padding reduced-margin ">
               <h6>MODE</h6>
-              <h5>
+              <h6>
                 <b>{telemetryData.mode}</b>
-              </h5>
+              </h6>
             </div>
-            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width reduced-padding reduced-margin">
               <h6>VELOCITY</h6>
               <h5>
                 <b>{telemetryData.groundspeed} m/s</b>
               </h5>
             </div>
-            <div className="col p-3 ">
+            <div className="col p-3 custom-width">
               <h6>BATTERY</h6>
               <h5>
                 <b>{telemetryData.battery} %</b>
               </h5>
             </div>
-            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width reduced-padding reduced-margin">
               <h6>STATUS</h6>
               <h5>
                 <b>{telemetryData.status}</b>
               </h5>
             </div>
-            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width reduced-padding reduced-margin">
               <h6>THROTTLE</h6>
               <h5>
                 {telemetryData.armed ? (
@@ -121,7 +137,7 @@ function Sidebar() {
             style={{ minWidth: "200px" }}
           >
             <div className="left">
-              <p className="text-white text-center">
+              <p className="text-white text-center reduced-padding reduced-margin">
                 <b>Flight time</b> : {timeofflight} seconds
               </p>
             </div>
@@ -144,43 +160,43 @@ function Sidebar() {
           </div>
         </div>
         <Divider />
-        <h2 className="text-center mt-4 text-white">ROVER</h2>
-        <div className="container text-left text-white">
-          <div className="row row-cols-3 p-3">
-            <div className="col p-3 ">
+        <h3 className="text-center mt-4 text-white">UAV 2</h3>
+        <div className="container text-left text-white reduced-padding reduced-margin">
+          <div className="row row-cols-3 p-3 reduced-padding reduced-margin">
+            <div className="col p-3 custom-width">
               <h6>ALTITUDE</h6>
               <h5>
-                <b>{telemetryData_rover.altitude} m</b>
+                <b>{telemetryData.altitude} m</b>
               </h5>
             </div>
-            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
               <h6>MODE</h6>
-              <h5>
-                <b>{telemetryData_rover.mode}</b>
-              </h5>
+              <h6>
+                <b>{telemetryData.mode}</b>
+              </h6>
             </div>
-            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
               <h6>VELOCITY</h6>
               <h5>
-                <b>{telemetryData_rover.groundspeed} m/s</b>
+                <b>{telemetryData.groundspeed} m/s</b>
               </h5>
             </div>
-            <div className="col p-3 ">
+            <div className="col p-3 custom-width">
               <h6>BATTERY</h6>
               <h5>
-                <b>{telemetryData_rover.battery} %</b>
+                <b>{telemetryData.battery} %</b>
               </h5>
             </div>
-            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
               <h6>STATUS</h6>
               <h5>
-                <b>{telemetryData_rover.status}</b>
+                <b>{telemetryData.status}</b>
               </h5>
             </div>
-            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0">
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
               <h6>THROTTLE</h6>
               <h5>
-                {telemetryData_rover.armed ? (
+                {telemetryData.armed ? (
                   <b style={{ color: "green" }}>ARMED</b>
                 ) : (
                   <b style={{ color: "red" }}>DISARMED</b>
@@ -193,7 +209,7 @@ function Sidebar() {
             style={{ minWidth: "200px" }}
           >
             <div className="left">
-              <p className="text-white text-center">
+              <p className="text-white text-center reduced-padding reduced-margin">
                 <b>Flight time</b> : {timeofflight} seconds
               </p>
             </div>
@@ -201,10 +217,85 @@ function Sidebar() {
               {mode === "success" && (
                 <>
                   <lottie-player
-                    src="https://lottie.host/272b60dd-462d-42a3-8ed6-fec4143633d6/X4FxBascRI.json"
+                    src="https://lottie.host/4e185203-34b8-4ee9-8353-b4a7e549537d/WXfunQTroA.json"
                     background="##1A2731"
                     speed="1"
-                    style={{ width: "70px", height: "70px" }}
+                    style={{ width: "50px", height: "50px" }}
+                    loop
+                    autoplay
+                    direction="1"
+                    mode="normal"
+                  ></lottie-player>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+        </div>
+        <div className="container text-center reduced-padding reduced-margin">
+        <Divider />
+        <h3 className="text-center mt-4 text-white">ROVER 1</h3>
+        <div className="container text-left text-white">
+          <div className="row row-cols-3 p-3">
+            <div className="col p-3 custom-width">
+              <h6>ALTITUDE</h6>
+              <h5>
+                <b>{telemetryData_rover.altitude} m</b>
+              </h5>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>MODE</h6>
+              <h6>
+                <b>{telemetryData_rover.mode}</b>
+              </h6>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>VELOCITY</h6>
+              <h5>
+                <b>{telemetryData_rover.groundspeed} m/s</b>
+              </h5>
+            </div>
+            <div className="col p-3 custom-width">
+              <h6>BATTERY</h6>
+              <h5>
+                <b>{telemetryData_rover.battery} %</b>
+              </h5>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>STATUS</h6>
+              <h5>
+                <b>{telemetryData_rover.status}</b>
+              </h5>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>THROTTLE</h6>
+              <h5>
+                {telemetryData_rover.armed ? (
+                  <b style={{ color: "green" }}>ARMED</b>
+                ) : (
+                  <b style={{ color: "red" }}>DISARMED</b>
+                )}
+              </h5>
+            </div>
+          </div>
+
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ minWidth: "200px" }}
+          >
+            <div className="left">
+              <p className="text-white text-center">
+                <b>Operation time</b> : {timeofflight} seconds
+              </p>
+            </div>
+            <div className="right">
+              {mode === "success" && (
+                <>
+                  <lottie-player
+                    src="https://lottie.host/4e185203-34b8-4ee9-8353-b4a7e549537d/WXfunQTroA.json"
+                    background="##1A2731"
+                    speed="1"
+                    style={{ width: "50px", height: "50px" }}
                     loop
                     autoplay
                     direction="1"
@@ -216,231 +307,154 @@ function Sidebar() {
           </div>
         </div>
         <Divider />
-        <h3 className="text-center mt-21 text-white">UAV control</h3>
-        <div className="container text-center">
-          <div className="row row-cols-3 p-2">
-            <div className="col p-2">
-              <button
-                onClick={toggleTelemetry}
-                type="button"
-                className={`btn w-100 ${
-                  telemetryStarted ? "btn-primary" : "btn-success"
-                }`}
-              >
-                {telemetryStarted ? "Telemetry UAV \n Stop" : "Telemetry UAV Start"}
-              </button>
+        <h3 className="text-center mt-4 text-white">ROVER 2</h3>
+        <div className="container text-left text-white">
+          <div className="row row-cols-3 p-3">
+            <div className="col p-3 custom-width">
+              <h6>ALTITUDE</h6>
+              <h5>
+                <b>{telemetryData_rover.altitude} m</b>
+              </h5>
             </div>
-            <div className="col p-2">
-              <button
-                onClick={armUav}
-                type="button"
-                className="btn btn-success w-100"
-              >
-                ARM UAV
-              </button>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>MODE</h6>
+              <h6>
+                <b>{telemetryData_rover.mode}</b>
+              </h6>
             </div>
-            <div className="col p-2">
-              <button
-                onClick={disarmUav}
-                type="button"
-                className="btn btn-danger w-100"
-              >
-                DISARM UAV
-              </button>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>VELOCITY</h6>
+              <h5>
+                <b>{telemetryData_rover.groundspeed} m/s</b>
+              </h5>
             </div>
-            <div className="col p-2">
-              <button
-                onClick={flyUav}
-                type="button"
-                className="btn btn-primary w-100"
-              >
-                TAKEOFF
-              </button>
+            <div className="col p-3 custom-width">
+              <h6>BATTERY</h6>
+              <h5>
+                <b>{telemetryData_rover.battery} %</b>
+              </h5>
             </div>
-            <div className="col p-2">
-              <button
-                onClick={RTL}
-                type="button"
-                className="btn btn-primary w-100"
-              >
-                UAV RTL
-              </button>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>STATUS</h6>
+              <h5>
+                <b>{telemetryData_rover.status}</b>
+              </h5>
             </div>
-            <div className="col p-2">
-              <button
-                onClick={landUAV}
-                type="button"
-                className="btn btn-primary w-100"
-              >
-                LAND
-              </button>
-            </div>
-            <div className="col p-2">
-              <button
-                onClick={goto_command}
-                type="button"
-                className="btn btn-primary w-100"
-              >
-                GOTO
-              </button>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>THROTTLE</h6>
+              <h5>
+                {telemetryData_rover.armed ? (
+                  <b style={{ color: "green" }}>ARMED</b>
+                ) : (
+                  <b style={{ color: "red" }}>DISARMED</b>
+                )}
+              </h5>
             </div>
           </div>
-          <div className="row row-cols-3 p-2">
-            <div className="d-flex col p-2 ">
-              <button
-                onClick={downloadMission}
-                type="button"
-                className="btn btn-primary w-100"
-                style={{ height: "50px", padding: "2px" }}
-              >
-                DOWNLOAD MISSION
-              </button>
+
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ minWidth: "200px" }}
+          >
+            <div className="left">
+              <p className="text-white text-center">
+                <b>Operation time</b> : {timeofflight} seconds
+              </p>
             </div>
-            <div className="col p-2">
-              <button
-                onClick={readMission}
-                type="button"
-                className="btn btn-primary w-100"
-                style={{ height: "50px", padding: "2px" }}
-              >
-                READ &nbsp; MISSION
-              </button>
-            </div>
-            <div className="col p-2">
-              <button
-                onClick={uploadMission}
-                type="button"
-                className="btn btn-primary w-100"
-                style={{ height: "50px", padding: "2px" }}
-              >
-                UPLOAD MISSION
-              </button>
-            </div>
-            <div className="col p-2">
-              <button
-                onClick={saveMission}
-                type="button"
-                className="btn btn-primary w-100"
-                style={{ height: "50px", padding: "2px" }}
-              >
-                SAVE &nbsp; &nbsp; MISSION
-              </button>
+            <div className="right">
+              {mode === "success" && (
+                <>
+                  <lottie-player
+                    src="https://lottie.host/4e185203-34b8-4ee9-8353-b4a7e549537d/WXfunQTroA.json"
+                    background="##1A2731"
+                    speed="1"
+                    style={{ width: "50px", height: "50px" }}
+                    loop
+                    autoplay
+                    direction="1"
+                    mode="normal"
+                  ></lottie-player>
+                </>
+              )}
             </div>
           </div>
         </div>
         <Divider />
-        <h3 className="text-center mt-21 text-white">ROVER control</h3>
-        <div className="container text-center">
-          <div className="row row-cols-3 p-2">
-            <div className="col p-2">
-              <button
-                onClick={toggleTelemetry_rover}
-                type="button"
-                className={`btn w-100 ${
-                  telemetryStarted_rover ? "btn-primary" : "btn-success"
-                }`}
-              >
-                {telemetryStarted_rover ? "Telemetry UGV \n Stop" : "Telemetry UGV Start"}
-              </button>
+        <h3 className="text-center mt-4 text-white">ROVER 3</h3>
+        <div className="container text-left text-white">
+          <div className="row row-cols-3 p-3">
+            <div className="col p-3 custom-width">
+              <h6>ALTITUDE</h6>
+              <h5>
+                <b>{telemetryData_rover.altitude} m</b>
+              </h5>
             </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>MODE</h6>
+              <h6>
+                <b>{telemetryData_rover.mode}</b>
+              </h6>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>VELOCITY</h6>
+              <h5>
+                <b>{telemetryData_rover.groundspeed} m/s</b>
+              </h5>
+            </div>
+            <div className="col p-3 custom-width">
+              <h6>BATTERY</h6>
+              <h5>
+                <b>{telemetryData_rover.battery} %</b>
+              </h5>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>STATUS</h6>
+              <h5>
+                <b>{telemetryData_rover.status}</b>
+              </h5>
+            </div>
+            <div className="col p-3 border border-secondary border-end-0 border-top-0 border-bottom-0 custom-width">
+              <h6>THROTTLE</h6>
+              <h5>
+                {telemetryData_rover.armed ? (
+                  <b style={{ color: "green" }}>ARMED</b>
+                ) : (
+                  <b style={{ color: "red" }}>DISARMED</b>
+                )}
+              </h5>
+            </div>
+          </div>
 
-            <div className="col p-2">
-              <button
-                onClick={armUgv}
-                type="button"
-                className="btn btn-success w-100"
-              >
-                ARM &nbsp; ROVER
-              </button>
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ minWidth: "200px" }}
+          >
+            <div className="left">
+              <p className="text-white text-center">
+                <b>Operation time</b> : {timeofflight} seconds
+              </p>
             </div>
-            <div className="col p-2">
-              <button
-                onClick={disarmUgv}
-                type="button"
-                className="btn btn-danger w-100"
-              >
-                DISARM&nbsp; ROVER
-              </button>
-            </div>
-            <div className="col p-2">
-              <button
-                onClick={STOP_rover}
-                type="button"
-                class="btn btn-secondary"
-                >
-                STOP ROVER
-              </button>
-            </div>
-            <div className="col p-2">
-              <button
-                onClick={RTL_rover}
-                type="button"
-                className="btn btn-primary w-100"
-              >
-                ROVER RTL
-              </button>
-            </div>
-            <div className="col p-2">
-              <button
-                onClick={goto_command_rover}
-                type="button"
-                className="btn btn-primary w-100"
-              >
-                GOTO
-              </button>
-            </div>
-            <div className="col p-2">
-              <button
-                onClick={auto_command}
-                type="button"
-                className="btn btn-primary w-100"
-              >
-                AUTO
-              </button>
+            <div className="right">
+              {mode === "success" && (
+                <>
+                  <lottie-player
+                    src="https://lottie.host/4e185203-34b8-4ee9-8353-b4a7e549537d/WXfunQTroA.json"
+                    background="##1A2731"
+                    speed="1"
+                    style={{ width: "50px", height: "50px" }}
+                    loop
+                    autoplay
+                    direction="1"
+                    mode="normal"
+                  ></lottie-player>
+                </>
+              )}
             </div>
           </div>
-          <div className="row row-cols-3 p-2">
-            <div className="d-flex col p-2 ">
-              <button
-                onClick={downloadMission}
-                type="button"
-                className="btn btn-primary w-100"
-                style={{ height: "50px", padding: "2px" }}
-              >
-                DOWNLOAD MISSION
-              </button>
-            </div>
-            <div className="col p-2">
-              <button
-                onClick={readMission}
-                type="button"
-                className="btn btn-primary w-100"
-                style={{ height: "50px", padding: "2px" }}
-              >
-                READ &nbsp; MISSION
-              </button>
-            </div>
-            <div className="col p-2">
-              <button
-                onClick={uploadMission_rover}
-                type="button"
-                className="btn btn-primary w-100"
-                style={{ height: "50px", padding: "2px" }}
-              >
-                UPLOAD MISSION
-              </button>
-            </div>
-            <div className="col p-2">
-              <button
-                onClick={saveMission}
-                type="button"
-                className="btn btn-primary w-100"
-                style={{ height: "50px", padding: "2px" }}
-              >
-                SAVE &nbsp; &nbsp; MISSION
-              </button>
-            </div>
-          </div>
+        </div>
+        <Divider />
+
+        </div>
         </div>
       </Box>
     </Drawer>

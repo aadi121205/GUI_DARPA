@@ -158,7 +158,7 @@ class RoverController:
                         telemetry_data_rover = {
                             "latitude": self.ugv_connection.location.global_relative_frame.lat,
                             "longitude": self.ugv_connection.location.global_relative_frame.lon,
-                            "altitude": self.ugv_connection.location.global_relative_frame.alt,
+                            "altitude": round(self.ugv_connection.location.global_relative_frame.alt, 2),
                             "airspeed": self.ugv_connection.airspeed,
                             "groundspeed": self.ugv_connection.groundspeed,
                             "mode": self.ugv_connection.mode.name,

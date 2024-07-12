@@ -1,8 +1,8 @@
 .map-container {
     height: 94.9vh;
-    width: 73.5vw;
+    width: 63.5vw;
     margin: 0px;
-    margin-left: 230px;
+    margin-left: 0px;
     margin-bottom: 0px;
 
     /* top: 5vh; */
@@ -10,14 +10,13 @@
   .sidebar {
     background-color: rgb(35 55 75 / 90%);
     color: #fff;
-    padding: 6px 12px;
     font-family: monospace;
     z-index: 1;
     position: absolute;
     top: 0vh;
     left: 15vw;
-    margin: 20px;
-    border-radius: 4px;
+    margin: 2px;
+    border-radius: 2px;
   }
   #map {
     position: relative;
