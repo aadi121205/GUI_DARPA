@@ -12,8 +12,6 @@ export default function Map() {
   const map = useRef(null);
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
-  const [lngua1, setLngua1] = useState(77.11695);
-  const [latua1, setLatua1] = useState(28.750449);
   const [lng_rover, setLng_rover] = useState(77.11695);
   const [lat_rover, setLat_rover] = useState(28.750449);
   const [lng_rover2, setLng_rover2] = useState(77.11695);
@@ -23,8 +21,12 @@ export default function Map() {
   const [zoom, setZoom] = useState(16.3);
   const { telemetryData} = React.useContext(telemContext);
   const { telemetryData_rover} = React.useContext(telemContext);
+  const { telemetryData_rover2} = React.useContext(telemContext);
+  const { telemetryData_rover3} = React.useContext(telemContext);
   const [marker,setMarker] = useState(null)
   const [marker_rover, setMarker_rover] = useState(null);
+  const [marker_rover2, setMarker_rover2] = useState(null);
+  const [marker_rover3, setMarker_rover3] = useState(null);
 
   useEffect(() => {
     //Initialize the map once
@@ -124,34 +126,6 @@ export default function Map() {
       setLat_rover(map.current.getCenter().lat.toFixed(4));
       setZoom(map.current.getZoom().toFixed(2));
     });
-    // map.current.on("load", () => {
-    //   // Add a data source containing GeoJSON data.
-    //   map.current.addSource("dtuCampus_rover", {
-    //     type: "geojson",
-    //     data: {
-    //       type: "Feature",
-    //       geometry: {
-    //         type: "Polygon",
-    //         // These coordinates outline dtuCampus.
-    //         coordinates: [
-    //           [
-    //             [77.115826, 28.754964],
-    //             [77.123077, 28.749402],
-    //             [77.118353, 28.744705],
-    //             [77.115991, 28.745345],
-    //             [77.115111, 28.748807],
-    //             [77.110113, 28.749459],
-    //             [77.112112, 28.751436],
-    //             [77.113197, 28.752666],
-    //             // [77.110103,28.749358]
-    //             //ghar ka location 85.902010 ,25.821255 (^_^)
-    //           ],
-    //         ],
-    //       },
-    //     },
-    //   });
-    //   console.log("Loadded layer");
-    // });
     if (marker_rover) {
       marker_rover.remove();
     }
@@ -164,6 +138,32 @@ export default function Map() {
     
     
   }, [lat_rover, lng_rover, zoom, telemetryData_rover]);
+
+  useEffect(() => {
+      
+      if (!telemetryData_rover2 || !telemetryData_rover2.latitude || !telemetryData_rover2.longitude) {
+        setLat_rover2(28.750449);
+        setLng_rover2(77.11695);
+        return;
+      }
+      
+      map.current.on("move", () => {
+        setLng_rover2(map.current.getCenter().lng.toFixed(4));
+        setLat_rover2(map.current.getCenter().lat.toFixed(4));
+        setZoom(map.current.getZoom().toFixed(2));
+      });
+      if (marker_rover2) {
+        marker_rover2.remove();
+      }
+        const markerElement_rover2 = document.createElement("div");
+        markerElement_rover2.className = "marker_rover2";
+        const markerObject_rover2 = new mapboxgl.Marker(markerElement_rover2)
+          .setLngLat([telemetryData_rover2.longitude, telemetryData_rover2.latitude])
+          .addTo(map.current);
+        setMarker_rover2(markerObject_rover2);
+      
+      
+    }, [lat_rover2, lng_rover2, zoom, telemetryData_rover2]);
 
   return (
     <div>

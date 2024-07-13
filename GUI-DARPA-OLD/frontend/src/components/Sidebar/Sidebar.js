@@ -114,7 +114,7 @@ function Sidebar() {
                   <button onClick={() => {
                     arm_uav();
                     armUgv();
-                }}  type="button" className="btn btn-success w-100">
+                }}  type="button" className="btn btn-primary w-100">
                     ARM ALL
                   </button>
                 </div>
@@ -122,7 +122,7 @@ function Sidebar() {
                   <button
                     onClick={STOP_rover}
                     type="button"
-                    class="btn btn-secondary w-100"
+                    class="btn btn-danger w-100"
                   >
                     SAFTEY STOP
                   </button>
@@ -453,7 +453,6 @@ function Sidebar() {
 
         </div>
         </div>
-
         <Divider />
         <div style={{padding: "10px"}}>
         <h4 className="text-left mt-12 text-white">UAV controls</h4>
@@ -474,7 +473,7 @@ function Sidebar() {
                   </button>
                 </div>
                 <div className="col p-2">
-                  <button onClick={() => {}}  type="button" className="btn btn-success w-100">
+                  <button onClick={() => {}}  type="button" className="btn btn-danger w-100">
                     STOP UAV
                   </button>
                 </div>
@@ -499,7 +498,7 @@ function Sidebar() {
                   </button>
                 </div>
                 <div className="col p-2">
-                  <button onClick={() => {}}  type="button" className="btn btn-success w-100">
+                  <button onClick={() => {}}  type="button" className="btn btn-danger w-100">
                     STOP UAV
                   </button>
                 </div>
@@ -524,7 +523,7 @@ function Sidebar() {
                   </button>
                 </div>
                 <div className="col p-2">
-                  <button onClick={() => {}}  type="button" className="btn btn-success w-100">
+                  <button onClick={() => {}}  type="button" className="btn btn-danger w-100">
                     STOP UAV
                   </button>
                 </div>
@@ -549,7 +548,7 @@ function Sidebar() {
                   </button>
                 </div>
                 <div className="col p-2">
-                  <button onClick={() => {}}  type="button" className="btn btn-success w-100">
+                  <button onClick={() => {}}  type="button" className="btn btn-danger w-100">
                     STOP UAV
                   </button>
                 </div>
