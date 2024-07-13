@@ -130,6 +130,30 @@ function Sidebar() {
           </div>
         </div>
         <Divider />
+        <div className="container text-center">
+          <div className="row row-cols-3 p-2">
+            <div className="col p-2">
+              <button
+                onClick={() => {}} type="button" className={`btn w-100 ${
+                  telemetryStarted ? "btn-primary" : "btn-success"
+                }`}
+              >
+                {telemetryStarted ? "Missions \n Stop" : "Missions Start"}
+              </button>
+            </div>
+            <div className="col p-2">
+                  <button onClick={() => {}}  type="button" className="btn btn-success w-100">
+                    SCRIPTS START
+                  </button>
+                </div>
+                <div className="col p-2">
+                  <button onClick={() => {}}  type="button" className="btn btn-success w-100">
+                    SEND Missions
+                  </button>
+                </div>
+          </div>
+        </div>
+        <Divider />
         <div className="row row-cols-2 p-2">
         <div className="container text-center reduced-padding reduced-margin">
         <h3 className="text-center mt-4 text-white">UAV 1</h3>
@@ -154,7 +178,7 @@ function Sidebar() {
               </h5>
             </div>
             <div className="col p-3 custom-width">
-              <h6>BATTERY</h6>
+              <h6>SIGNAL LOSS</h6>
               <h5>
                 <b>{telemetryData.battery} %</b>
               </h5>
@@ -208,7 +232,7 @@ function Sidebar() {
         <div className="container text-left text-white">
           <div className="row row-cols-3 p-3">
             <div className="col p-3 custom-width">
-              <h6>ALTITUDE</h6>
+              <h6>DISPLACEMENT</h6>
               <h5>
                 <b>{telemetryData_rover.altitude} m</b>
               </h5>
@@ -226,7 +250,7 @@ function Sidebar() {
               </h5>
             </div>
             <div className="col p-3 custom-width">
-              <h6>BATTERY</h6>
+              <h6>SIGNAL LOSS</h6>
               <h5>
                 <b>{telemetryData_rover.battery} %</b>
               </h5>
@@ -283,7 +307,7 @@ function Sidebar() {
         <div className="container text-left text-white">
           <div className="row row-cols-3 p-3">
             <div className="col p-3 custom-width">
-              <h6>ALTITUDE</h6>
+              <h6>DISPLACEMENT</h6>
               <h5>
                 <b>{telemetryData_rover.altitude} m</b>
               </h5>
@@ -301,7 +325,7 @@ function Sidebar() {
               </h5>
             </div>
             <div className="col p-3 custom-width">
-              <h6>BATTERY</h6>
+              <h6>SIGNAL LOSS</h6>
               <h5>
                 <b>{telemetryData_rover.battery} %</b>
               </h5>
@@ -355,7 +379,7 @@ function Sidebar() {
         <div className="container text-left text-white">
           <div className="row row-cols-3 p-3">
             <div className="col p-3 custom-width">
-              <h6>ALTITUDE</h6>
+              <h6>DISPLACEMENT</h6>
               <h5>
                 <b>{telemetryData_rover.altitude} m</b>
               </h5>
@@ -373,7 +397,7 @@ function Sidebar() {
               </h5>
             </div>
             <div className="col p-3 custom-width">
-              <h6>BATTERY</h6>
+              <h6>SIGNAL LOSS</h6>
               <h5>
                 <b>{telemetryData_rover.battery} %</b>
               </h5>
@@ -429,30 +453,7 @@ function Sidebar() {
 
         </div>
         </div>
-        <Divider />
-        <div className="container text-center">
-          <div className="row row-cols-3 p-2">
-            <div className="col p-2">
-              <button
-                onClick={() => {}} type="button" className={`btn w-100 ${
-                  telemetryStarted ? "btn-primary" : "btn-success"
-                }`}
-              >
-                {telemetryStarted ? "Missions \n Stop" : "Missions Start"}
-              </button>
-            </div>
-            <div className="col p-2">
-                  <button onClick={() => {}}  type="button" className="btn btn-success w-100">
-                    SCRIPTS START
-                  </button>
-                </div>
-                <div className="col p-2">
-                  <button onClick={() => {}}  type="button" className="btn btn-success w-100">
-                    SEND Missions
-                  </button>
-                </div>
-          </div>
-        </div>
+
         <Divider />
         <div style={{padding: "10px"}}>
         <h4 className="text-left mt-12 text-white">UAV controls</h4>
