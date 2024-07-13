@@ -172,9 +172,6 @@ export default function Map() {
           <strong>UAV1:-</strong> Longitude: {telemetryData.longitude} | Latitude:{" "}
           {telemetryData.latitude} | Zoom: {zoom}
           <br />
-          <strong>UAV2:-</strong> Longitude: {telemetryData.longitude} | Latitude:{" "}
-          {telemetryData.latitude} | Zoom: {zoom}
-          <br />
           <strong>ROVER 1:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude: {telemetryData_rover?.latitude}
           <div id="listings" className="listings"></div>
           <strong>ROVER 2:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude: {telemetryData_rover?.latitude}

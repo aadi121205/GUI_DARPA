@@ -87,21 +87,13 @@ export default function SwipeableTemporaryDrawer() {
         margin: '0px',
       }}
     >
+      <h3 className='text-center mt-21 text-white'>only for use in emergency simulation</h3>
+      <br />
       <div style={{ width: '100%', height: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <div style={{ flex: 1 }}>
           <h3 className="text-center mt-21 text-white">UAV-1 control</h3>
           <div className="container text-center">
             <div className="row row-cols-3 p-2">
-              <div className="col p-2">
-                <button
-                  onClick={toggleTelemetry}
-                  type="button"
-                  className={`btn w-100 ${telemetryStarted ? "btn-primary" : "btn-success"
-                    }`}
-                >
-                  {telemetryStarted ? "Telemetry UAV \n Stop" : "Telemetry UAV Start"}
-                </button>
-              </div>
               <div className="col p-2">
                 <button
                   onClick={armUav}
@@ -161,94 +153,9 @@ export default function SwipeableTemporaryDrawer() {
         </div>
         <Divider orientation="vertical" flexItem style={{ background: 'white', height: '100%', width: '5px' }} />
         <div style={{ flex: 1 }}>
-          <h3 className="text-center mt-21 text-white">UAV-2 control</h3>
+          <h3 className="text-center mt-21 text-white">ROVER-3 control</h3>
           <div className="container text-center">
             <div className="row row-cols-3 p-2">
-              <div className="col p-2">
-                <button
-                  onClick={toggleTelemetry}
-                  type="button"
-                  className={`btn w-100 ${telemetryStarted ? "btn-primary" : "btn-success"
-                    }`}
-                >
-                  {telemetryStarted ? "Telemetry UAV \n Stop" : "Telemetry UAV Start"}
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={armUav}
-                  type="button"
-                  className="btn btn-success w-100"
-                >
-                  ARM UAV
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={disarmUav}
-                  type="button"
-                  className="btn btn-danger w-100"
-                >
-                  DISARM UAV
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={flyUav}
-                  type="button"
-                  className="btn btn-primary w-100"
-                >
-                  TAKEOFF
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={RTL}
-                  type="button"
-                  className="btn btn-primary w-100"
-                >
-                  UAV RTL
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={landUAV}
-                  type="button"
-                  className="btn btn-primary w-100"
-                >
-                  LAND
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={goto_command}
-                  type="button"
-                  className="btn btn-primary w-100"
-                >
-                  GOTO
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <Divider />
-      <br />
-      <div style={{ width: '100%', height: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
-        <div style={{ flex: 1 }}>
-          <h3 className="text-center mt-21 text-white">ROVER-1 control</h3>
-          <div className="container text-center">
-            <div className="row row-cols-3 p-2">
-              <div className="col p-2">
-                <button
-                  onClick={toggleTelemetry_rover}
-                  type="button"
-                  className={`btn w-100 ${telemetryStarted_rover ? "btn-primary" : "btn-success"
-                    }`}
-                >
-                  {telemetryStarted_rover ? "Telemetry UGV \n Stop" : "Telemetry UGV Start"}
-                </button>
-              </div>
 
               <div className="col p-2">
                 <button
@@ -279,11 +186,59 @@ export default function SwipeableTemporaryDrawer() {
               </div>
               <div className="col p-2">
                 <button
-                  onClick={RTL_rover}
+                  onClick={goto_command_rover}
                   type="button"
                   className="btn btn-primary w-100"
                 >
-                  ROVER RTL
+                  GOTO
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={auto_command}
+                  type="button"
+                  className="btn btn-primary w-100"
+                >
+                  AUTO
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <Divider />
+      <br />
+      <div style={{ width: '100%', height: '50%', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <div style={{ flex: 1 }}>
+          <h3 className="text-center mt-21 text-white">ROVER-1 control</h3>
+          <div className="container text-center">
+            <div className="row row-cols-3 p-2">
+
+              <div className="col p-2">
+                <button
+                  onClick={armUgv}
+                  type="button"
+                  className="btn btn-success w-100"
+                >
+                  ARM &nbsp; ROVER
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={disarmUgv}
+                  type="button"
+                  className="btn btn-danger w-100"
+                >
+                  DISARM&nbsp; ROVER
+                </button>
+              </div>
+              <div className="col p-2">
+                <button
+                  onClick={STOP_rover}
+                  type="button"
+                  class="btn btn-secondary w-100"
+                >
+                  STOP ROVER
                 </button>
               </div>
               <div className="col p-2">
@@ -315,17 +270,6 @@ export default function SwipeableTemporaryDrawer() {
             <div className="row row-cols-3 p-2">
               <div className="col p-2">
                 <button
-                  onClick={toggleTelemetry_rover}
-                  type="button"
-                  className={`btn w-100 ${telemetryStarted_rover ? "btn-primary" : "btn-success"
-                    }`}
-                >
-                  {telemetryStarted_rover ? "Telemetry UGV \n Stop" : "Telemetry UGV Start"}
-                </button>
-              </div>
-
-              <div className="col p-2">
-                <button
                   onClick={armUgv}
                   type="button"
                   className="btn btn-success w-100"
@@ -349,15 +293,6 @@ export default function SwipeableTemporaryDrawer() {
                   class="btn btn-secondary w-100"
                 >
                   STOP ROVER
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={RTL_rover}
-                  type="button"
-                  className="btn btn-primary w-100"
-                >
-                  ROVER RTL
                 </button>
               </div>
               <div className="col p-2">
@@ -381,78 +316,6 @@ export default function SwipeableTemporaryDrawer() {
             </div>
           </div>
           <Divider/>
-        </div>
-        <div style={{ flex: 1 }}>
-          <h3 className="text-center mt-21 text-white">ROVER-3 control</h3>
-          <div className="container text-center">
-            <div className="row row-cols-3 p-2">
-              <div className="col p-2">
-                <button
-                  onClick={toggleTelemetry_rover}
-                  type="button"
-                  className={`btn w-100 ${telemetryStarted_rover ? "btn-primary" : "btn-success"
-                    }`}
-                >
-                  {telemetryStarted_rover ? "Telemetry UGV \n Stop" : "Telemetry UGV Start"}
-                </button>
-              </div>
-
-              <div className="col p-2">
-                <button
-                  onClick={armUgv}
-                  type="button"
-                  className="btn btn-success w-100"
-                >
-                  ARM &nbsp; ROVER
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={disarmUgv}
-                  type="button"
-                  className="btn btn-danger w-100"
-                >
-                  DISARM&nbsp; ROVER
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={STOP_rover}
-                  type="button"
-                  class="btn btn-secondary w-100"
-                >
-                  STOP ROVER
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={RTL_rover}
-                  type="button"
-                  className="btn btn-primary w-100"
-                >
-                  ROVER RTL
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={goto_command_rover}
-                  type="button"
-                  className="btn btn-primary w-100"
-                >
-                  GOTO
-                </button>
-              </div>
-              <div className="col p-2">
-                <button
-                  onClick={auto_command}
-                  type="button"
-                  className="btn btn-primary w-100"
-                >
-                  AUTO
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </Box>
