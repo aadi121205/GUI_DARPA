@@ -1,20 +1,5 @@
 import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import suas_logo from "../assets/darpa_logo.png";
-import uas_logo from "../assets/uas_logo.png";
-
-const pages = ["Telem", "Logs", "Stats"];
-const links = ["/telem", "/logs", "/stats"];
+import { Navbar, Nav, Container } from 'react-bootstrap';
 
 function NavigationBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -26,48 +11,39 @@ function NavigationBar() {
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   return (
-    <AppBar
-      position="fixed"
-      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1,backgroundColor:"#0D101B" }}
-    >
-      <Container maxWidth="xll">
-        <Toolbar disableGutters>
-          <Tooltip title="UAS-DTU">
-            <Box
-              component="img"
-              sx={{ height: 40, mr: 6 }}
-              alt="UAS DTU"
-              src={uas_logo}
-            />
-          </Tooltip>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
-          <Box sx={{ flexGrow: 0}}>
-            <Tooltip title="DARPA 2024">
-              <Box
-                component="img"
-                sx={{
-                  height: 50,
-                }}
-                alt="DARPA"
-                src={suas_logo}
-              />
-            </Tooltip>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+          <Navbar bg="dark" variant="dark" expand="lg">
+            <Container style={{ padding: "3px", display: "flex", justifyContent: "flex-start", alignItems: "left", margin: "0.5px", paddingLeft: "30px"}}>
+                <Navbar.Brand href="/">
+                    <img
+                        src= "src/assets/uas_logo.png" // replace with the path to your image
+                        width="120"
+                        height="50"
+                        alt="Logo"
+                    />
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link href="/">Home</Nav.Link>
+                        <Nav.Link href="/telem">Telem</Nav.Link>
+                        <Nav.Link href="/contact">Contact</Nav.Link>
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+            <Container style={{ padding: "3px", display: "flex", justifyContent: "flex-end", alignItems: "center", margin: "0.5px", paddingLeft: "0px" }}>
+              <Navbar.Brand href="/">
+                  <img
+                      src="src/assets/darpa_logo.png" // replace with the path to your image
+                      width="140"
+                      height="50"
+                      alt="Logo"
+                  />
+              </Navbar.Brand>
+            </Container>
+
+        </Navbar>
+
   );
 }
 

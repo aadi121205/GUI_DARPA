@@ -91,7 +91,7 @@ function Sidebar() {
       }}
     >
       <Toolbar />
-      <Divider />
+        <Divider />
       <br></br>
       <Box sx={{ overflow: "hidden" }}>
       <h3 className="text-center mt-21 text-white">OVERALL controls</h3>
