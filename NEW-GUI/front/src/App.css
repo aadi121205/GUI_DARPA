@@ -3,4 +3,22 @@
     margin-top: 600px; /* Adjust this value based on the height of your Navbar */
     padding: 200px; /* Optional: Add some padding if needed */
   }
-  
+
+  /* Style the video: 100% width and height to cover the entire window */
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 10%;
+  height: 10%;
+}
+
+/* Add some content at the bottom of the video/page */
+.content1 {
+  position: fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 70%;
+  padding: 20px;
+}

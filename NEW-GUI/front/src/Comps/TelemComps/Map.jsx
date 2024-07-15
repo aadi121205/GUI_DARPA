@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import mapboxgl from 'mapbox-gl';
+import Modal from "./MapConps/Modal";
 /* import telemContext from "../../context/home/telemContext"; */
 
 mapboxgl.accessToken = "pk.eyJ1IjoiYXl1c2gxMDIiLCJhIjoiY2xycTRtZW4xMDE0cTJtbno5dnU0dG12eCJ9.L9xmYztXX2yOahZoKDBr6g";
@@ -9,7 +10,7 @@ export default function Map() {
   const map = useRef(null);
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
-  const [zoom, setZoom] = useState(16.3);
+  const [zoom, setZoom] = useState(16);
 
   /* 
   const { telemetryData } = React.useContext(telemContext);
@@ -161,6 +162,9 @@ export default function Map() {
           <div id="listings" className="listings"></div>
           <strong>ROVER 3:-</strong> Longitude: {telemetryData_rover3?.longitude} | Latitude: {telemetryData_rover3?.latitude}
           <div id="listings" className="listings"></div> */}
+          <strong>UAV1:-</strong> Longitude: 77.11695 | Latitude: 28.750449 | Zoom: {zoom}
+          <br />
+          <Modal />
         </div>
         <div ref={mapContainer} className="map-container" />
       </div>
