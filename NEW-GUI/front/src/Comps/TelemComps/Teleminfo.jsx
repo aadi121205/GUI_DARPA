@@ -7,6 +7,13 @@ import SignalBars from "./SignalBar";
 
 const Teleminfo = ({ vehicle }) => {
   const style = vehicle.con ? { color: "green" } : { color: "red" };
+  const stylet = { color: "White" };
+  if (vehicle.throttle === "ARMED") {
+    const stylet = { color: "green" };
+  }
+  else {
+    const stylet = { color: "red" };
+  }
   return (
     <div>
     <Container style={{display: "flex", justifyContent: "flex-start", alignItems: "left", paddingLeft: "50px", paddingRight: "40px", paddingBottom: "10px", paddingTop: "10px", margin: "5px"}}>
@@ -18,33 +25,33 @@ const Teleminfo = ({ vehicle }) => {
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
               <h6>ALTITUDE</h6>
               <h5>
-                <b>m</b>
+                <b>{vehicle.altitude} m</b>
               </h5>
               <br></br>
               <h6>MODE</h6>
               <h6>
-              <b>m</b>
+              <b>{vehicle.mode}</b>
               </h6>
               <br></br>
               <h6>VELOCITY</h6>
               <h5>
-                <b> m/s</b>
+                <b>{vehicle.velocity} m/s</b>
               </h5>
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
               <h6>BATT</h6>
               <h5>
-                <b>%</b>
+                <b>{vehicle.battery} %</b>
               </h5>
               <br></br>
               <h6>STATUS</h6>
               <h5>
-                <b>x</b>
+                <b>{vehicle.status}</b>
               </h5>
               <br></br>
               <h6>THROTTLE</h6>
-              <h5>
-                  <b style={{ color: "green" }}>ARMED</b>
+              <h5 style={stylet}>
+                <b>{vehicle.throttle}</b>
               </h5>
         </Col>
         <Col style={{display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: "50px"}}>  

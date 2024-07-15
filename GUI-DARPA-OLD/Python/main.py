@@ -19,8 +19,6 @@ if __name__=="__main__":
     sio = Socketio_client(gcs_ip,gcs_port).socketio_client
     uav = DroneController(sio)
     ugv = RoverController(sio, "127.0.0.1:14552", 1)
-    ugv2 = RoverController(sio, "127.0.0.1:14553", 2)
-    ugv3 = RoverController(sio, "127.0.0.1:14554", 3)
     video= Image_Capture(sio)
     
     
