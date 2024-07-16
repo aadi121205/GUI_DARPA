@@ -2,15 +2,6 @@ import * as React from "react";
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
 function NavigationBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
   return (
           <Navbar bg="dark" variant="dark" expand="lg">
             <Container style={{ padding: "3px", display: "flex", justifyContent: "flex-start", alignItems: "left", margin: "0.5px", paddingLeft: "30px"}}>

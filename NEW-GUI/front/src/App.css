@@ -22,3 +22,12 @@
   width: 70%;
   padding: 20px;
 }
+.marker {
+/*   background-image: url("./assets/UAVmarker.png");
+ */  background-size: cover;
+  background-color: black;
+  width: 25px;
+  height: 25px;
+  border-radius: 3px;
+  cursor: pointer;
+}

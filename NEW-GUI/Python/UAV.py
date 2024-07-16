@@ -204,6 +204,7 @@ class DroneController:
 						# "gps_health":vehicle.gps_0.status,
 					}
 						try:
+							print("[Telem] Telemetry send by UAV",telemetry_data)
 							self.sio.emit('telemetry',telemetry_data,namespace="/python")
 							# print(telemetry_data)
 						except Exception as e:

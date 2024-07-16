@@ -74,22 +74,22 @@ export default function Modal() {
                     <Button 
                     style={{ position: "absolute", top: 0, right: 0, color: "white" }}
                     >
-                        <RiCloseCircleLine style={{ fontSize: 100 }} />
+                      <h3>Take Off</h3>
                     </Button>
                     <Button
                     style={{ position: "absolute", top: 0, left: 0, color: "white" }}
                     >
-                        <RiCloseCircleLine style={{ fontSize: 100 }} />
+                      <h3>Take Off</h3>
                     </Button>
                     <Button
                     style={{ position: "absolute", bottom: 0, right: 0, color: "white" }}
                     >
-                        <RiCloseCircleLine style={{ fontSize: 100 }} />
+                      <h3>Take Off</h3>
                     </Button>
                     <Button
                     style={{ position: "absolute", bottom: 0, left: 0, color: "white" }}
                     >
-                        <RiCloseCircleLine style={{ fontSize: 100 }} />
+                      <h3>Take Off</h3>
                     </Button>
                 </div>
                   <Button
