@@ -1,13 +1,14 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import telemContext from "../../context/home/telemContext";
-import markerIcon from "../../assets/UAVmarker.png"; // Import the local image
+import 'mapbox-gl/dist/mapbox-gl.css';
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXl1c2gxMDIiLCJhIjoiY2xycTRtZW4xMDE0cTJtbno5dnU0dG12eCJ9.L9xmYztXX2yOahZoKDBr6g";
 
 export default function Map() {
-  const mapContainer = useRef(null);
-  const map = useRef(null);
+  const mapContainer = useRef();
+  const map = useRef();
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
   const [zoom, setZoom] = useState(16.3);
@@ -73,6 +74,8 @@ export default function Map() {
         },
       });
     });
+
+
   }, []);
 
   useEffect(() => {
@@ -82,29 +85,52 @@ export default function Map() {
 
     setLat(latitude);
     setLng(longitude);
-
+    const geojson = {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          properties: {
+            message: 'Foo',
+            imageId: 1011,
+            iconSize: [30, 30]
+          },
+          geometry: {
+            type: 'Point',
+            coordinates: [longitude, latitude]
+          }
+        }
+      ]
+    };
     // Move the map to the new telemetry data location
     map.current.flyTo({
       center: [longitude, latitude],
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
-
-    // Update marker position or create a new marker with an image
-    if (marker) {
-      marker.setLngLat([longitude, latitude]);
-    } else {
+    for (const feature of geojson.features) {
       const el = document.createElement('div');
+      const width = feature.properties.iconSize[0];
+      const height = feature.properties.iconSize[1];
       el.className = 'marker';
-      el.style.backgroundImage = `url(${markerIcon})`;
-      el.style.width = '50px';
-      el.style.height = '50px';
+      el.style.backgroundImage = `url(https://picsum.photos/id/${feature.properties.imageId}/${width}/${height})`;
+      el.style.width = `${width}px`;
+      el.style.height = `${height}px`;
       el.style.backgroundSize = '100%';
+      el.style.display = 'block';
+      el.style.border = 'none';
+      el.style.borderRadius = '50%';
+      el.style.cursor = 'pointer';
+      el.style.padding = 0;
 
-      const newMarker = new mapboxgl.Marker(el)
-        .setLngLat([longitude, latitude])
+      el.addEventListener('click', () => {
+        window.alert(feature.properties.message);
+      });
+
+      new mapboxgl.Marker(el)
+        .setLngLat(feature.geometry.coordinates)
         .addTo(map.current);
-      setMarker(newMarker);
     }
+
   }, [telemetryData]);
 
   return (
@@ -113,7 +139,6 @@ export default function Map() {
         <div className="sidebar">
           <strong>UAV1:-</strong> Longitude: {telemetryData.longitude} | Latitude:{" "}
           {telemetryData.latitude} | Zoom: {zoom}
-          <img src={markerIcon} alt="marker" style={{ width: "50px", height: "50px" }} />
           <br />
         </div>
         <div ref={mapContainer} className="map-container" />
