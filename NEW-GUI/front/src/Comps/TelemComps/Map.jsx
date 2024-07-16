@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import telemContext from "../../context/home/telemContext";
+import markerIcon from "../../assets/UAVmarker.png"; // Import the local image
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXl1c2gxMDIiLCJhIjoiY2xycTRtZW4xMDE0cTJtbno5dnU0dG12eCJ9.L9xmYztXX2yOahZoKDBr6g";
 
@@ -88,14 +89,13 @@ export default function Map() {
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
 
-    const el = document.createElement('div');
-
     // Update marker position or create a new marker with an image
     if (marker) {
       marker.setLngLat([longitude, latitude]);
     } else {
+      const el = document.createElement('div');
       el.className = 'marker';
-      el.style.backgroundImage = 'url(file:///home/aadi/Projects/GUI_DARPA/NEW-GUI/front/src/assets/UAVmarker.png)';
+      el.style.backgroundImage = `url(${markerIcon})`;
       el.style.width = '50px';
       el.style.height = '50px';
       el.style.backgroundSize = '100%';
@@ -113,6 +113,7 @@ export default function Map() {
         <div className="sidebar">
           <strong>UAV1:-</strong> Longitude: {telemetryData.longitude} | Latitude:{" "}
           {telemetryData.latitude} | Zoom: {zoom}
+          <img src={markerIcon} alt="marker" style={{ width: "50px", height: "50px" }} />
           <br />
         </div>
         <div ref={mapContainer} className="map-container" />
