@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import telemContext from "../../context/home/telemContext";
 mapboxgl.accessToken =
@@ -10,32 +10,24 @@ export default function Map() {
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
   const [zoom, setZoom] = useState(16.3);
-  const { telemetryData} = React.useContext(telemContext);
-  const [marker,setMarker] = useState(null)
+  const { telemetryData } = useContext(telemContext);
+  const [marker, setMarker] = useState(null);
 
   useEffect(() => {
-    //Initialize the map once
-    if (map.current) return;
+    if (map.current) return; // Initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/satellite-v9",
       center: [lng, lat],
       zoom: zoom,
     });
-  }, [lng, lat]);
 
-  useEffect(() => {
-    if (!telemetryData || !telemetryData.latitude || !telemetryData.longitude) {
-      setLat(28.750449);
-      setLng(77.11695);
-      return;
-    }
-    
     map.current.on("move", () => {
       setLng(map.current.getCenter().lng.toFixed(4));
       setLat(map.current.getCenter().lat.toFixed(4));
       setZoom(map.current.getZoom().toFixed(2));
     });
+
     map.current.on("load", () => {
       // Add a data source containing GeoJSON data.
       map.current.addSource("dtuCampus", {
@@ -44,7 +36,6 @@ export default function Map() {
           type: "Feature",
           geometry: {
             type: "Polygon",
-            // These coordinates outline dtuCampus.
             coordinates: [
               [
                 [77.115826, 28.754964],
@@ -55,25 +46,21 @@ export default function Map() {
                 [77.110113, 28.749459],
                 [77.112112, 28.751436],
                 [77.113197, 28.752666],
-                // [77.110103,28.749358]
-                //ghar ka location 85.902010 ,25.821255 (^_^)
               ],
             ],
           },
         },
       });
-      console.log("Loadded layer");
       map.current.addLayer({
         id: "dtuCampus",
         type: "fill",
-        source: "dtuCampus", // reference the data source
+        source: "dtuCampus",
         layout: {},
         paint: {
-          "fill-color": "#798b90", // blue color fill has been changed as per my preference
+          "fill-color": "#798b90",
           "fill-opacity": 0.5,
         },
       });
-      // Add a black outline around the polygon.
       map.current.addLayer({
         id: "outline",
         type: "line",
@@ -84,8 +71,41 @@ export default function Map() {
           "line-width": 3,
         },
       });
-    });    
-  }, [lat, lng, zoom, telemetryData]);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!telemetryData || !telemetryData.latitude || !telemetryData.longitude) return;
+
+    const { latitude, longitude } = telemetryData;
+
+    setLat(latitude);
+    setLng(longitude);
+
+    // Move the map to the new telemetry data location
+    map.current.flyTo({
+      center: [longitude, latitude],
+      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
+    });
+
+    const el = document.createElement('div');
+
+    // Update marker position or create a new marker with an image
+    if (marker) {
+      marker.setLngLat([longitude, latitude]);
+    } else {
+      el.className = 'marker';
+      el.style.backgroundImage = 'url(file:///home/aadi/Projects/GUI_DARPA/NEW-GUI/front/src/assets/UAVmarker.png)';
+      el.style.width = '50px';
+      el.style.height = '50px';
+      el.style.backgroundSize = '100%';
+
+      const newMarker = new mapboxgl.Marker(el)
+        .setLngLat([longitude, latitude])
+        .addTo(map.current);
+      setMarker(newMarker);
+    }
+  }, [telemetryData]);
 
   return (
     <div>

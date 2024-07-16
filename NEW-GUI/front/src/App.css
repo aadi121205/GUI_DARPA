@@ -23,8 +23,8 @@
   padding: 20px;
 }
 .marker {
-/*   background-image: url("./assets/UAVmarker.png");
- */  background-size: cover;
+  background-image: url("./assets/UAVmarker.png");
+  background-size: cover;
   background-color: black;
   width: 25px;
   height: 25px;
