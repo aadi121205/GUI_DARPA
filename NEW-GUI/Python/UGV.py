@@ -33,7 +33,7 @@ class RoverController:
         self.sio.on('goto_rover', self.goto_rover, namespace="/rover")
         self.sio.on('auto_rover', self.auto_rover, namespace="/rover")
         self.sio.on('STOP_rover', self.set_stop_rover, namespace="/rover")
-        self.filename = "mission_rover.txt"
+        self.filename = "waypoints.txt"
         self.goto_mission = "waypoints.txt"
         self.connect_ugv()
         t2 = threading.Thread(target=self.send_telemetry_data_rover).start()
@@ -167,6 +167,8 @@ class RoverController:
                             "armed": self.ugv_connection.armed,
                             "velocity": self.ugv_connection.velocity,
                             "status": self.ugv_connection.system_status.state,
+                            "heading": self.ugv_connection.heading,
+                            "heartbeat": self.ugv_connection.last_heartbeat
                         }
                         try:
                             self.sio.emit('telemetry_rover', telemetry_data_rover, namespace="/rover")
@@ -205,18 +207,8 @@ class RoverController:
         print("Connected to rover")
 
     def goto_rover(self):
-        self.arm_rover()
-        Lat = []
-        Lon = []
-        with open(self.goto_mission, "r") as file:
-            for line in file:
-                latitude, longitude = line.strip().split(", ")
-                Lat.append(float(latitude))
-                Lon.append(float(longitude))
-        for c in range(len(Lat)):
-            self.travel_rover(Lon[c], Lat[c])
-            time.sleep(2)
-        self.ugv_connection.mode = VehicleMode("RTL")
+        self.ugv_connection.mode = VehicleMode("GUIDED")
+        
 
     def auto_rover(self):
         self.ugv_connection.mode = VehicleMode("AUTO")
@@ -227,57 +219,3 @@ class RoverController:
     def set_stop_rover(self):
         self.ugv_connection.mode = VehicleMode("HOLD")
         print("Rover stopped")
-
-    def gotoMission_rover(self):
-        global i
-        self.arm_rover()
-        with open('waypoints.txt', 'r') as file:
-            for line in file:
-                lat, lon = line.strip().split(',')
-                target_location = LocationGlobalRelative(float(lat), float(lon))
-                self.ugv_connection.simple_goto(target_location)
-                ugv_lat, uav_lon = self.ugv_connection.location.global_frame.lat, self.ugv_connection.location.global_frame.lon
-                subprocess.call('python3 doit.py', shell=True)
-                print(f"Distance to target: {remaining_distance}m")
-                while True:
-                    ugv_lat, ugv_lon = self.ugv_connection.location.global_frame.lat, self.ugv_connection.location.global_frame.lon
-                    remaining_distance = haversine(float(lat), float(lon), ugv_lat, ugv_lon)
-                    if remaining_distance < 1:
-                        break
-                print("Reached target")
-                time.sleep(1)
-                target_location = LocationGlobalRelative(float(lat), float(lon))
-                self.ugv_connection.simple_goto(target_location)
-                time.sleep(10)
-                ugv_lat, ugv_lon = self.ugv_connection.location.global_frame.lat, self.ugv_connection.location.global_frame.alt
-                print(f"UGV location: {ugv_lat}, {ugv_lon}")
-                with open('sd.txt', 'w') as file:
-                    file.write(str(i))
-                subprocess.call('python3 doit.py', shell=True)
-                time.sleep(10)
-                i += 1
-
-# if __name__ == "__main__":
-#     try:
-#         sio = Socketio_client(Socket_Connection_String)
-#     except Exception as e:
-#         print(e)
-#     drone = connect(DroneIP, wait_ready=False)
-#     controller = DroneController(sio.socketio_client)
-#     controller.telem_running = True
-#     try:
-#         telemetry_thread = threading.Thread(target=controller.send_telemetry_data, args=(drone,))
-#         telemetry_thread.start()
-#         print("Telemetry thread started.")
-#     except Exception as e:
-#         print("Error starting telemetry thread:", e)
-#     while True:
-#         time.sleep(1)
-#         if not sio.flag:
-#             print("Server disconnected. Attempting to reconnect...")
-#             try:
-#                 sio = Socketio_client(Socket_Connection_String)
-#                 controller.sio = sio.socketio_client
-#                 print("Reconnected to server.")
-#             except Exception as e:
-#                 print("Error reconnecting to server:", e)

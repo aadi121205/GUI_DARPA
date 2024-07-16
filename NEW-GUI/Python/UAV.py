@@ -46,6 +46,7 @@ class DroneController:
 		self.sio.on('landUav',self.land_Uav,namespace="/python")
 		self.sio.on('goto_drone',self.goto,namespace="/python")
 		self.sio.on('odlc_mission',self.flyMission,namespace="/python")
+		self.sio.on('set_Guided',self.set_Guided,namespace="/python")
 		self.filename = "mission.txt"
 		self.goto_mission = "waypoints.txt"
 		self.connect_uav()
@@ -63,7 +64,10 @@ class DroneController:
 				print("[UAV.py] An error occurred: " + str(e))
 				self.uav_connected = False
 				time.sleep(5)
-    
+
+	def set_Guided(self):
+		self.uav_connection.mode = "GUIDED"
+		    
 	
 	def on_arm_drone(self):
 		# drone_vehicle.mode = VehicleMode("GUIDED")

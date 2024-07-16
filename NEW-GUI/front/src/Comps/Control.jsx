@@ -1,11 +1,16 @@
 import React from 'react';
+import { SocketState } from "../context/socketContext";
+import { TelemState } from "../context/home/telemState";
+import Contexp from "./ControlComps/Contexp";
+import Telemexp from "./TelemComps/Teleexp";
 
 export default function Control() {
 
     return (
-        <>
-        <h1>Control</h1>
-        <p>This is the control page</p>
-        </>
+        <SocketState>
+        <TelemState>
+            <Contexp/>
+        </TelemState>
+      </SocketState>
     );
     }

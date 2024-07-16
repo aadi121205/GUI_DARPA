@@ -1,15 +1,13 @@
 import * as React from "react";
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Button, Row, Col, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Modal from "./Modal";
-import SignalBars from "./SignalBar";
-import { Button } from "@mui/material";
-import { margin } from "@mui/system";
+import Modal from "../TelemComps/Modal";
+import SignalBars from "../TelemComps/SignalBar";
 
 
 const Teleminfo = ({ vehicle }) => {
   const style = vehicle.con ? { color: "green" } : { color: "red" };
-  let stylet = { color: "White", margin: "0px" };
+  let stylet = { color: "White" };
   if (vehicle.throttle === "DISARMED") {
     stylet.color = "red";
   } else {
@@ -52,17 +50,15 @@ const Teleminfo = ({ vehicle }) => {
               </h5>
               <br></br>
               <h6>THROTTLE</h6>
-              <Button variant="primary" onClick={vehicle.arm} style={{margin: "0px"}}>
               <h5 style={stylet}>
                 <b>{vehicle.throttle}</b>
               </h5>
-              </Button>
         </Col>
         <Col style={{display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: "50px"}}>  
               <SignalBars st={vehicle.signalStrength} />
         </Col>
         <Col style={{display: "flex", justifyContent: "center", alignItems: "center"}}>  
-        <Modal vehicle={vehicle} />
+        <Modal />
         </Col>
     </Container>
     </div>

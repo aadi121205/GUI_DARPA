@@ -215,6 +215,9 @@ reactNamespace.on('connection', (socket) => {
     socket.on("mission_auto_rover",()=>{
         roverNamespace.emit("auto_rover")
     })
+    socket.on("set_Guided",()=>{
+        pythonNamespace.emit("set_Guided")
+    })
 
     setInterval(() => {
         socket.emit('chart', chartData);

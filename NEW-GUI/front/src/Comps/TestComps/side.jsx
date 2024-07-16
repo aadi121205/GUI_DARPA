@@ -27,7 +27,8 @@ function Side() {
     landUAV,
     RTL,
     RTL_rover,
-    STOP_rover
+    STOP_rover,
+    set_Guided
   } = React.useContext(telemContext);
   const [telemetryStarted, setTelemetryStarted] = React.useState(false);
   const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(false);
@@ -92,6 +93,7 @@ function Side() {
     <div className="tab">
       <h1>Telemetry</h1>
       <Button variant="primary" onClick={start_Telem}>Start Telemetry</Button>
+      <Button variant="danger" onClick={start_Telem_rover}>start Telemetry</Button>
       <Button variant="danger" onClick={stop_Telem}>Stop Telemetry</Button>
 
       <h2>UAV</h2>
@@ -99,16 +101,31 @@ function Side() {
         <Card.Body>
           <Card.Title>UAV 1</Card.Title>
           <Card.Text>
+            <h1>{telemetryData.latitude}</h1>
+            <h1>{telemetryData.longitude}</h1>
             <h1>{telemetryData.altitude}</h1>          
             <h2>{telemetryData.groundspeed}</h2>
             <h2>{telemetryData.battery}</h2>
             <h2>{telemetryData.status}</h2>
             <h2>{telemetryData.armed ? "ARMED" : "DISARMED"}</h2>
           </Card.Text>
+          <Card.Text>
+            <h2>Mode: {telemetryData_rover.mode}</h2>
+            <h2>Groundspeed: {telemetryData_rover.groundspeed}</h2>
+            <h2>Battery: {telemetryData_rover.battery}</h2>
+            <h2>Status: {telemetryData_rover.status}</h2>
+            <h2>Throttle: {telemetryData_rover.armed ? "ARMED" : "DISARMED"}</h2>
+            <h1>Time of Flight: {timeofflight}</h1>
+            <h1>lat: {telemetryData_rover.latitude}</h1>
+            <h1>long: {telemetryData_rover.longitude}</h1>
+          </Card.Text>
+
           <Button variant="primary" onClick={arm_uav}>{telemetryData.armed ? "Disarm" : "Arm"}</Button>
           <Button variant="primary" onClick={RTL}>RTL</Button>
           <Button variant="primary" onClick={landUAV}>Land</Button>
           <Button variant="primary" onClick={goto_command}>Goto</Button>
+          <Button variant="primary" onClick={auto_command}>Auto</Button>
+          <Button variant="primary" onClick={set_Guided}>Guided</Button>
         </Card.Body>
       </Card>
       </div>

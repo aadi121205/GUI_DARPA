@@ -7,6 +7,7 @@ import Data from './Comps/Data';
 import Home from './Comps/Home';
 import Sidebar from './Comps/Test';
 import Control from './Comps/Control';
+import GenomeTerminal from './Comps/Terminal';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/Data" element={<Data />} />
         <Route path="/test" element={<Sidebar />} />
         <Route path="/control" element={<Control />} />
+        <Route path="/terminal" element={<GenomeTerminal />} />
       </Routes>
       </Router>
   );

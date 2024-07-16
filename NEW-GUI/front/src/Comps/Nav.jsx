@@ -21,6 +21,7 @@ function NavigationBar() {
                         <Nav.Link href="/control">Controls</Nav.Link>
                         <Nav.Link href="/data">Data</Nav.Link>
                         <Nav.Link href="/test">Test</Nav.Link>
+                        <Nav.Link href="/terminal">Terminal</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

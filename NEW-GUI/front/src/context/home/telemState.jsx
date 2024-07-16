@@ -114,6 +114,9 @@ const TelemState = ({ children }) => {
     socket.emit('startvideo_rover');
     console.log("emit video start_rover")
   }
+  const set_Guided = () => {
+    socket.emit("set_Guided");
+  };
 
   const stopvideo_rover = () =>{
     socket.emit('stopvideo_rover');

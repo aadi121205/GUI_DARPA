@@ -1,8 +1,7 @@
 import * as React from "react";
 import Divider from "@mui/material/Divider";
 import telemContext from "../../context/home/telemContext";
-import Teleminfo from "./Teleminfo";
-import Map from "./Map";
+import Teleminfo from "./Continfo";
 import { Container, Button, Row, Col, Card } from 'react-bootstrap';
 
 export const Dts = (delaySec) => {
@@ -23,50 +22,15 @@ export const Dts = (delaySec) => {
   return scaledValue;
 };
 
-function Telemexp() {
+function Contexp() {
   const { telemetryData, telemetryData_rover } = React.useContext(telemContext);
-  React.useContext(telemContext);
-  const {
-    goto_command,
-    goto_command_rover,
-    auto_command,
-    flyUav,
-    armUav,
-    armUgv,
-    disarmUav,
-    disarmUgv,
-    downloadMission,
-    readMission,
-    saveMission,
-    uploadMission,
-    uploadMission_rover,
-    landUAV,
-    RTL,
-    RTL_rover,
-    STOP_rover
-  } = React.useContext(telemContext);
-  const arm_uav = () => {
-    if (telemetryData.armed) {
-      disarmUav();
-    } else {
-      armUav();
-    }
-  };
-
-  const arm_rover = () => {
-    if (telemetryData_rover.armed) {
-      disarmUgv();
-    } else {
-      armUgv();
-    }
-  }
   const [telemetryStarted, setTelemetryStarted] = React.useState(true);
   const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(true);
   telemetryData.groundspeed = Math.round(telemetryData.groundspeed * 100) / 100;
   telemetryData_rover.groundspeed = Math.round(telemetryData_rover.groundspeed * 100) / 100;
 
   const scaledValue = Dts(telemetryData.heartbeat);
-  const scaledValue_rover = Dts(telemetryData_rover.heartbeat);
+  const scaledValue_rover = 4
 
   const UAVvehicleData = {
     name: "UAV 1",
@@ -78,10 +42,6 @@ function Telemexp() {
     status: telemetryData.status, // status
     throttle: telemetryData.armed ? "ARMED" : "DISARMED", // throttle status
     signalStrength: scaledValue,
-    arm: arm_uav,
-    rtl: RTL,
-    land: landUAV,
-    goto: goto_command,
   };
 
   const UGVvehicleData = {
@@ -94,10 +54,6 @@ function Telemexp() {
     status: telemetryData_rover.status, // status
     throttle: telemetryData_rover.armed ? "ARMED" : "DISARMED", // throttle status
     signalStrength: scaledValue_rover,
-    arm: arm_rover,
-    rtl: RTL_rover,
-    land: STOP_rover,
-    goto: goto_command_rover,
   };
 
 
@@ -118,14 +74,9 @@ function Telemexp() {
                     <Teleminfo vehicle={UAVvehicleData}/>
                 </Container>
             </Col>
-            <Col>
-            <Container style={{ padding: "0px", overflow: "hidden",margin: "0px", paddingLeft: "0px", backgroundColor: "black"}}>
-                <Map />
-            </Container>
-            </Col>
         </Row>
     </div>
   );
 }
 
-export default Telemexp;
+export default Contexp;

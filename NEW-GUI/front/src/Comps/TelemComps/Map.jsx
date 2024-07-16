@@ -12,8 +12,9 @@ export default function Map() {
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
   const [zoom, setZoom] = useState(16.3);
-  const { telemetryData } = useContext(telemContext);
-  const [marker, setMarker] = useState(null);
+  const { telemetryData, telemetryData_rover } = useContext(telemContext);
+  const [uavMarker, setUavMarker] = useState(null);
+  const [roverMarker, setRoverMarker] = useState(null);
 
   useEffect(() => {
     if (map.current) return; // Initialize map only once
@@ -77,8 +78,8 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    if (marker) {
-      marker.remove();
+    if (uavMarker) {
+      uavMarker.remove();
     }
     if (!telemetryData || !telemetryData.latitude || !telemetryData.longitude) return;
 
@@ -86,61 +87,71 @@ export default function Map() {
 
     setLat(latitude);
     setLng(longitude);
-    const geojson = {
-      type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          properties: {
-            message: 'Foo',
-            imageId: `url(https://iili.io/dBbAcPf.md.png)`,
-            iconSize: [30, 30]
-          },
-          geometry: {
-            type: 'Point',
-            coordinates: [longitude, latitude]
-          }
-        }
-      ]
-    };
-    // Move the map to the new telemetry data location
-    map.current.flyTo({
-      center: [longitude, latitude],
-      essential: true, // this animation is considered essential with respect to prefers-reduced-motion
-    });
-    const feature = geojson.features[0];
-    const el = document.createElement('div');
-    const width = feature.properties.iconSize[0];
-    const height = feature.properties.iconSize[1];
-    el.className = 'marker';
-    el.style.backgroundImage = feature.properties.imageId;
-    el.style.width = `${width}px`;
-    el.style.height = `${height}px`;
-    el.style.backgroundSize = '100%';
-    el.style.display = 'block';
-    el.style.border = 'none';
-    el.style.borderRadius = '50%';
-    el.style.cursor = 'pointer';
-    el.style.padding = 0;
 
-    el.addEventListener('click', () => {
-      window.alert(feature.properties.message);
+    const uavElement = document.createElement('div');
+    uavElement.className = 'marker';
+    uavElement.style.backgroundImage = 'url(https://iili.io/dBbAcPf.md.png)';
+    uavElement.style.width = '35px';
+    uavElement.style.height = '35px';
+    uavElement.style.backgroundSize = '100%';
+    uavElement.style.border = 'none';
+    uavElement.style.borderRadius = '50%';
+    uavElement.style.cursor = 'pointer';
+
+    uavElement.addEventListener('click', () => {
+      window.alert('UAV Location');
     });
 
-    const newMarker = new mapboxgl.Marker(el)
-      .setLngLat(feature.geometry.coordinates)
+    const newUavMarker = new mapboxgl.Marker(uavElement)
+      .setLngLat([longitude, latitude])
       .addTo(map.current);
 
-    setMarker(newMarker);
+    setUavMarker(newUavMarker);
+
+    map.current.flyTo({
+      center: [longitude, latitude],
+      essential: true,
+    });
   }, [telemetryData]);
+
+  useEffect(() => {
+    if (roverMarker) {
+      roverMarker.remove();
+    }
+    if (!telemetryData_rover || !telemetryData_rover.latitude || !telemetryData_rover.longitude) return;
+
+    const { latitude, longitude } = telemetryData_rover;
+
+    const roverElement = document.createElement('div');
+    roverElement.className = 'marker';
+    roverElement.style.backgroundImage = 'url(https://iili.io/dBmOJb1.png)';
+    roverElement.style.width = '30px';
+    roverElement.style.height = '30px';
+    roverElement.style.backgroundSize = '100%';
+    roverElement.style.border = 'none';
+    roverElement.style.borderRadius = '50%';
+    roverElement.style.cursor = 'pointer';
+
+    roverElement.addEventListener('click', () => {
+      window.alert('Rover Location');
+    });
+
+    const newRoverMarker = new mapboxgl.Marker(roverElement)
+      .setLngLat([longitude, latitude])
+      .addTo(map.current);
+
+    setRoverMarker(newRoverMarker);
+  }, [telemetryData_rover]);
 
   return (
     <div>
       <div id="map" className="map">
         <div className="sidebar">
-          <strong>UAV1:-</strong> Longitude: {telemetryData.longitude} | Latitude:{" "}
-          {telemetryData.latitude} | Zoom: {zoom}
+          <strong>UAV1:-</strong> Longitude: {telemetryData?.longitude} | Latitude:{" "}
+          {telemetryData?.latitude} | Zoom: {zoom}
           <br />
+          <strong>Rover:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude:{" "}
+          {telemetryData_rover?.latitude}
         </div>
         <div ref={mapContainer} className="map-container" />
       </div>
