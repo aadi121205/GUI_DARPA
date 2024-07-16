@@ -4,6 +4,9 @@ const socketIo = require('socket.io');
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
+const cors = require("cors");
+
+
 
 const defaultParams = {
     maxHttpBufferSize: 1e8,
@@ -15,12 +18,19 @@ const defaultParams = {
             "http://localhost:3001",
             "http://127.0.0.1:3000",
             "http://127.0.0.1:3001",
+            "http://localhost:5173",
         ],
         methods: ["GET", "POST"],
     }
 };
 
 const app = express();
+app.use(cors({
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}));
 const server = http.createServer(app);
 const io = socketIo(server, defaultParams);
 console.log("Server started");
