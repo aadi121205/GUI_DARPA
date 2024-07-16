@@ -74,11 +74,12 @@ export default function Map() {
         },
       });
     });
-
-
   }, []);
 
   useEffect(() => {
+    if (marker) {
+      marker.remove();
+    }
     if (!telemetryData || !telemetryData.latitude || !telemetryData.longitude) return;
 
     const { latitude, longitude } = telemetryData;
@@ -92,7 +93,7 @@ export default function Map() {
           type: 'Feature',
           properties: {
             message: 'Foo',
-            imageId: 1011,
+            imageId: `url(https://iili.io/dBbAcPf.md.png)`,
             iconSize: [30, 30]
           },
           geometry: {
@@ -107,30 +108,30 @@ export default function Map() {
       center: [longitude, latitude],
       essential: true, // this animation is considered essential with respect to prefers-reduced-motion
     });
-    for (const feature of geojson.features) {
-      const el = document.createElement('div');
-      const width = feature.properties.iconSize[0];
-      const height = feature.properties.iconSize[1];
-      el.className = 'marker';
-      el.style.backgroundImage = `url(https://picsum.photos/id/${feature.properties.imageId}/${width}/${height})`;
-      el.style.width = `${width}px`;
-      el.style.height = `${height}px`;
-      el.style.backgroundSize = '100%';
-      el.style.display = 'block';
-      el.style.border = 'none';
-      el.style.borderRadius = '50%';
-      el.style.cursor = 'pointer';
-      el.style.padding = 0;
+    const feature = geojson.features[0];
+    const el = document.createElement('div');
+    const width = feature.properties.iconSize[0];
+    const height = feature.properties.iconSize[1];
+    el.className = 'marker';
+    el.style.backgroundImage = feature.properties.imageId;
+    el.style.width = `${width}px`;
+    el.style.height = `${height}px`;
+    el.style.backgroundSize = '100%';
+    el.style.display = 'block';
+    el.style.border = 'none';
+    el.style.borderRadius = '50%';
+    el.style.cursor = 'pointer';
+    el.style.padding = 0;
 
-      el.addEventListener('click', () => {
-        window.alert(feature.properties.message);
-      });
+    el.addEventListener('click', () => {
+      window.alert(feature.properties.message);
+    });
 
-      new mapboxgl.Marker(el)
-        .setLngLat(feature.geometry.coordinates)
-        .addTo(map.current);
-    }
+    const newMarker = new mapboxgl.Marker(el)
+      .setLngLat(feature.geometry.coordinates)
+      .addTo(map.current);
 
+    setMarker(newMarker);
   }, [telemetryData]);
 
   return (
