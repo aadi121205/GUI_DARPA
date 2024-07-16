@@ -3,7 +3,9 @@ const http = require('http');
 const socketIo = require('socket.io');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config()
+require('dotenv').config();
+const cors = require("cors");
+
 const defaultParams = {
   maxHttpBufferSize: 1e8,
   pingTimeout: 60000,
@@ -16,11 +18,11 @@ const defaultParams = {
 
 const app = express();
 app.use(cors({
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204
-}));
+    "origin": "*",
+    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    "preflightContinue": false,
+    "optionsSuccessStatus": 204
+  }));
 
 
 const server = http.createServer(app);

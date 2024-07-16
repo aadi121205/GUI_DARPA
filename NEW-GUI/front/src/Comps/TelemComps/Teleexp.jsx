@@ -12,15 +12,16 @@ function Telemexp() {
   
   const UAVvehicleData = {
     name: "UAV 1",
-    con: true, // or false depending on the connection status
+    con: telemetryData.status,
     altitude: telemetryData.altitude, // altitude in meters
     mode: telemetryData.mode, // current mode
     velocity: telemetryData.groundspeed, // velocity in m/s
     battery: telemetryData.battery, // battery percentage
     status: telemetryData.status, // status
     throttle: telemetryData.armed ? "ARMED" : "DISARMED", // throttle status
-    signalStrength: 5 // signal strength
+    signalStrength: telemetryData.heartbeat*19,
   };
+
 
   return (
     <div className="tab">

@@ -7,13 +7,13 @@ import SignalBars from "./SignalBar";
 
 const Teleminfo = ({ vehicle }) => {
   const style = vehicle.con ? { color: "green" } : { color: "red" };
-  const stylet = { color: "White" };
-  if (vehicle.throttle === "ARMED") {
-    const stylet = { color: "green" };
+  let stylet = { color: "White" };
+  if (vehicle.throttle === "DISARMED") {
+    stylet.color = "red";
+  } else {
+    stylet.color = "green";
   }
-  else {
-    const stylet = { color: "red" };
-  }
+  
   return (
     <div>
     <Container style={{display: "flex", justifyContent: "flex-start", alignItems: "left", paddingLeft: "50px", paddingRight: "40px", paddingBottom: "10px", paddingTop: "10px", margin: "5px"}}>
