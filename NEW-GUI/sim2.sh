@@ -1,4 +1,3 @@
-mkdir siltsim
 cd  siltsim
 
 rm -rf uav
