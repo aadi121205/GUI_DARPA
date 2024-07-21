@@ -41,6 +41,7 @@ const chartData = [
 
 const pythonNamespace = io.of('/python');
 const roverNamespace = io.of('/rover');
+const rover2Namespace = io.of('/rover2');
 const reactNamespace = io.of('/react');
 
 // Python namespace
@@ -81,6 +82,21 @@ roverNamespace.on('connection', (socket) => {
     })
 
     socket.on('disconnect_rover', () => {
+        console.log('A Python client disconnected');
+    });
+});
+
+// Rover2 namespace
+rover2Namespace.on('connection', (socket) => {
+    console.log('A Python client connected');
+
+    socket.on('telemetry_rover2', (data) => {
+        counter = 0
+        console.log("Telemetry received:", data);
+        reactNamespace.emit('telemetryServer_rover2', data);
+    })
+
+    socket.on('disconnect_rover2', () => {
         console.log('A Python client disconnected');
     });
 });

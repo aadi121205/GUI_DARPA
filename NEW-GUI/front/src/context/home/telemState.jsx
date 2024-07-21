@@ -6,6 +6,7 @@ const TelemState = ({ children }) => {
   const { socket } = useContext(SocketContext);
   const [telemetryData, setTelemetryData] = useState({});
   const [telemetryData_rover, setTelemetryData_rover] = useState({});
+  const [telemetryData_rover2, setTelemetryData_rover2] = useState({});
   const [OdlcData, setOdlcData] = useState({});
   const [roll, setroll] = useState("");
   const [pitch, setpitch] = useState("");
@@ -152,6 +153,13 @@ const TelemState = ({ children }) => {
         return { ...prevData, ...data };
       });
     });
+    socket.on("telemetryServer_rover2", (data) => {
+      settimeofflight(timeofflight + 1);
+      setTelemetryData_rover2((prevData) => {
+        return { ...prevData, ...data };
+      });
+    }
+    );
     socket.on("mode", (flag) => {
       if (flag === true) {
         setMode("success");

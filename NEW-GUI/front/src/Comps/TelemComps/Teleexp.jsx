@@ -2,8 +2,26 @@ import * as React from "react";
 import Divider from "@mui/material/Divider";
 import telemContext from "../../context/home/telemContext";
 import Teleminfo from "./Teleminfo";
+import Teleminforov from "./Teleminforov";
 import Map from "./Map";
 import { Container, Button, Row, Col, Card } from 'react-bootstrap';
+
+export const haversine_distance = (lat1, lon1, lat2, lon2) => {
+  // distance between latitudes
+  // and longitudes
+  const dLat = ((lat2 - lat1) * Math.PI) / 180.0;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180.0;
+
+  // convert to radians
+  lat1 = (lat1 * Math.PI) / 180.0;
+  lat2 = (lat2 * Math.PI) / 180.0;
+
+  // apply formulae
+  const a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
+  const rad = 6371;
+  const c = 2 * Math.asin(Math.sqrt(a));
+  return rad * c * 1000;
+};
 
 export const Dts = (delaySec) => {
   const bpm = 1200;  // Define bpm here or pass it as a parameter if it's dynamic
@@ -98,6 +116,7 @@ function Telemexp() {
     rtl: RTL_rover,
     land: STOP_rover,
     goto: goto_command_rover,
+    displacment: haversine_distance(telemetryData.latitude, telemetryData.longitude, telemetryData_rover.latitude, telemetryData_rover.longitude),
   };
 
 
@@ -109,13 +128,13 @@ function Telemexp() {
                 <Container bg="dark" style={{padding: "2px", justifyContent: "flex-start", alignItems: "left", paddingLeft: "0px", backgroundColor: "black", color: "white"}}>
                     <Teleminfo vehicle={UAVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-                    <Teleminfo vehicle={UGVvehicleData}/>
+                    <Teleminforov vehicle={UGVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
                     <Teleminfo vehicle={UAVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
                     <Teleminfo vehicle={UAVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-                    <Teleminfo vehicle={UAVvehicleData}/>
+{/*                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
+                    <Teleminfo vehicle={UAVvehicleData}/> */}
                 </Container>
             </Col>
             <Col>

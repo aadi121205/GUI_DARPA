@@ -32,6 +32,7 @@ function Side() {
   } = React.useContext(telemContext);
   const [telemetryStarted, setTelemetryStarted] = React.useState(false);
   const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(false);
+  const [telemetryData_rover2, setTelemetryData_rover2] = React.useState({});
   const [armed_uav, setArmed_uav] = React.useState(false);
   const [armed_rover, setArmed_rover] = React.useState(false);
   const [uav_1, uav_1_flag] = React.useState(false);
@@ -94,6 +95,7 @@ function Side() {
       <h1>Telemetry</h1>
       <Button variant="primary" onClick={start_Telem}>Start Telemetry</Button>
       <Button variant="danger" onClick={start_Telem_rover}>start Telemetry</Button>
+      
       <Button variant="danger" onClick={stop_Telem}>Stop Telemetry</Button>
 
       <h2>UAV</h2>

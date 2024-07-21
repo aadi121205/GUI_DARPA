@@ -19,6 +19,7 @@
     "@mui/system": "^5.16.1",
     "@mui/x-charts": "^7.10.0",
     "bootstrap": "^5.3.3",
+    "electron": "^31.2.1",
     "mapbox-gl": "^3.5.1",
     "mathjs": "^13.0.2",
     "node-sass": "^9.0.0",

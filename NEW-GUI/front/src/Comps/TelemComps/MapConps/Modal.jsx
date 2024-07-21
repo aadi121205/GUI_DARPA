@@ -4,6 +4,7 @@ import { RiCameraLensFill } from "react-icons/ri";
 import { Rnd } from "react-rnd";
 import { RiCloseCircleLine } from "react-icons/ri"
 import ColorsTimeline from "./Timeline";
+import Timer from "./Timer";
 
 export default function Modal() {
   const [open, setOpen] = useState(true);
@@ -22,11 +23,17 @@ export default function Modal() {
   const style = {
     display: "flex",
     border: "solid 1px #ddd",
-    background: "rgb(0 0 0 / 80%)",
-    width: "full",
+    background: "rgb(0 0 0 / 65%)",
     flexDirection: "column",
     padding: "3px",
+    position: "fixed",
+    zIndex: 1000,
+    textAlign: "center",
+    color: "white",
+    borderRadius: "10px",
+    fontSize: "40px",
   };
+
 
   return (
     <div>
@@ -36,13 +43,13 @@ export default function Modal() {
                 style={style}
                 default={{
                   x: 0,
-                  y: 1189,
-                  width: 1210,
+                  y: 1217,
+                  width: 1213,
                   height: 100,
                 }}
               >
-                <div style={{ position: "relative", width: "100%", height: "100%", paddingTop: "20px" }}>
-                  <ColorsTimeline />
+                <div style={{ position: "absolute", width: "100%", height: "100%", paddingTop: "20px" }}>
+                  <Timer/>
                 </div>
                   <Button
                     onClick={handleOpen}

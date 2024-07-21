@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useContext } from "react";
 import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import telemContext from "../../context/home/telemContext";
 import 'mapbox-gl/dist/mapbox-gl.css';
+import Modal from "./MapConps/Modal";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXl1c2gxMDIiLCJhIjoiY2xycTRtZW4xMDE0cTJtbno5dnU0dG12eCJ9.L9xmYztXX2yOahZoKDBr6g";
@@ -153,6 +154,7 @@ export default function Map() {
           <strong>Rover:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude:{" "}
           {telemetryData_rover?.latitude}
         </div>
+        <Modal />
         <div ref={mapContainer} className="map-container" />
       </div>
     </div>
