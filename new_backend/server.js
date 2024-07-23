@@ -3,15 +3,26 @@ const fs = require('fs');
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
+const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+const io = new Server(server,{cors:{
+  origin:'*',
+  methods:['GET','POST']}
+});
+
+app.use(cors({
+  origin: '*'
+}));
 id_map_ugv={};
-
+count_data={'ugv_1':0,'ugv_2':0,'ugv_3':0,'ugv_4':0,'uav':0}
 function pathPlan(data){
+  setInterval(()=>{
+    fs.writeFileSync(`GlobalJSON.json`, JSON.stringify(GlobalJSON, null, 2));
+  },3000)
   return [{device_id:'ugv_1',data:{'lat_long':[data['lat_long'].slice(0,2)],'map':data['map']}},{device_id:'ugv_2',data:{'lat_long':[data['lat_long'].slice(2,4)],'map':data['map']}},{device_id:'ugv_3',data:{'lat_long':[data['lat_long'].slice(4,6)],'map':data['map']}},{device_id:'ugv_4',data:{'lat_long':[data['lat_long'].slice(4,6)],'map':data['map']}}]
-
+  
 }
 
 var GlobalJSON = [];
@@ -46,14 +57,14 @@ function generateGlobalJSON(casualty_data) {
     GlobalJSON.push(json_data);
     ctr+=1;
   };
-
+  
   fs.writeFileSync(`GlobalJSON.json`, JSON.stringify(GlobalJSON, null, 2));
-  return JSON.stringify(GlobalJSON, null, 2);
+  return GlobalJSON;
 }
 
 
 io.on('connection', (socket) => {
-  // console.log(socket.id)
+  console.log(socket.id)
   
   socket.on('custom_id',(id)=>{
     console.log(id);
@@ -62,9 +73,11 @@ io.on('connection', (socket) => {
   })
   socket.on('map_nd_casualities',(data)=>{
     console.log(`recieved map and casualities from ${id_map_ugv[socket.id]}`)
-    
+    io.emit('map_nd_casualities',data)
+
     let generatedJSON = generateGlobalJSON(data["lat_long"]);
-    console.log(generatedJSON)
+    // console.log(generatedJSON)
+    io.emit('global_dict',generatedJSON)
 
     io.emit('schedule',pathPlan(data))
     console.log('emitted the schedule')
@@ -90,16 +103,16 @@ io.on('connection', (socket) => {
   socket.on('inferance',(data)=>{
     // let data=fs.readFileSync('GlobalJSON.json','utf-8')
     // let jsonData = JSON.parse(data);
-    setInterval(()=>{
-      fs.writeFileSync(`GlobalJSON.json`, JSON.stringify(GlobalJSON, null, 2));
+    io.emit('inference',data)
 
-    },3000)
     for(let casuality of GlobalJSON){
       // console.log(casuality);
       // console.log(JSON.stringify(data['lat_long'])==JSON.stringify(casuality['LatLong']));
       if(JSON.stringify(data['lat_long'])==JSON.stringify(casuality['LatLong'])){
         casuality['Data'][data['data']['type']]=('time' in data['data'])?{'time':data['data']['time'],'value':data['data']['value']}:data['data']['value'];
         console.log(`updated global database, recieved data from ${data['UXV_id']}`);
+        count_data[data['UXV_id']]+=1;
+        console.log(count_data)
 
       }
     }

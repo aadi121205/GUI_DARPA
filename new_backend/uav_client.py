@@ -26,7 +26,9 @@ device_id='uav'
             "hr": value;time,
             "rr": value;time,
             "alertness_motor":value,
-            "alertness_verbal":value,
+            "alertness_verbal":valusetInterval(()=>{
+    fs.writeFileSync(`GlobalJSON.json`, JSON.stringify(GlobalJSON, null, 2));
+  },3000)e,
             "alertness_ocular":value,
             "trauma_head":value,
             "trauma_torso":value,
@@ -54,7 +56,7 @@ def schedule(data):
         if dict['device_id']==device_id:
             schedule_reciever(dict)
     while True:
-            if random.random()>0.9999999:
+            if random.random()>0.999999:
                 dict=imitiate_json(device_id)
                 dict['system']=device_id
                 sio.emit('inferance',dict)
@@ -66,6 +68,4 @@ sio.connect('http://localhost:8000')
 #emit the map and casualties
 sio.emit('map_nd_casualities',data={'lat_long':[[1.1,1.2],[1.12,1.23],[1.13,1.24],[1.14,1.25],[1.15,1.26],[1.16,1.27],[1.17,1.28],[1.18,1.29]],'map':img})
 print('map and casualities sent')
-
-
 sio.wait()
