@@ -272,8 +272,6 @@ class DroneController:
 			self.travel(Lon[c], Lat[c], alt)
 			time.sleep(2)
 		
-		self.uav_connection.mode= "RTL"
-
 	def run(self,vehicle):
 		self.drone_operation(vehicle)
 

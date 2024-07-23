@@ -13,6 +13,15 @@ def haversine(lon1, lat1, lon2, lat2):
     c = 2 * asin(sqrt(a))
     return c * 6371 * 1000
 
+
+def get_distance_metres(aLocation1, aLocation2):
+    dlat = aLocation2.lat - aLocation1.lat
+    dlong = aLocation2.lon - aLocation1.lon
+    return sqrt((dlat*dlat) + (dlong*dlong)) * 1.113195e5
+
+proximity_threshold = 2  # Adjusted for ground vehicle
+
+
 class RoverController:
     def __init__(self, sio, RoverIP, id):
         self.RoverIP = RoverIP
@@ -52,10 +61,23 @@ class RoverController:
                 time.sleep(5)
 
     def on_arm_rover(self):
-        print("Received")
-        self.ugv_connection.mode = VehicleMode("MANUAL")
+        """
+        Arms the vehicle and starts it in GUIDED mode.
+        """
+        print("Basic pre-arm checks")
+        while not self.ugv_connection.is_armable:
+            print(" Waiting for vehicle to initialise...")
+            time.sleep(1)
+
+        print("Arming motors")
+        self.ugv_connection.mode = VehicleMode("GUIDED")
         self.ugv_connection.armed = True
-        print("Armed")
+
+        while not self.ugv_connection.armed:
+            print(" Waiting for arming...")
+            time.sleep(1)
+
+        print("Vehicle armed and in GUIDED mode")
 
     def on_disarm_rover(self):
         self.ugv_connection.armed = False
@@ -208,7 +230,42 @@ class RoverController:
 
     def goto_rover(self):
         self.ugv_connection.mode = VehicleMode("GUIDED")
-        
+        waypoints = [
+            LocationGlobalRelative(28.75388100595015, 77.11552573884727, 0),
+            LocationGlobalRelative(28.753797144981764, 77.11585444715492, 0),
+            LocationGlobalRelative(28.75349524493797, 77.11585096876011, 0),
+            LocationGlobalRelative(28.753383938135936, 77.11560226353265, 0)
+        ]
+
+        proximity_threshold = 2  # Adjusted for ground vehicle
+
+        def set_next_waypoint():
+            if waypoints:
+                self.ugv_connectionsimple_goto(waypoints[0])
+                print(f"Setting next waypoint: 0")
+            else:
+                print("No more waypoints to set.")
+
+        def mode_change_handler(vehicle, attr_name, value):
+            print(f"Mode changed to: {value}")
+
+            if value == 'GUIDED' and waypoints:
+                set_next_waypoint()
+
+        self.ugv_connection.add_attribute_listener('mode', mode_change_handler)
+
+
+        # Start with the first waypoint
+        self.ugv_connection.simple_goto(waypoints[0])
+
+        # Main loop
+        while True:
+            n = 0
+            self.ugv_connection.simple_goto(waypoints[n])
+            n += 1
+            # Check for other tasks or conditions if needed
+            time.sleep(20)
+
 
     def auto_rover(self):
         self.ugv_connection.mode = VehicleMode("AUTO")

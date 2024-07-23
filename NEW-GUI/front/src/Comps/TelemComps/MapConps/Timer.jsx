@@ -29,10 +29,17 @@ const Timer = () => {
   return (
     <div>
         <Row>
+        <Col>Timer:
+        </Col>
         <Col>{seconds}s</Col>
         <Col>
           <button className={`button button-primary button-primary-${isActive ? 'active' : 'inactive'}`} onClick={toggle}>
             {isActive ? 'Pause' : 'Start'}
+          </button>
+        </Col>
+        <Col>
+          <button className="button" onClick={reset}>
+            Reset
           </button>
         </Col>
         </Row>
