@@ -4,22 +4,19 @@ import telemContext from "../../context/home/telemContext";
 import Teleminfo from "./Continfo";
 import { Container, Button, Row, Col, Card } from 'react-bootstrap';
 
-export const Dts = (delaySec) => {
-  const bpm = 1200;  // Define bpm here or pass it as a parameter if it's dynamic
-  const beatsPerMinute = bpm;
-  const beatsPerBar = 5;  // assuming a 4/4 time signature
+const Dts = (delaySec) => {
+  // Define the min and max values of delay in seconds that correspond to 0 and 5 bars
+  const minDelaySec = 0;
+  const maxDelaySec = 1; // Assuming 100 seconds is the maximum delay for 5 bars
 
-  const durationOfOneBeatMs = 60000 / beatsPerMinute;
-  const durationOfOneBarMs = durationOfOneBeatMs * beatsPerBar;
+  // Ensure delaySec is within the expected range
+  if (delaySec < minDelaySec) delaySec = minDelaySec;
+  if (delaySec > maxDelaySec) delaySec = maxDelaySec;
 
-  const delayMs = delaySec * 1000;  // convert delay from seconds to milliseconds
-  const numberOfBars = delayMs / durationOfOneBarMs;
+  // Calculate the bars based on the delaySec
+  const bars = (delaySec - minDelaySec) * 5 / (maxDelaySec - minDelaySec);
 
-  // Scale the number of bars to a value between 0 and 5
-  let scaledValue = (numberOfBars / 6) * 6;  // Assuming maxBars is 5
-  scaledValue = Math.min(scaledValue, 6);  // Cap the value at 5
-
-  return scaledValue;
+  return bars;
 };
 
 function Contexp() {

@@ -25,20 +25,22 @@ const Teleminforov = ({ vehicle }) => {
             </h3>
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h6>Displacment (m)</h6>
+              <h6>Displacment</h6>
               <h5>
-                <b>{vehicle.displacment}</b>
+                <b>{vehicle.displacment} m</b>
               </h5>
-              <br></br>
-              <h6>MODE</h6>
-              <h6>
-              <b>{vehicle.mode}</b>
-              </h6>
               <br></br>
               <h6>VELOCITY</h6>
               <h5>
                 <b>{vehicle.velocity} m/s</b>
               </h5>
+              <br></br>
+              <h6>MODE</h6>
+              <Button variant="primary" onClick={vehicle.arm} style={{margin: "0px"}}>
+              <h6>
+              <b>{vehicle.mode}</b>
+              </h6>
+              </Button>
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
               <h6>BATT</h6>

@@ -71,12 +71,12 @@ class DroneController:
 	
 	def on_arm_drone(self):
 		# drone_vehicle.mode = VehicleMode("GUIDED")
-		if(self.uav_connection.mode=="LAND"):
-			self.uav_connection.mode = "GUIDED"
+		self.uav_connection.mode = "GUIDED"
 		self.uav_connection.armed = True
 		print("Armed")
 	
 	def on_disarm_drone(self):
+		self.uav_connection.mode = "LAND"
 		self.uav_connection.armed= False
 		print("Disarmed")
 		# vehicle.mode = "LAND"

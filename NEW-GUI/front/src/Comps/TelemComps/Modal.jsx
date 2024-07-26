@@ -48,13 +48,15 @@ const Modal = ({ vehicle }) => {
               x: 200,
               y: -80,
               width: 320,
-              height: 200,
+              height: 225,
             }}
           >
             <Button variant="primary" onClick={vehicle.arm}>{vehicle.armed ? "Disarm" : "Arm"}</Button>
             <Button variant="primary" onClick={vehicle.rtl}>RTL</Button>
             <Button variant="primary" onClick={vehicle.land}>Land</Button>
             <Button variant="primary" onClick={vehicle.goto}>Goto</Button>
+            <Button variant="primary" onClick={vehicle.takeoff}>Takeoff</Button>
+            <Button variant="primary" onClick={vehicle.rtl}>Emergency Stop</Button>
             <Button
               onClick={handleOpen}
               style={{ position: "absolute", top: 0, right: 0, color: "white" }}
