@@ -19,8 +19,8 @@ gcs_port=os.getenv('GCS_PORT')
 if __name__=="__main__":
     sio = Socketio_client(gcs_ip,gcs_port).socketio_client
     uav = DroneController(sio)
-    ugv = RoverController(sio, "127.0.0.1:14552", 1)
-#    ugv2 = RoverController2(sio, "127.0.0.1:14553", 2)
+"""     ugv = RoverController(sio, "127.0.0.1:14552", 1)
+ """#    ugv2 = RoverController2(sio, "127.0.0.1:14553", 2)
     
 """
     video= Image_Capture(sio) """

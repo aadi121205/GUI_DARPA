@@ -26,7 +26,7 @@ def haversine(lon1, lat1, lon2, lat2):
 class DroneController:
 	def __init__(self,sio):
 		## Initialze the socketio-client
-		self.DroneIP='127.0.0.1:14550'
+		self.DroneIP="127.0.0.1:14550"
 		self.sio = sio
 		self.telem_running = False
 		self.uav_connected= False
@@ -46,7 +46,6 @@ class DroneController:
 		self.sio.on('landUav',self.land_Uav,namespace="/python")
 		self.sio.on('goto_drone',self.goto,namespace="/python")
 		self.sio.on('odlc_mission',self.flyMission,namespace="/python")
-		self.sio.on('set_Guided',self.set_Guided,namespace="/python")
 		self.filename = "mission.txt"
 		self.goto_mission = "waypoints.txt"
 		self.connect_uav()
@@ -64,19 +63,16 @@ class DroneController:
 				print("[UAV.py] An error occurred: " + str(e))
 				self.uav_connected = False
 				time.sleep(5)
-
-	def set_Guided(self):
-		self.uav_connection.mode = "GUIDED"
-		    
+    
 	
 	def on_arm_drone(self):
 		# drone_vehicle.mode = VehicleMode("GUIDED")
-		self.uav_connection.mode = "GUIDED"
+		if(self.uav_connection.mode=="LAND"):
+			self.uav_connection.mode = "GUIDED"
 		self.uav_connection.armed = True
 		print("Armed")
 	
 	def on_disarm_drone(self):
-		self.uav_connection.mode = "LAND"
 		self.uav_connection.armed= False
 		print("Disarmed")
 		# vehicle.mode = "LAND"
@@ -205,7 +201,6 @@ class DroneController:
 						"armed":self.uav_connection.armed,
 						"velocity":self.uav_connection.velocity,
 						"status":self.uav_connection.system_status.state,
-						"heartbeat":self.uav_connection.last_heartbeat
 						# "gps_health":vehicle.gps_0.status,
 					}
 						try:
@@ -272,6 +267,8 @@ class DroneController:
 			self.travel(Lon[c], Lat[c], alt)
 			time.sleep(2)
 		
+		self.uav_connection.mode= "RTL"
+
 	def run(self,vehicle):
 		self.drone_operation(vehicle)
 
