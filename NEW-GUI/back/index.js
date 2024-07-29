@@ -3,28 +3,25 @@ const http = require('http');
 const socketIo = require('socket.io');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config();
-const cors = require("cors");
-
+require('dotenv').config()
 const defaultParams = {
   maxHttpBufferSize: 1e8,
   pingTimeout: 60000,
   pingInterval: 500,
   cors: {
-    origin: "*",
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "http://127.0.0.1:3000",
+      "http://127.0.0.1:3001",
+      "http://127.0.0.1:5173",
+      "http://localhost:5173",
+    ],
     methods: ["GET", "POST"],
   }
 };
 
 const app = express();
-app.use(cors({
-    "origin": "*",
-    "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    "preflightContinue": false,
-    "optionsSuccessStatus": 204
-  }));
-
-
 const server = http.createServer(app);
 const io = socketIo(server, defaultParams);
 // Variables 
@@ -41,7 +38,6 @@ const chartData = [
 
 const pythonNamespace = io.of('/python');
 const roverNamespace = io.of('/rover');
-const rover2Namespace = io.of('/rover2');
 const reactNamespace = io.of('/react');
 
 // Python namespace
@@ -51,8 +47,9 @@ pythonNamespace.on('connection', (socket) => {
     socket.on('telemetry', (data) => {
         counter = 0
         if (telemetryActive) {
-            console.log("Telemetry received:", data);
+            // console.log("Telemetry received:", data);
             reactNamespace.emit('telemetryServer', data);
+            console.log(data)
         }
     });
     socket.on("image",(payload)=>{
@@ -77,26 +74,10 @@ roverNamespace.on('connection', (socket) => {
         // console.log("Telemetry received:", data);
         if(telemetryroverActive){
             reactNamespace.emit('telemetryServer_rover', data);
-            console.log("Telemetry received:", data);
         }
     })
 
     socket.on('disconnect_rover', () => {
-        console.log('A Python client disconnected');
-    });
-});
-
-// Rover2 namespace
-rover2Namespace.on('connection', (socket) => {
-    console.log('A Python client connected');
-
-    socket.on('telemetry_rover2', (data) => {
-        counter = 0
-        console.log("Telemetry received:", data);
-        reactNamespace.emit('telemetryServer_rover2', data);
-    })
-
-    socket.on('disconnect_rover2', () => {
         console.log('A Python client disconnected');
     });
 });
@@ -231,9 +212,6 @@ reactNamespace.on('connection', (socket) => {
     socket.on("mission_auto_rover",()=>{
         roverNamespace.emit("auto_rover")
     })
-    socket.on("set_Guided",()=>{
-        pythonNamespace.emit("set_Guided")
-    })
 
     setInterval(() => {
         socket.emit('chart', chartData);
@@ -245,6 +223,11 @@ reactNamespace.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('A React client disconnected');
     });
+    // setInterval(()=>{
+    //     const frame = wCap.read()
+    //     const image = cv.imencode('.jpg',frame).toString('base64')
+    //     socket.emit('image',image)
+    // },1000)
 });
 
 setInterval(() => {

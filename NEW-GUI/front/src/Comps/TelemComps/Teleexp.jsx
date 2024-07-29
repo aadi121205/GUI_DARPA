@@ -85,12 +85,12 @@ function Telemexp() {
 
   const UAVvehicleData = {
     name: "UAV 1",
-    con: telemetryData.status,
+    con: telemetryData.heartbeat,
     altitude: telemetryData.altitude, // altitude in meters
     mode: telemetryData.mode, // current mode
     velocity: telemetryData.groundspeed, // velocity in m/s
     battery: telemetryData.battery, // battery percentage
-    status: telemetryData.status, // status
+    status: telemetryData.status ? "is Armable" : "Not Armable", // status
     throttle: telemetryData.armed ? "ARMED" : "DISARMED", // throttle status
     signalStrength: scaledValue,
     arm: arm_uav,

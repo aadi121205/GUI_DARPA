@@ -2,8 +2,6 @@ cd  siltsim
 
 rm -rf uav
 rm -rf r1
-rm -rf r2
-rm -rf r3
 
 mkdir uav
 mkdir r1

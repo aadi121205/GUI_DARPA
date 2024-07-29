@@ -26,7 +26,7 @@ def haversine(lon1, lat1, lon2, lat2):
 class DroneController:
 	def __init__(self,sio):
 		## Initialze the socketio-client
-		self.DroneIP="127.0.0.1:14550"
+		self.DroneIP='127.0.0.1:14550'
 		self.sio = sio
 		self.telem_running = False
 		self.uav_connected= False
@@ -61,7 +61,6 @@ class DroneController:
 				self.uav_connected = True
 			except Exception as e:
 				print("[UAV.py] An error occurred: " + str(e))
-				self.uav_connected = False
 				time.sleep(5)
     
 	
@@ -187,8 +186,8 @@ class DroneController:
 	def send_telemetry_data(self):
 		while True:
 			try:
-				if (self.uav_connected & (not self.uav_connection._heartbeat_timeout)):
-					# print(self.uav_connection._heartbeat_timeout)
+				if (self.uav_connected):
+					print("Sending Telemetry Data")
 					try:
 						telemetry_data = {
 						"latitude": self.uav_connection.location.global_relative_frame.lat,
@@ -200,18 +199,18 @@ class DroneController:
 						"battery":self.uav_connection.battery.level,
 						"armed":self.uav_connection.armed,
 						"velocity":self.uav_connection.velocity,
-						"status":self.uav_connection.system_status.state,
-						# "gps_health":vehicle.gps_0.status,
+						#"status":self.uav_connection.system_status.state,
+						"status":self.uav_connection.is_armable,
+						"heading":self.uav_connection.heading,
+						"heartbeat":self.uav_connection.last_heartbeat,
 					}
 						try:
 							self.sio.emit('telemetry',telemetry_data,namespace="/python")
-							# print(telemetry_data)
+							print(telemetry_data)
 						except Exception as e:
 							print("[Telem] Telemetry not send ERROR by UAV:",str(e))
-							self.uav_connected=False
 					except Exception as e:
 						print("[Telem] Telemetry Error:",str(e))
-						self.uav_connected=False
 						pass
 					time.sleep(1)
 				else:
