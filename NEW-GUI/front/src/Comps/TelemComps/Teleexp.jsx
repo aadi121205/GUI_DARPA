@@ -58,7 +58,7 @@ function Telemexp() {
     landUAV,
     RTL,
     RTL_rover,
-    STOP_rover
+    STOP_rover,
   } = React.useContext(telemContext);
   const arm_uav = () => {
     if (telemetryData.armed) {
@@ -97,6 +97,8 @@ function Telemexp() {
     rtl: RTL,
     land: landUAV,
     goto: goto_command,
+    takeoff: flyUav,
+    state : telemetryData.state,
   };
 
   const UGVvehicleData = {

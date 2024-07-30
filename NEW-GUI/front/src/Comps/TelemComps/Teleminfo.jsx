@@ -45,9 +45,9 @@ const Teleminfo = ({ vehicle }) => {
 
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h6>BATT</h6>
+              <h6>STATE</h6>
               <h5>
-                <b>{vehicle.battery} %</b>
+                <b>{vehicle.state}</b>
               </h5>
               <br></br>
               <h6>STATUS</h6>

@@ -1,20 +1,10 @@
-from dronekit import connect,VehicleMode,Command,LocationGlobalRelative, APIException
+from dronekit import connect,VehicleMode,Command,LocationGlobalRelative
 import time
 import os
 import threading
 from dotenv import load_dotenv
-from pymavlink import mavutil
-# import socketio
-# from Python.socket_client import Socketio_client
 from math import radians, cos, sin, asin, sqrt
 import subprocess
-# load_dotenv()
-# # from socket_client import Drone
-
-# Socket_Connection_String = os.getenv('SERVER_PORT')
-# DroneIP = os.getenv('DRONE_IP_ADDRESS')
-# RoverIP = os.getenv('ROVER_IP_ADDRESS')
-
 
 def haversine(lon1, lat1, lon2, lat2):
 	lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
@@ -22,22 +12,16 @@ def haversine(lon1, lat1, lon2, lat2):
 	c = 2 * asin(sqrt(a))
 	return c * 6371 * 1000
 
-## Initialize the class for the drone controll
 class DroneController:
 	def __init__(self,sio):
-		## Initialze the socketio-client
 		self.DroneIP='127.0.0.1:14550'
 		self.sio = sio
 		self.telem_running = False
 		self.uav_connected= False
 		self.uav_connection= None
-		## Define event handlers
-		# self.sio.on('connect', self.on_connect,namespace="/python")
-		# self.sio.on('disconnect', self.on_disconnect,namespace="/python")
 		self.sio.on('arm_drone',self.on_arm_drone,namespace="/python")
-		self.sio.on('takeoff',self.on_takeoff_drone,namespace="/python")
+		self.sio.on('takeoff',self.takeoff,namespace="/python")
 		self.sio.on('disarm_drone',self.on_disarm_drone,namespace="/python")
-		self.sio.on('gimbal_point',self.on_gimbal_point,namespace="/python")
 		self.sio.on('upload_mission',self.upload_mission,namespace="/python")
 		self.sio.on('readmission',self.readmission,namespace="/python")
 		self.sio.on('save_mission',self.save_mission,namespace="/python")
@@ -62,11 +46,13 @@ class DroneController:
 			except Exception as e:
 				print("[UAV.py] An error occurred: " + str(e))
 				time.sleep(5)
+
+	def takeoff(self,altitude=20):
+		self.arm_and_takeoff(altitude)
     
 	
 	def on_arm_drone(self):
-		# drone_vehicle.mode = VehicleMode("GUIDED")
-		if(self.uav_connection.mode=="LAND"):
+		if(self.uav_connection.mode!="GUIDED"):
 			self.uav_connection.mode = "GUIDED"
 		self.uav_connection.armed = True
 		print("Armed")
@@ -74,22 +60,6 @@ class DroneController:
 	def on_disarm_drone(self):
 		self.uav_connection.armed= False
 		print("Disarmed")
-		# vehicle.mode = "LAND"
-		# while True:
-		#     print("Altitude", vehicle.location.global_relative_frame.alt)
-		#     if vehicle.location.global_relative_frame.alt <:
-		#         print("Ready to disarm")
-		#         vehicle.armed= False
-		#         break
-		#     time.sleep(1)
-	
-	def on_takeoff_drone(self):
-		self.uav_connection.mode = "GUIDED"
-		self.uav_connection.simple_takeoff(10)
-		while True:
-			if self.uav_connection.location.global_relative_frame.alt >= 10*0.95:
-				print("Reached the target Altitude")
-				break
 
 	def set_rtl(self):
 		self.uav_connection.mode = "RTL"
@@ -97,37 +67,6 @@ class DroneController:
 	def land_Uav(self):
 		self.uav_connection.mode = "LAND"
 
-	def on_gimbal_point(self,data):
-		pitch = float(data['pitch'])
-		roll = float(data['roll'])
-		yaw = float(data['yaw'])
-		time_ms = 0
-		self.check_gimbal_status()
-		msg = self.uav_connection.message_factory.command_long_encode(
-			0,0,
-			mavutil.mavlink.MAV_CMD_DO_MOUNT_CONTROL,
-			0,
-			0,
-			roll,
-			pitch,
-			yaw,
-			time_ms,
-			0,0
-		)
-		self.uav_connection.send_mavlink(msg)
-		print(f"Gimbal pointed to {roll} {pitch} {yaw}")
-
-	def check_gimbal_status(self):
-	# Request gimbal status
-		self.uav_connection.send_mavlink(self.uav_connection.message_factory.command_long_encode(
-		0,  # Target system
-		0,  # Target component
-		mavutil.mavlink.MAV_CMD_REQUEST_MESSAGE,  # Command ID
-		0,  # Confirmation
-		mavutil.mavlink.MAVLINK_MSG_ID_GIMBAL_REPORT,  # Requested message ID
-		0, 0, 0, 0, 0, 0 # Parameters 1-7 (unused)
-	))
-	
 	def upload_mission(self):
 		missionList = self.readmission()
 		print(f"\nUpload mission from a file: {self.filename}")
@@ -182,12 +121,10 @@ class DroneController:
 			missionList.append(cmd)
 		return missionList
 
-	## Sending telem data to the server
 	def send_telemetry_data(self):
 		while True:
 			try:
 				if (self.uav_connected):
-					print("Sending Telemetry Data")
 					try:
 						telemetry_data = {
 						"latitude": self.uav_connection.location.global_relative_frame.lat,
@@ -199,14 +136,13 @@ class DroneController:
 						"battery":self.uav_connection.battery.level,
 						"armed":self.uav_connection.armed,
 						"velocity":self.uav_connection.velocity,
-						#"status":self.uav_connection.system_status.state,
+						"state":self.uav_connection.system_status.state,
 						"status":self.uav_connection.is_armable,
 						"heading":self.uav_connection.heading,
 						"heartbeat":self.uav_connection.last_heartbeat,
 					}
 						try:
 							self.sio.emit('telemetry',telemetry_data,namespace="/python")
-							print(telemetry_data)
 						except Exception as e:
 							print("[Telem] Telemetry not send ERROR by UAV:",str(e))
 					except Exception as e:
@@ -218,8 +154,6 @@ class DroneController:
 			except Exception as e:
 				print("UAV 1 not connected")
 				self.connect_uav()
-
-				
 
 	def arm_and_takeoff(self,target_altitude):
 		print("Checking basic pre-arm")
@@ -307,39 +241,3 @@ class DroneController:
 				time.sleep(10)
 				i += 1
 	
-
-# if __name__=="__main__":
-
-#     try:
-#         sio = Socketio_client(Socket_Connection_String)
-#     except Exception as e:
-#         print(e)
-		
-#     drone = connect(DroneIP,wait_ready=False)
-#     # drone = Drone(14450).drone
-#     # print("drone imported is ", drone)
-#     controller = DroneController(sio.socketio_client)
-#     controller.telem_running = True
-
-#     # Start telemetry thread
-#     try:
-#         telemetry_thread = threading.Thread(target=controller.send_telemetry_data, args=(drone,))
-#         telemetry_thread.start()
-#         print("Telemetry thread started.")
-#     except Exception as e:
-#         print("Error starting telemetry thread:", e)
-
-
-#     while True:
-#         time.sleep(1)  # Sleep to avoid high CPU usage
-		
-#         # Check if the flag indicating server connection is False
-#         if not sio.flag:
-#             print("Server disconnected. Attempting to reconnect...")
-#             try:
-#                 # Reconnect to the server
-#                 sio = Socketio_client(Socket_Connection_String)
-#                 controller.sio = sio.socketio_client  # Update the SocketIO client reference in the controller
-#                 print("Reconnected to server.")
-#             except Exception as e:
-#                 print("Error reconnecting to server:", e)
