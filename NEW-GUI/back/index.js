@@ -159,6 +159,12 @@ reactNamespace.on('connection', (socket) => {
         console.log("save Mission command recieved");
         roverNamespace.emit('save_mission_rover');
     });
+
+    socket.on('flyMission', () => {
+        console.log("Fly Mission command recieved");
+        pythonNamespace.emit('fly_mission');
+    });
+
     socket.on('takeoffBackend', () => {
         console.log("Recieved takeoff command");
         pythonNamespace.emit('takeoff');

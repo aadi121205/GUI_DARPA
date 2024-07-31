@@ -29,7 +29,8 @@ class DroneController:
 		self.sio.on('RTL',self.set_rtl,namespace="/python")
 		self.sio.on('landUav',self.land_Uav,namespace="/python")
 		self.sio.on('goto_drone',self.goto,namespace="/python")
-		self.sio.on('odlc_mission',self.flyMission,namespace="/python")
+		self.sio.on('fly_mission',self.flyMission,namespace="/python")
+		self.sio.on('circle',self.circle,namespace="/python")
 		self.filename = "mission.txt"
 		self.goto_mission = "waypoints.txt"
 		self.connect_uav()
@@ -49,8 +50,8 @@ class DroneController:
 
 	def takeoff(self,altitude=20):
 		self.arm_and_takeoff(altitude)
-    
-	
+		print("Takeoff Completed")
+		
 	def on_arm_drone(self):
 		if(self.uav_connection.mode!="GUIDED"):
 			self.uav_connection.mode = "GUIDED"
@@ -66,6 +67,9 @@ class DroneController:
 	
 	def land_Uav(self):
 		self.uav_connection.mode = "LAND"
+
+	def circle(self):
+		self.uav_connection.mode = "CIRCLE"
 
 	def upload_mission(self):
 		missionList = self.readmission()
@@ -180,9 +184,6 @@ class DroneController:
 			d = haversine(self.uav_connection.location.global_relative_frame.lon, self.uav_connection.location.global_relative_frame.lat, lon, lat)
 			# print(d)
 			time.sleep(1)
-
-	def drone_operation(self,vehicle):
-		print("Connected to drone")
 	
 	def goto(self, alt=10):
 		self.arm_and_takeoff(10)
@@ -199,14 +200,9 @@ class DroneController:
 		for c in range(len(Lat)):
 			self.travel(Lon[c], Lat[c], alt)
 			time.sleep(2)
-		
-		self.uav_connection.mode= "RTL"
-
-	def run(self,vehicle):
-		self.drone_operation(vehicle)
+		print("Mission completed")
 
 	def flyMission(self):
-		global i
 		self.arm_and_takeoff(10)
 		with open('waypoints.txt', 'r') as file:
 			for line in file:
@@ -215,9 +211,6 @@ class DroneController:
 				self.uav_connection.simple_goto(target_location)
 
 				uav_lat, uav_lon = self.uav_connection.location.global_frame.lat, self.uav_connection.location.global_frame.lon
-				subprocess.call('python3 doit.py', shell=True)
-
-				print(f"Distance to target: {remaining_distance}m")
 
 				while True:
 					uav_lat, uav_lon = self.uav_connection.location.global_frame.lat, self.uav_connection.location.global_frame.lon
@@ -227,17 +220,9 @@ class DroneController:
 					if remaining_distance < 1:
 						break
 				
+					print(f"Distance to target: {remaining_distance}m")
+
 				print("Reached target")
 				time.sleep(1)
-				#replace with zoom
-				target_location = LocationGlobalRelative(float(lat), float(lon), float(10))
-				self.uav_connection.simple_goto(target_location)
-				time.sleep(10)
-				uav_lat, uav_lon, uav_alt = self.uav_connection.location.global_frame.lat, self.uav_connection.location.global_frame.alt
-				print(f"UAV location: {uav_lat}, {uav_lon}, {uav_alt}")
-				with open('sd.txt', 'w') as file:
-					file.write(str(i))
-				subprocess.call('python3 doit.py', shell=True)
-				time.sleep(10)
-				i += 1
-	
+		self.uav_connection.mode = "RTL"
+		print("Mission completed")	

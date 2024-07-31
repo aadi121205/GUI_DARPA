@@ -50,6 +50,9 @@ const TelemState = ({ children }) => {
   const disarmUgv = () => {
     socket.emit("disarmingBackend_rover");
   };
+  const flyMission = () => {
+    socket.emit("flyMission");
+  };
   const setGimbalPoint = () => {
     const data = { roll, pitch, yaw };
     socket.emit("set_gimbal_point", data);
@@ -233,7 +236,9 @@ const TelemState = ({ children }) => {
         stopvideo,
         startvideo_rover,
         stopvideo_rover,
-        image
+        image,
+        set_Guided,
+        flyMission,
       }}
     >
       {children}
