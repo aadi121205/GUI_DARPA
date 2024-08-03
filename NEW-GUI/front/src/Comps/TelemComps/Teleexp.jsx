@@ -46,6 +46,7 @@ function Telemexp() {
     goto_command,
     goto_command_rover,
     auto_command,
+    auto_command_rover,
     flyUav,
     armUav,
     armUgv,
@@ -124,6 +125,8 @@ function Telemexp() {
     goto: goto_command_rover,
     displacment: haversine_distance( 28.753716379581093, 77.11551231763772, telemetryData_rover.latitude, telemetryData_rover.longitude),
     flymission: goto_command_rover,
+    uploadMission_rover: uploadMission_rover,
+    auto: auto_command_rover,
   };
 
   return (
