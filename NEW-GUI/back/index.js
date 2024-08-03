@@ -49,7 +49,6 @@ pythonNamespace.on('connection', (socket) => {
         if (telemetryActive) {
             // console.log("Telemetry received:", data);
             reactNamespace.emit('telemetryServer', data);
-            console.log(data)
         }
     });
     socket.on("image",(payload)=>{

@@ -37,7 +37,7 @@ const Modes = ({ vehicle }) => {
   return (
     <div>
       <Button onClick={handleOpen}>
-        <h6>
+        <h6 style={{ color: "white" }}>
           <b>{vehicle.mode}</b>
         </h6>
       </Button>

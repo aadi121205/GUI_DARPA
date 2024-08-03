@@ -27,7 +27,7 @@ const Teleminfo = ({ vehicle }) => {
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
               <h6>ALTITUDE</h6>
               <h5>
-                <b>{vehicle.altitude.toFixed(4)} m</b>
+                <b>{vehicle.altitude} m</b>
               </h5>
               <br></br>
               <h6>VELOCITY</h6>
