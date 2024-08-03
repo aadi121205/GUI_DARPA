@@ -4,6 +4,7 @@ import telemContext from "../../context/home/telemContext";
 import Teleminfo from "./Teleminfo";
 import Teleminforov from "./Teleminforov";
 import Map from "./Map";
+import MapOF from "./MapOF";
 import { Container, Button, Row, Col, Card } from 'react-bootstrap';
 
 export const haversine_distance = (lat1, lon1, lat2, lon2) => {
@@ -59,6 +60,8 @@ function Telemexp() {
     RTL,
     RTL_rover,
     STOP_rover,
+    flyMission,
+    circle,
   } = React.useContext(telemContext);
   const arm_uav = () => {
     if (telemetryData.armed) {
@@ -84,7 +87,7 @@ function Telemexp() {
   const scaledValue_rover = Dts(telemetryData_rover.heartbeat);
 
   const UAVvehicleData = {
-    name: "UAV 1",
+    name: "UAV",
     con: telemetryData.heartbeat,
     altitude: telemetryData.altitude, // altitude in meters
     mode: telemetryData.mode, // current mode
@@ -99,10 +102,14 @@ function Telemexp() {
     goto: goto_command,
     takeoff: flyUav,
     state : telemetryData.state,
+    auto: auto_command,
+    displacment: haversine_distance( 28.753681733536023, 77.11523238257983, telemetryData.latitude, telemetryData.longitude),
+    flymission: flyMission,
+    circle: circle,
   };
 
   const UGVvehicleData = {
-    name: "UGV 1",
+    name: "UGV",
     con: telemetryData_rover.status,
     altitude: telemetryData_rover.altitude, // altitude in meters
     mode: telemetryData_rover.mode, // current mode
@@ -115,10 +122,8 @@ function Telemexp() {
     rtl: RTL_rover,
     land: STOP_rover,
     goto: goto_command_rover,
-    displacment: haversine_distance(telemetryData.latitude, telemetryData.longitude, telemetryData_rover.latitude, telemetryData_rover.longitude),
+    displacment: haversine_distance( 28.750449, 77.11695, telemetryData_rover.latitude, telemetryData_rover.longitude),
   };
-
-
 
   return (
     <div className="tab">
@@ -129,17 +134,17 @@ function Telemexp() {
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
                     <Teleminforov vehicle={UGVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-{/*                     <Teleminfo vehicle={UAVvehicleData}/>
+                    <Teleminfo vehicle={UGVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-                    <Teleminfo vehicle={UAVvehicleData}/>
+                    <Teleminfo vehicle={UGVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-                    <Teleminfo vehicle={UAVvehicleData}/> */}
                 </Container>
             </Col>
             <Col>
             <Container style={{ padding: "0px", overflow: "hidden",margin: "0px", paddingLeft: "0px", backgroundColor: "black"}}>
-                <Map />
-            </Container>
+              <Map />
+              {/* <MapOF /> */}
+           </Container>
             </Col>
         </Row>
     </div>

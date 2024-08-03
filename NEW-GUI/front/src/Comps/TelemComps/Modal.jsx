@@ -54,7 +54,8 @@ const Modal = ({ vehicle }) => {
             <Button variant="primary" onClick={vehicle.arm}>{vehicle.armed ? "Disarm" : "Arm"}</Button>
             <Button variant="primary" onClick={vehicle.rtl}>RTL</Button>
             <Button variant="primary" onClick={vehicle.land}>Land</Button>
-            <Button variant="primary" onClick={vehicle.goto}>Goto</Button>
+{/*             <Button variant="primary" onClick={vehicle.goto}>Goto</Button>
+ */}        <Button variant="primary" onClick={vehicle.flymission}>Fly Mission</Button>
             <Button variant="primary" onClick={vehicle.takeoff}>Takeoff</Button>
             <Button variant="primary" onClick={vehicle.rtl}>Emergency Stop</Button>
             <Button
@@ -69,16 +70,19 @@ const Modal = ({ vehicle }) => {
             default={{
               x: 600,
               y: -80,
-              width: 320,
-              height: 200,
+              width: 330,
+              height: 400,
             }}
           >
             <div style={{ position: "relative", width: "100%", height: "100%" }}>
-              <img
-                src="src/assets/darpa_logo.png"
-                alt="Camera Feed"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
+              <h3>Altitude: {vehicle.altitude} m</h3>
+              <h3>Velocity: {vehicle.velocity} m/s</h3>
+              <h3>Mode: {vehicle.mode}</h3>
+              <h3>State: {vehicle.state}</h3>
+              <h3>Status: {vehicle.status}</h3>
+              <h3>Throttle: {vehicle.throttle}</h3>
+              <h3>Signal Strength: {vehicle.signalStrength}</h3>
+              <h3>Displacement: {vehicle.displacment} m</h3>
             </div>
             <Button
               onClick={handleOpen}

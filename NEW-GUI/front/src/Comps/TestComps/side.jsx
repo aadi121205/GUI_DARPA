@@ -30,6 +30,7 @@ function Side() {
     STOP_rover,
     set_Guided,
     flyMission,
+    circle,
   } = React.useContext(telemContext);
   const [telemetryStarted, setTelemetryStarted] = React.useState(false);
   const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(false);
@@ -134,6 +135,7 @@ function Side() {
           <Button variant="primary" onClick={uploadMission}>Upload Mission</Button>
           <Button variant="primary" onClick={flyUav}>Fly</Button>
           <Button variant="primary" onClick={flyMission}>Fly Mission</Button>
+          <Button variant="primary" onClick={circle}>Circle</Button>
         </Card.Body>
       </Card>
       </div>

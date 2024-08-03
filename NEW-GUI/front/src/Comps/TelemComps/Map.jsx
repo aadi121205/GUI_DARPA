@@ -101,7 +101,7 @@ export default function Map() {
     uavElement.style.cursor = 'pointer';
 
     uavElement.addEventListener('click', () => {
-      window.alert('UAV Location');
+    window.alert('UAV Location: ' + latitude + ', ' + longitude);
     });
 
     const newUavMarker = new mapboxgl.Marker(uavElement)

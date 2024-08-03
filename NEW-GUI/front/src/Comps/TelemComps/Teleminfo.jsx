@@ -42,7 +42,6 @@ const Teleminfo = ({ vehicle }) => {
               <b>{vehicle.mode}</b>
               </h6>
               </Button>
-
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
               <h6>STATE</h6>

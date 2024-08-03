@@ -14,10 +14,9 @@ def haversine(lon1, lat1, lon2, lat2):
     return c * 6371 * 1000
 
 class RoverController:
-    def __init__(self, sio, RoverIP, id):
-        self.RoverIP = RoverIP
+    def __init__(self, sio,):
+        self.RoverIP = "127.0.0.1:14552"
         self.sio = sio
-        self.id = id
         self.telem_running = False
         self.ugv_connected = False
         self.ugv_connection = None

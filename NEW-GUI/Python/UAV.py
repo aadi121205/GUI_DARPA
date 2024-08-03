@@ -190,7 +190,7 @@ class DroneController:
 		
 		Lat = []
 		Lon = []
-		with open(self.goto_mission, "r") as file:
+		with open("goto.txt", "r") as file:
 			for line in file:
 				# Split the line into latitude and longitude
 				latitude, longitude = line.strip().split(", ")

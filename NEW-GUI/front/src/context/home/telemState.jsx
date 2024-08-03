@@ -109,6 +109,9 @@ const TelemState = ({ children }) => {
     socket.emit('startvideo');
     console.log("emit video start")
   }
+  const circle = () =>{
+    socket.emit('circle');
+  }
 
   const stopvideo = () =>{
     socket.emit('stopvideo');
@@ -239,6 +242,7 @@ const TelemState = ({ children }) => {
         image,
         set_Guided,
         flyMission,
+        circle,
       }}
     >
       {children}
