@@ -122,7 +122,7 @@ function Telemexp() {
     rtl: RTL_rover,
     land: STOP_rover,
     goto: goto_command_rover,
-    displacment: haversine_distance( 28.750449, 77.11695, telemetryData_rover.latitude, telemetryData_rover.longitude),
+    displacment: haversine_distance( 28.753716379581093, 77.11551231763772, telemetryData_rover.latitude, telemetryData_rover.longitude),
   };
 
   return (
@@ -134,9 +134,9 @@ function Telemexp() {
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
                     <Teleminforov vehicle={UGVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-                    <Teleminfo vehicle={UGVvehicleData}/>
+                    <Teleminforov vehicle={UGVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-                    <Teleminfo vehicle={UGVvehicleData}/>
+                    <Teleminforov vehicle={UGVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
                 </Container>
             </Col>

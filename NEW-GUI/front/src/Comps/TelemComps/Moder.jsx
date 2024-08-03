@@ -55,6 +55,7 @@ const Modes = ({ vehicle }) => {
           >
             <Button variant="primary" onClick={vehicle.rtl}>RTL</Button>
             <Button variant="primary" onClick={vehicle.land}>Land</Button>
+            <Button variant="primary" onClick={vehicle.Hold}>Hold</Button>
             <Button variant="primary" onClick={vehicle.auto}>Auto</Button>
             <Button
               onClick={handleOpen}

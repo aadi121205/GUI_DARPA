@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useState } from "react";
-import { RiCameraLensFill } from "react-icons/ri";
+import { RiSettings4Fill } from "react-icons/ri";
 import { Rnd } from "react-rnd";
 import { RiCloseCircleLine } from "react-icons/ri";
 import telemContext from "../../context/home/telemContext";
@@ -37,7 +37,7 @@ const Modal = ({ vehicle }) => {
   return (
     <div>
       <Button onClick={handleOpen}>
-        <RiCameraLensFill style={{ fontSize: 30, color: "white" }} />
+        <RiSettings4Fill style={{ fontSize: 30, color: "white" }} />
       </Button>
       {open && (
         <>
@@ -47,15 +47,13 @@ const Modal = ({ vehicle }) => {
             default={{
               x: 200,
               y: -80,
-              width: 320,
-              height: 225,
+              width: 300,
+              height: 200,
             }}
           >
             <Button variant="primary" onClick={vehicle.arm}>{vehicle.armed ? "Disarm" : "Arm"}</Button>
-            <Button variant="primary" onClick={vehicle.rtl}>RTL</Button>
-            <Button variant="primary" onClick={vehicle.land}>Land</Button>
-{/*             <Button variant="primary" onClick={vehicle.goto}>Goto</Button>
- */}        <Button variant="primary" onClick={vehicle.flymission}>Fly Mission</Button>
+            <Button variant="primary" onClick={vehicle.goto}>Goto</Button>
+            <Button variant="primary" onClick={vehicle.flymission}>Fly Mission</Button>
             <Button variant="primary" onClick={vehicle.takeoff}>Takeoff</Button>
             <Button variant="primary" onClick={vehicle.rtl}>Emergency Stop</Button>
             <Button
@@ -65,7 +63,7 @@ const Modal = ({ vehicle }) => {
               <RiCloseCircleLine style={{ fontSize: 30 }} />
             </Button>
           </Rnd>
-          <Rnd
+{/*           <Rnd
             style={style}
             default={{
               x: 600,
@@ -90,7 +88,7 @@ const Modal = ({ vehicle }) => {
             >
               <RiCloseCircleLine style={{ fontSize: 30 }} />
             </Button>
-          </Rnd>
+          </Rnd> */}
         </>
       )}
     </div>

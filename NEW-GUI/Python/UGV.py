@@ -23,7 +23,6 @@ class RoverController:
         self.cmds = None  # Initialize the cmds attribute
         self.sio.on('arm_rover', self.on_arm_rover, namespace="/rover")
         self.sio.on('disarm_rover', self.on_disarm_rover, namespace="/rover")
-        self.sio.on('gimbal_point_rover', self.on_gimbal_point_rover, namespace="/rover")
         self.sio.on('upload_mission_rover', self.upload_mission_rover, namespace="/rover")
         self.sio.on('readmission_rover', self.readmission_rover, namespace="/rover")
         self.sio.on('save_mission_rover', self.save_mission_rover, namespace="/rover")
@@ -62,36 +61,6 @@ class RoverController:
 
     def set_rtl_rover(self):
         self.ugv_connection.mode = VehicleMode("RTL")
-
-    def on_gimbal_point_rover(self, data):
-        pitch = float(data['pitch'])
-        roll = float(data['roll'])
-        yaw = float(data['yaw'])
-        time_ms = 0
-        self.check_gimbal_status_rover()
-        msg = self.ugv_connection.message_factory.command_long_encode(
-            0, 0,
-            mavutil.mavlink.MAV_CMD_DO_MOUNT_CONTROL,
-            0,
-            0,
-            roll,
-            pitch,
-            yaw,
-            time_ms,
-            0, 0
-        )
-        self.ugv_connection.send_mavlink(msg)
-        print(f"Gimbal pointed to {roll} {pitch} {yaw}")
-
-    def check_gimbal_status_rover(self):
-        self.ugv_connection.send_mavlink(self.ugv_connection.message_factory.command_long_encode(
-            0,
-            0,
-            mavutil.mavlink.MAV_CMD_REQUEST_MESSAGE,
-            0,
-            mavutil.mavlink.MAVLINK_MSG_ID_GIMBAL_REPORT,
-            0, 0, 0, 0, 0, 0
-        ))
 
     def upload_mission_rover(self):
         missionList = self.readmission_rover()
@@ -166,6 +135,8 @@ class RoverController:
                             "armed": self.ugv_connection.armed,
                             "velocity": self.ugv_connection.velocity,
                             "status": self.ugv_connection.system_status.state,
+                            "heartbeat":self.ugv_connection.last_heartbeat,
+
                         }
                         try:
                             self.sio.emit('telemetry_rover', telemetry_data_rover, namespace="/rover")
@@ -255,28 +226,3 @@ class RoverController:
                 subprocess.call('python3 doit.py', shell=True)
                 time.sleep(10)
                 i += 1
-
-# if __name__ == "__main__":
-#     try:
-#         sio = Socketio_client(Socket_Connection_String)
-#     except Exception as e:
-#         print(e)
-#     drone = connect(DroneIP, wait_ready=False)
-#     controller = DroneController(sio.socketio_client)
-#     controller.telem_running = True
-#     try:
-#         telemetry_thread = threading.Thread(target=controller.send_telemetry_data, args=(drone,))
-#         telemetry_thread.start()
-#         print("Telemetry thread started.")
-#     except Exception as e:
-#         print("Error starting telemetry thread:", e)
-#     while True:
-#         time.sleep(1)
-#         if not sio.flag:
-#             print("Server disconnected. Attempting to reconnect...")
-#             try:
-#                 sio = Socketio_client(Socket_Connection_String)
-#                 controller.sio = sio.socketio_client
-#                 print("Reconnected to server.")
-#             except Exception as e:
-#                 print("Error reconnecting to server:", e)

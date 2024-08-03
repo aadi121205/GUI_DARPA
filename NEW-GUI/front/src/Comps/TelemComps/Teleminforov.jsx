@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import SignalBars from "./SignalBar";
 import { Button } from "@mui/material";
 import { margin } from "@mui/system";
+import Modes from "./Moder";
 
 
 const Teleminforov = ({ vehicle }) => {
@@ -27,7 +28,7 @@ const Teleminforov = ({ vehicle }) => {
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
               <h6>Displacment</h6>
               <h5>
-                <b>{vehicle.displacment} m</b>
+                <b>{vehicle.displacment.toFixed(4)} m</b>
               </h5>
               <br></br>
               <h6>VELOCITY</h6>
@@ -36,11 +37,7 @@ const Teleminforov = ({ vehicle }) => {
               </h5>
               <br></br>
               <h6>MODE</h6>
-              <Button variant="primary" onClick={vehicle.arm} style={{margin: "0px"}}>
-              <h6>
-              <b>{vehicle.mode}</b>
-              </h6>
-              </Button>
+              <Modes vehicle={vehicle} />
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
               <h6>BATT</h6>
