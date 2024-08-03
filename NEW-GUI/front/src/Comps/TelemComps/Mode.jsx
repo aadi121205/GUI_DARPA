@@ -56,6 +56,7 @@ const Modes = ({ vehicle }) => {
             <Button variant="primary" onClick={vehicle.rtl}>RTL</Button>
             <Button variant="primary" onClick={vehicle.land}>Land</Button>
             <Button variant="primary" onClick={vehicle.auto}>Auto</Button>
+            <Button variant="primary" onClick={vehicle.circle}>Circle</Button>
             <Button
               onClick={handleOpen}
               style={{ position: "absolute", top: 0, right: 0, color: "white" }}

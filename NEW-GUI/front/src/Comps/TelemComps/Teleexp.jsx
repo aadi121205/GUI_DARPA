@@ -93,7 +93,7 @@ function Telemexp() {
     mode: telemetryData.mode, // current mode
     velocity: telemetryData.groundspeed, // velocity in m/s
     battery: telemetryData.battery, // battery percentage
-    status: telemetryData.status ? "is Armable" : "Not Armable", // status
+    status: telemetryData.status ? "Armable" : "Not Armable", // status
     throttle: telemetryData.armed ? "ARMED" : "DISARMED", // throttle status
     signalStrength: scaledValue,
     arm: arm_uav,

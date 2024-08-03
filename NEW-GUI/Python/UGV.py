@@ -32,7 +32,7 @@ class RoverController:
         self.sio.on('auto_rover', self.auto_rover, namespace="/rover")
         self.sio.on('STOP_rover', self.set_stop_rover, namespace="/rover")
         self.filename = "mission_rover.txt"
-        self.goto_mission = "waypoints.txt"
+        self.goto_mission = "waypointsr.txt"
         self.connect_ugv()
         t2 = threading.Thread(target=self.send_telemetry_data_rover).start()
 
