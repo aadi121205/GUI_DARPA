@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Modal from "./Modal";
+import Modal from "./Modalr";
 import SignalBars from "./SignalBar";
 import { Button } from "@mui/material";
 import { margin } from "@mui/system";
