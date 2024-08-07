@@ -155,10 +155,10 @@ export default function Map() {
           <strong>Rover:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude:{" "}
           {telemetryData_rover?.latitude}
           <br />
-          <strong>Center:</strong> Longitude: {telemetryData_rover2?.longitude} | Latitude:{" "}
+          <strong>Rover2:</strong> Longitude: {telemetryData_rover2?.longitude} | Latitude:{" "}
           {telemetryData_rover2?.latitude}
           <br />
-          <strong>Center:</strong> Longitude: {telemetryData_rover3?.longitude} | Latitude:{" "}
+          <strong>Rover3:</strong> Longitude: {telemetryData_rover3?.longitude} | Latitude:{" "}
           {telemetryData_rover3?.latitude}
           <br />
           <strong>DTU Campus</strong>
