@@ -150,7 +150,7 @@ export default function Map() {
       <div id="map" className="map">
         <div className="sidebar">
           <strong>UAV1:-</strong> Longitude: {telemetryData?.longitude} | Latitude:{" "}
-          {telemetryData?.latitude} | Zoom: {zoom}
+          {telemetryData?.latitude}
           <br />
           <strong>Rover:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude:{" "}
           {telemetryData_rover?.latitude}
@@ -161,7 +161,7 @@ export default function Map() {
           <strong>Rover3:</strong> Longitude: {telemetryData_rover3?.longitude} | Latitude:{" "}
           {telemetryData_rover3?.latitude}
           <br />
-          <strong>DTU Campus</strong>
+          <strong>DTU Campus  | Zoom: {zoom}</strong>
         </div>
         <Modal />
         <div ref={mapContainer} className="map-container" />
