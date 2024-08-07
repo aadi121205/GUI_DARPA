@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { RiCloseCircleLine } from "react-icons/ri";
 import { Rnd } from "react-rnd";
@@ -25,6 +25,11 @@ export default function TimerModal() {
     fontSize: "40px",
   };
 
+  // Function to calculate y position to place the modal at the bottom
+  const calculateYPosition = () => window.innerHeight - 250;
+  const calculateWPosition = () => window.innerWidth/2 - 15;
+
+
   return (
     <div>
       {isOpen && (
@@ -32,14 +37,15 @@ export default function TimerModal() {
           style={modalStyle}
           default={{
             x: 0,
-            y: 1217,
-            width: 1213,
+            y: calculateYPosition(),
+            width: calculateWPosition(),
             height: 100,
           }}
+          bounds="window" // Ensure the modal stays within the window boundaries
         >
           <div
             style={{
-              position: "absolute",
+              position: "absolute", // Ensure the div fits within the Rnd component
               width: "100%",
               height: "100%",
               paddingTop: "20px",

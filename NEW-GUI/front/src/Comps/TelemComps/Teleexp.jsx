@@ -131,17 +131,18 @@ function Telemexp() {
 
   return (
     <div className="tab">
-        <Row style={{ padding: "24px", backgroundColor: "black"}}>
+        <Row style={{ padding: "10px", backgroundColor: "black"}}>
             <Col style={{ padding: "5px", backgroundColor: "black"}}>
                 <Container bg="dark" style={{padding: "2px", justifyContent: "flex-start", alignItems: "left", paddingLeft: "0px", backgroundColor: "black", color: "white"}}>
                     <Teleminfo vehicle={UAVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
+                    <Divider style={{ backgroundColor: 'white', height: "3px"}} />
                     <Teleminforov vehicle={UGVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
+                    <Divider style={{ backgroundColor: 'white', height: "3px"}} />
                     <Teleminforov vehicle={UGVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
+                    <Divider style={{ backgroundColor: 'white', height: "3px"}} />
                     <Teleminforov vehicle={UGVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
+                    <Divider style={{ backgroundColor: 'white', height: "3px"}} />
+                    <Teleminforov vehicle={UGVvehicleData}/>
                 </Container>
             </Col>
             <Col>
