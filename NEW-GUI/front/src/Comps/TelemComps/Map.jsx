@@ -13,7 +13,7 @@ export default function Map() {
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
   const [zoom, setZoom] = useState(16.3);
-  const { telemetryData, telemetryData_rover } = useContext(telemContext);
+  const { telemetryData, telemetryData_rover,telemetryData_rover2,telemetryData_rover3 } = React.useContext(telemContext);
   const [uavMarker, setUavMarker] = useState(null);
   const [roverMarker, setRoverMarker] = useState(null);
 
@@ -154,6 +154,14 @@ export default function Map() {
           <br />
           <strong>Rover:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude:{" "}
           {telemetryData_rover?.latitude}
+          <br />
+          <strong>Center:</strong> Longitude: {telemetryData_rover2?.longitude} | Latitude:{" "}
+          {telemetryData_rover2?.latitude}
+          <br />
+          <strong>Center:</strong> Longitude: {telemetryData_rover3?.longitude} | Latitude:{" "}
+          {telemetryData_rover3?.latitude}
+          <br />
+          <strong>DTU Campus</strong>
         </div>
         <Modal />
         <div ref={mapContainer} className="map-container" />
