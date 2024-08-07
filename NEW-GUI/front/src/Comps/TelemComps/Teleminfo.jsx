@@ -50,7 +50,7 @@ const Teleminfo = ({ vehicle }) => {
               </h5>
               <br></br>
               <h6>THROTTLE</h6>
-              <Button variant="primary" onClick={vehicle.arm} style={{margin: "0px"}}>
+              <Button variant="primary" onClick={vehicle.arm} style={{ paddingLeft: 0 }}>
               <h5 style={stylet}>
                 <b>{vehicle.throttle}</b>
               </h5>

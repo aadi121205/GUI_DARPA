@@ -26,21 +26,21 @@ const Teleminforov = ({ vehicle }) => {
             </h3>
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h6>Displacment</h6>
-              <h5>
-                <b>{vehicle.displacment.toFixed(4)} m</b>
-              </h5>
+              <h6>DISPLACEMENT</h6>
+              <h6>
+                <b>{vehicle.displacment.toFixed(3)} m</b>
+              </h6>
               <br></br>
               <h6>VELOCITY</h6>
-              <h5>
-                <b>{vehicle.velocity} m/s</b>
-              </h5>
+              <h6>
+                <b>{typeof vehicle.velocity === 'number' ? vehicle.velocity.toFixed(2) : 'N/A'} m/s</b>
+              </h6>
               <br></br>
               <h6>MODE</h6>
               <Modes vehicle={vehicle} />
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h6>BATT</h6>
+              <h6>BATTERY</h6>
               <h5>
                 <b>{vehicle.battery} %</b>
               </h5>
@@ -51,7 +51,7 @@ const Teleminforov = ({ vehicle }) => {
               </h5>
               <br></br>
               <h6>THROTTLE</h6>
-              <Button variant="primary" onClick={vehicle.arm} style={{margin: "0px"}}>
+              <Button variant="primary" onClick={vehicle.arm} style={{ paddingLeft: 0 }}>
               <h5 style={stylet}>
                 <b>{vehicle.throttle}</b>
               </h5>

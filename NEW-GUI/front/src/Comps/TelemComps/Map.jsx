@@ -155,9 +155,7 @@ export default function Map() {
           <strong>Rover:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude:{" "}
           {telemetryData_rover?.latitude}
         </div>
-        <div style={{ bottom: 0 }}>            
         <Modal />
-        </div>
         <div ref={mapContainer} className="map-container" />
       </div>
     </div>

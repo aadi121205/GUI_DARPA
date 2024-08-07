@@ -32,12 +32,13 @@ const Modes = ({ vehicle }) => {
     color: "white",
     borderRadius: "10px",
     fontSize: "40px",
+    paddingLeft: 0 
   };
 
   return (
     <div>
       <Button onClick={handleOpen}>
-        <h6 style={{ color: "white" }}>
+        <h6 style={{ color: "white", paddingLeft: 0  }}>
           <b>{vehicle.mode}</b>
         </h6>
       </Button>

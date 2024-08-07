@@ -40,7 +40,7 @@ const Dts = (delaySec) => {
 };
 
 function Telemexp() {
-  const { telemetryData, telemetryData_rover } = React.useContext(telemContext);
+  const { telemetryData, telemetryData_rover,telemetryData_rover2,telemetryData_rover3 } = React.useContext(telemContext);
   React.useContext(telemContext);
   const {
     goto_command,
@@ -110,7 +110,7 @@ function Telemexp() {
   };
 
   const UGVvehicleData = {
-    name: "UGV",
+    name: "UGV1",
     con: telemetryData_rover.status,
     altitude: telemetryData_rover.altitude, // altitude in meters
     mode: telemetryData_rover.mode, // current mode
@@ -128,21 +128,58 @@ function Telemexp() {
     uploadMission_rover: uploadMission_rover,
     auto: auto_command_rover,
   };
+  const UGVvehicleData2 = {
+    name: "UGV2",
+    con: telemetryData_rover2.status,
+    altitude: telemetryData_rover2.altitude, // altitude in meters
+    mode: telemetryData_rover2.mode, // current mode
+    velocity: telemetryData_rover2.groundspeed, // velocity in m/s
+    battery: telemetryData_rover2.battery, // battery percentage
+    status: telemetryData_rover2.status, // status
+    throttle: telemetryData_rover2.armed ? "ARMED" : "DISARMED", // throttle status
+    signalStrength: scaledValue_rover,
+    arm: arm_rover,
+    rtl: RTL_rover,
+    land: STOP_rover,
+    goto: goto_command_rover,
+    displacment: haversine_distance( 28.753716379581093, 77.11550231763772, telemetryData_rover2.latitude, telemetryData_rover2.longitude),
+    flymission: goto_command_rover,
+    uploadMission_rover: uploadMission_rover,
+    auto: auto_command_rover,
+  };
+  const UGVvehicleData3 = {
+    name: "UGV3",
+    con: telemetryData_rover3.status,
+    altitude: telemetryData_rover3.altitude, // altitude in meters
+    mode: telemetryData_rover3.mode, // current mode
+    velocity: telemetryData_rover3.groundspeed, // velocity in m/s
+    battery: telemetryData_rover3.battery, // battery percentage
+    status: telemetryData_rover3.status, // status
+    throttle: telemetryData_rover3.armed ? "ARMED" : "DISARMED", // throttle status
+    signalStrength: scaledValue_rover,
+    arm: arm_rover,
+    rtl: RTL_rover,
+    land: STOP_rover,
+    goto: goto_command_rover,
+    displacment: haversine_distance( 28.753716379581093, 77.11550031763772, telemetryData_rover3.latitude, telemetryData_rover3.longitude),
+    flymission: goto_command_rover,
+    uploadMission_rover: uploadMission_rover,
+    auto: auto_command_rover,
+  };
 
   return (
     <div className="tab">
-        <Row style={{ padding: "10px", backgroundColor: "black"}}>
+        <Row style={{ padding: "24px", backgroundColor: "black"}}>
             <Col style={{ padding: "5px", backgroundColor: "black"}}>
                 <Container bg="dark" style={{padding: "2px", justifyContent: "flex-start", alignItems: "left", paddingLeft: "0px", backgroundColor: "black", color: "white"}}>
                     <Teleminfo vehicle={UAVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "3px"}} />
+                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
                     <Teleminforov vehicle={UGVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "3px"}} />
-                    <Teleminforov vehicle={UGVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "3px"}} />
-                    <Teleminforov vehicle={UGVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "3px"}} />
-                    <Teleminforov vehicle={UGVvehicleData}/>
+                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
+                    <Teleminforov vehicle={UGVvehicleData2}/>
+                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
+                    <Teleminforov vehicle={UGVvehicleData3}/>
+                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
                 </Container>
             </Col>
             <Col>
