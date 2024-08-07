@@ -16,6 +16,8 @@ export default function Map() {
   const { telemetryData, telemetryData_rover,telemetryData_rover2,telemetryData_rover3 } = React.useContext(telemContext);
   const [uavMarker, setUavMarker] = useState(null);
   const [roverMarker, setRoverMarker] = useState(null);
+  const [roverMarker2, setRoverMarker2] = useState(null);
+  const [roverMarker3, setRoverMarker3] = useState(null);
 
   useEffect(() => {
     if (map.current) return; // Initialize map only once
@@ -146,8 +148,8 @@ export default function Map() {
   }, [telemetryData_rover]);
 
   useEffect(() => {
-    if (roverMarker) {
-      roverMarker.remove();
+    if (roverMarker2) {
+      roverMarker2.remove();
     }
     if (!telemetryData_rover2 || !telemetryData_rover2.latitude || !telemetryData_rover2.longitude) return;
 

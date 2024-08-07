@@ -126,6 +126,11 @@ class DroneController:
 		return missionList
 
 	def send_telemetry_data(self):
+		locations = []
+		with open('waypoints.txt', 'r') as file:
+			for line in file:
+				lat, lon, alt = line.strip().split(',')
+				locations.append((float(lat), float(lon), float(alt)))
 		while True:
 			try:
 				if (self.uav_connected):
@@ -144,6 +149,7 @@ class DroneController:
 						"status":self.uav_connection.is_armable,
 						"heading":self.uav_connection.heading,
 						"heartbeat":self.uav_connection.last_heartbeat,
+						"locations":locations,
 					}
 						try:
 							self.sio.emit('telemetry',telemetry_data,namespace="/python")
