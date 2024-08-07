@@ -25,7 +25,7 @@ function NavigationBar() {
                     </Nav>
                 </Navbar.Collapse>
             </Container>
-            <Container style={{ padding: "3px", display: "flex", justifyContent: "flex-end", alignItems: "center", margin: "0.5px", paddingLeft: "0px" }}>
+            <Container style={{ padding: "3px", display: "flex", justifyContent: "flex-end", paddingLeft: "0px" }}>
               <Navbar.Brand href="https://triagechallenge.darpa.mil/">
                   <img
                       src="src/assets/darpa_logo.png" // replace with the path to your image

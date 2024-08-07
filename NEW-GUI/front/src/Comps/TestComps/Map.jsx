@@ -115,95 +115,7 @@ export default function Map() {
       essential: true,
     });
   }, [telemetryData]);
-
-  useEffect(() => {
-    if (roverMarker) {
-      roverMarker.remove();
-    }
-    if (!telemetryData_rover || !telemetryData_rover.latitude || !telemetryData_rover.longitude) return;
-
-    const { latitude, longitude } = telemetryData_rover;
-
-    const roverElement = document.createElement('div');
-    roverElement.className = 'marker';
-    roverElement.style.backgroundImage = 'url(https://iili.io/dBmOJb1.png)';
-    roverElement.style.width = '30px';
-    roverElement.style.height = '30px';
-    roverElement.style.backgroundSize = '100%';
-    roverElement.style.border = 'none';
-    roverElement.style.borderRadius = '50%';
-    roverElement.style.cursor = 'pointer';
-
-    roverElement.addEventListener('click', () => {
-      window.alert('Rover Location');
-    });
-
-    const newRoverMarker = new mapboxgl.Marker(roverElement)
-      .setLngLat([longitude, latitude])
-      .addTo(map.current);
-
-    setRoverMarker(newRoverMarker);
-  }, [telemetryData_rover]);
-
-  useEffect(() => {
-    if (roverMarker) {
-      roverMarker.remove();
-    }
-    if (!telemetryData_rover2 || !telemetryData_rover2.latitude || !telemetryData_rover2.longitude) return;
-
-    const { latitude, longitude } = telemetryData_rover2;
-
-    const roverElement = document.createElement('div');
-    roverElement.className = 'marker';
-    roverElement.style.backgroundImage = 'url(https://iili.io/dBmOJb1.png)';
-    roverElement.style.width = '30px';
-    roverElement.style.height = '30px';
-    roverElement.style.backgroundSize = '100%';
-    roverElement.style.border = 'none';
-    roverElement.style.borderRadius = '50%';
-    roverElement.style.cursor = 'pointer';
-
-    roverElement.addEventListener('click', () => {
-      window.alert('Rover Location');
-    });
-
-    const newRoverMarker = new mapboxgl.Marker(roverElement)
-      .setLngLat([longitude, latitude])
-      .addTo(map.current);
-
-    setRoverMarker(newRoverMarker);
-  }
-  , [telemetryData_rover2]);
-
-  useEffect(() => {
-    if (roverMarker) {
-      roverMarker.remove();
-    }
-    if (!telemetryData_rover3 || !telemetryData_rover3.latitude || !telemetryData_rover3.longitude) return;
-
-    const { latitude, longitude } = telemetryData_rover3;
-
-    const roverElement = document.createElement('div');
-    roverElement.className = 'marker';
-    roverElement.style.backgroundImage = 'url(https://iili.io/dBmOJb1.png)';
-    roverElement.style.width = '30px';
-    roverElement.style.height = '30px';
-    roverElement.style.backgroundSize = '100%';
-    roverElement.style.border = 'none';
-    roverElement.style.borderRadius = '50%';
-    roverElement.style.cursor = 'pointer';
-
-    roverElement.addEventListener('click', () => {
-      window.alert('Rover Location');
-    });
-
-    const newRoverMarker = new mapboxgl.Marker(roverElement)
-      .setLngLat([longitude, latitude])
-      .addTo(map.current);
-
-    setRoverMarker(newRoverMarker);
-  } , [telemetryData_rover3]);
-
+  
   return (
     <div>
       <div id="map" className="map">
@@ -211,18 +123,8 @@ export default function Map() {
           <strong>UAV1:-</strong> Longitude: {telemetryData?.longitude} | Latitude:{" "}
           {telemetryData?.latitude}
           <br />
-          <strong>Rover:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude:{" "}
-          {telemetryData_rover?.latitude}
-          <br />
-          <strong>Rover2:</strong> Longitude: {telemetryData_rover2?.longitude} | Latitude:{" "}
-          {telemetryData_rover2?.latitude}
-          <br />
-          <strong>Rover3:</strong> Longitude: {telemetryData_rover3?.longitude} | Latitude:{" "}
-          {telemetryData_rover3?.latitude}
-          <br />
           <strong>DTU Campus  | Zoom: {zoom}</strong>
         </div>
-        <Modal />
         <div ref={mapContainer} className="map-container" />
       </div>
     </div>

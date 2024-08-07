@@ -1,0 +1,57 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@mixin bg($color) {
+  background: rgba($color, .7);
+}
+
+#topbar {
+  margin: 0 auto;
+}
+
+#bars {
+  position: relative;
+  margin: 50px auto 0 auto;
+  width: 62px;
+  height: 30px;
+  -webkit-box-reflect: below 1px linear-gradient(to bottom, transparent, rgba(#000000,.35));
+  
+  .bar {
+    position: absolute;
+    bottom: 0;
+    width: 10px;
+    
+    &:nth-child(1) {
+      background: rgb(255, 0, 0);
+      height: 10px;
+      left: 0px;
+    }
+    
+    &:nth-child(2) {
+      background: rgb(138, 32, 32);
+      height: 15px;
+      left: 13px;
+    }
+    
+    &:nth-child(3) {
+      background: rgb(218, 214, 21);
+      height: 20px;
+      left: 26px;
+    }
+    
+    &:nth-child(4) {
+      background: rgb(25, 139, 50);
+      height: 25px;
+      left: 39px;
+    }
+    
+    &:nth-child(5) {
+      background: rgb(0, 255, 21);
+      height: 30px;
+      left: 52px;
+    }
+  }
+}
