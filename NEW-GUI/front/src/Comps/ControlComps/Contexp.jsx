@@ -4,6 +4,23 @@ import telemContext from "../../context/home/telemContext";
 import Teleminfo from "./Continfo";
 import { Container, Button, Row, Col, Card } from 'react-bootstrap';
 
+export const haversine_distance = (lat1, lon1, lat2, lon2) => {
+  // distance between latitudes
+  // and longitudes
+  const dLat = ((lat2 - lat1) * Math.PI) / 180.0;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180.0;
+
+  // convert to radians
+  lat1 = (lat1 * Math.PI) / 180.0;
+  lat2 = (lat2 * Math.PI) / 180.0;
+
+  // apply formulae
+  const a = Math.pow(Math.sin(dLat / 2), 2) + Math.pow(Math.sin(dLon / 2), 2) * Math.cos(lat1) * Math.cos(lat2);
+  const rad = 6371;
+  const c = 2 * Math.asin(Math.sqrt(a));
+  return rad * c * 1000;
+};
+
 const Dts = (delaySec) => {
   // Define the min and max values of delay in seconds that correspond to 0 and 5 bars
   const minDelaySec = 0;
@@ -16,33 +33,81 @@ const Dts = (delaySec) => {
   // Calculate the bars based on the delaySec
   const bars = (delaySec - minDelaySec) * 5 / (maxDelaySec - minDelaySec);
 
-  return bars;
+  return 5 - bars;
 };
 
-function Contexp() {
-  const { telemetryData, telemetryData_rover } = React.useContext(telemContext);
+function Telemexp() {
+  const { telemetryData, telemetryData_rover,telemetryData_rover2,telemetryData_rover3 } = React.useContext(telemContext);
+  React.useContext(telemContext);
+  const {
+    goto_command,
+    goto_command_rover,
+    auto_command,
+    auto_command_rover,
+    flyUav,
+    armUav,
+    armUgv,
+    disarmUav,
+    disarmUgv,
+    downloadMission,
+    readMission,
+    saveMission,
+    uploadMission,
+    uploadMission_rover,
+    landUAV,
+    RTL,
+    RTL_rover,
+    STOP_rover,
+    flyMission,
+    circle,
+  } = React.useContext(telemContext);
+  const arm_uav = () => {
+    if (telemetryData.armed) {
+      disarmUav();
+    } else {
+      armUav();
+    }
+  };
+
+  const arm_rover = () => {
+    if (telemetryData_rover.armed) {
+      disarmUgv();
+    } else {
+      armUgv();
+    }
+  }
   const [telemetryStarted, setTelemetryStarted] = React.useState(true);
   const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(true);
   telemetryData.groundspeed = Math.round(telemetryData.groundspeed * 100) / 100;
   telemetryData_rover.groundspeed = Math.round(telemetryData_rover.groundspeed * 100) / 100;
 
   const scaledValue = Dts(telemetryData.heartbeat);
-  const scaledValue_rover = 4
+  const scaledValue_rover = Dts(telemetryData_rover.heartbeat);
 
   const UAVvehicleData = {
-    name: "UAV 1",
-    con: telemetryData.status,
+    name: "UAV",
+    con: telemetryData.heartbeat,
     altitude: telemetryData.altitude, // altitude in meters
     mode: telemetryData.mode, // current mode
     velocity: telemetryData.groundspeed, // velocity in m/s
     battery: telemetryData.battery, // battery percentage
-    status: telemetryData.status, // status
+    status: telemetryData.status ? "Armable" : "Not Armable", // status
     throttle: telemetryData.armed ? "ARMED" : "DISARMED", // throttle status
     signalStrength: scaledValue,
+    arm: arm_uav,
+    rtl: RTL,
+    land: landUAV,
+    goto: goto_command,
+    takeoff: flyUav,
+    state : telemetryData.state,
+    auto: auto_command,
+    displacment: haversine_distance( 28.753681733536023, 77.11523238257983, telemetryData.latitude, telemetryData.longitude),
+    flymission: flyMission,
+    circle: circle,
   };
 
   const UGVvehicleData = {
-    name: "UGV 1",
+    name: "UGV1",
     con: telemetryData_rover.status,
     altitude: telemetryData_rover.altitude, // altitude in meters
     mode: telemetryData_rover.mode, // current mode
@@ -51,9 +116,53 @@ function Contexp() {
     status: telemetryData_rover.status, // status
     throttle: telemetryData_rover.armed ? "ARMED" : "DISARMED", // throttle status
     signalStrength: scaledValue_rover,
+    arm: arm_rover,
+    rtl: RTL_rover,
+    land: STOP_rover,
+    goto: goto_command_rover,
+    displacment: haversine_distance( 28.753716379581093, 77.11551231763772, telemetryData_rover.latitude, telemetryData_rover.longitude),
+    flymission: goto_command_rover,
+    uploadMission_rover: uploadMission_rover,
+    auto: auto_command_rover,
   };
-
-
+  const UGVvehicleData2 = {
+    name: "UGV2",
+    con: telemetryData_rover2.status,
+    altitude: telemetryData_rover2.altitude, // altitude in meters
+    mode: telemetryData_rover2.mode, // current mode
+    velocity: telemetryData_rover2.groundspeed, // velocity in m/s
+    battery: telemetryData_rover2.battery, // battery percentage
+    status: telemetryData_rover2.status, // status
+    throttle: telemetryData_rover2.armed ? "ARMED" : "DISARMED", // throttle status
+    signalStrength: scaledValue_rover,
+    arm: arm_rover,
+    rtl: RTL_rover,
+    land: STOP_rover,
+    goto: goto_command_rover,
+    displacment: haversine_distance( 28.753716379581093, 77.11550231763772, telemetryData_rover2.latitude, telemetryData_rover2.longitude),
+    flymission: goto_command_rover,
+    uploadMission_rover: uploadMission_rover,
+    auto: auto_command_rover,
+  };
+  const UGVvehicleData3 = {
+    name: "UGV3",
+    con: telemetryData_rover3.status,
+    altitude: telemetryData_rover3.altitude, // altitude in meters
+    mode: telemetryData_rover3.mode, // current mode
+    velocity: telemetryData_rover3.groundspeed, // velocity in m/s
+    battery: telemetryData_rover3.battery, // battery percentage
+    status: telemetryData_rover3.status, // status
+    throttle: telemetryData_rover3.armed ? "ARMED" : "DISARMED", // throttle status
+    signalStrength: scaledValue_rover,
+    arm: arm_rover,
+    rtl: RTL_rover,
+    land: STOP_rover,
+    goto: goto_command_rover,
+    displacment: haversine_distance( 28.753716379581093, 77.11550031763772, telemetryData_rover3.latitude, telemetryData_rover3.longitude),
+    flymission: goto_command_rover,
+    uploadMission_rover: uploadMission_rover,
+    auto: auto_command_rover,
+  };
 
   return (
     <div className="tab">
@@ -62,13 +171,12 @@ function Contexp() {
                 <Container bg="dark" style={{padding: "2px", justifyContent: "flex-start", alignItems: "left", paddingLeft: "0px", backgroundColor: "black", color: "white"}}>
                     <Teleminfo vehicle={UAVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-                    <Teleminfo vehicle={UGVvehicleData}/>
+{/*                     <Teleminforov vehicle={UGVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-                    <Teleminfo vehicle={UAVvehicleData}/>
+                    <Teleminforov vehicle={UGVvehicleData2}/>
                     <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-                    <Teleminfo vehicle={UAVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
-                    <Teleminfo vehicle={UAVvehicleData}/>
+                    <Teleminforov vehicle={UGVvehicleData3}/>
+                    <Divider style={{ backgroundColor: 'white', height: "5px"}} /> */}
                 </Container>
             </Col>
         </Row>
@@ -76,4 +184,4 @@ function Contexp() {
   );
 }
 
-export default Contexp;
+export default Telemexp;
