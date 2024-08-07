@@ -25,6 +25,9 @@ export default function TimerModal() {
     fontSize: "40px",
   };
 
+  // Function to calculate y position to place the modal at the bottom
+  const calculateYPosition = () => window.innerHeight - 240;
+
   return (
     <div>
       {isOpen && (
@@ -32,14 +35,15 @@ export default function TimerModal() {
           style={modalStyle}
           default={{
             x: 0,
-            y: 1217,
+            y: calculateYPosition(),
             width: 1213,
             height: 100,
           }}
+          bounds="window" // Ensure the modal stays within the window boundaries
         >
           <div
             style={{
-              position: "absolute",
+              position: "absolute", // Ensure the div fits within the Rnd component
               width: "100%",
               height: "100%",
               paddingTop: "20px",
