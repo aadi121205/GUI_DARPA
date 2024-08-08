@@ -5,22 +5,15 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config()
 const defaultParams = {
-  maxHttpBufferSize: 1e8,
-  pingTimeout: 60000,
-  pingInterval: 500,
-  cors: {
-    origin: [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "http://127.0.0.1:3000",
-      "http://127.0.0.1:3001",
-      "http://127.0.0.1:5173",
-      "http://localhost:5173",
-      "http://192.168.0.129:5173",
-    ],
-    methods: ["GET", "POST"],
-  }
-};
+    maxHttpBufferSize: 1e8,
+    pingTimeout: 60000,
+    pingInterval: 500,
+    cors: {
+      origin: "*",  // Allow all origins for testing
+      methods: ["GET", "POST"],
+    }
+  };
+  
 
 const app = express();
 const server = http.createServer(app);
