@@ -27,7 +27,7 @@ const Timer = () => {
   };
 
   return (
-    <div style={{ textAlign: 'center' , padding: "20px"}}>
+    <div style={{ textAlign: 'center' , padding: "10%"}}>
         <Row>
         <Col>{seconds}s</Col>
         <Col>

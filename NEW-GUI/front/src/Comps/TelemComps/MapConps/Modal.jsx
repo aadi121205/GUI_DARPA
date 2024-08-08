@@ -16,17 +16,14 @@ export default function TimerModal() {
     border: "solid 1px #ddd",
     background: "rgba(0, 0, 0, 0.85)",
     flexDirection: "column",
-    padding: "3px",
+    padding: "4px",
     position: "fixed",
     zIndex: 1000,
     textAlign: "center",
     color: "white",
     borderRadius: "10px",
-    fontSize: "40px",
+    fontSize: "25px",
   };
-
-  // Function to calculate y position to place the modal at the bottom
-  const calculateYPosition = () => 0;
 
   return (
     <div>
@@ -34,10 +31,10 @@ export default function TimerModal() {
         <Rnd
           style={modalStyle}
           default={{
-            x: window.innerWidth/3,
+            x: window.innerWidth/2.65,
             y: 0,
-            width: window.innerWidth/7,
-            height: window.innerHeight/9,
+            width: window.innerWidth/10,
+            height: window.innerHeight/13,
           }}
           bounds="window" // Ensure the modal stays within the window boundaries
         >
@@ -45,8 +42,7 @@ export default function TimerModal() {
             style={{
               position: "absolute", // Ensure the div fits within the Rnd component
               width: "100%",
-              height: "100%",
-              paddingTop: "20px",
+              height: "80%",
             }}
           >
             <Timer />
@@ -60,7 +56,7 @@ export default function TimerModal() {
               color: "white",
             }}
           >
-            <RiCloseCircleLine style={{ fontSize: 30 }} />
+            <RiCloseCircleLine style={{ fontSize: 20 }} />
           </Button>
         </Rnd>
       )}
