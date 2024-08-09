@@ -99,7 +99,7 @@ Before you begin, ensure you have the following installed:
 
    - Create and upload missions to the UAVs and UGVs.
    - Monitor mission progress in real-time.
-   
+
 ## Project Structure
 
 ```plaintext
@@ -110,6 +110,7 @@ GUI_DARPA/
 │   ├── data.json
 │   ├── index.js
 │   ├── package.json
+│
 ├── front/
 │   ├── .eslintrc.cjs
 │   ├── .gitignore
@@ -121,14 +122,13 @@ GUI_DARPA/
 │       ├── App.jsx            # Main app component
 │       ├── assets/            # Images, icons, etc.
 │       ├── Comps/
-│       │   └── Control.jsx    # Reusable UI components
 │       ├── config.jsx
 │       ├── context/
 │       ├── data/
 │       ├── index.css
 │       └── main.jsx           # Entry point
 │   ├── vite.config.js         # Vite configuration
-├── gitpush.sh
+│
 ├── Python/
 │   ├── .env
 │   ├── config/
@@ -146,6 +146,7 @@ GUI_DARPA/
 │   ├── waypoints.txt
 │   └── waypointsr.txt
 ├── README.md
+├── gitpush.sh
 
 ```
 ## Configuration
