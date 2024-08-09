@@ -107,6 +107,7 @@ function Telemexp() {
     displacment: haversine_distance( 28.753681733536023, 77.11523238257983, telemetryData.latitude, telemetryData.longitude),
     flymission: flyMission,
     circle: circle,
+    ip: telemetryData.ip,
   };
 
   const UGVvehicleData = {
@@ -127,6 +128,7 @@ function Telemexp() {
     flymission: goto_command_rover,
     uploadMission_rover: uploadMission_rover,
     auto: auto_command_rover,
+    ip: telemetryData_rover.ip,
   };
   const UGVvehicleData2 = {
     name: "UGV2",
@@ -146,6 +148,7 @@ function Telemexp() {
     flymission: goto_command_rover,
     uploadMission_rover: uploadMission_rover,
     auto: auto_command_rover,
+    ip: telemetryData_rover2.ip,
   };
   const UGVvehicleData3 = {
     name: "UGV3",
@@ -165,6 +168,7 @@ function Telemexp() {
     flymission: goto_command_rover,
     uploadMission_rover: uploadMission_rover,
     auto: auto_command_rover,
+    ip: telemetryData_rover3.ip,
   };
 
   return (

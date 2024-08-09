@@ -136,6 +136,7 @@ class RoverController3:
                             "velocity": self.ugv_connection.velocity,
                             "status": self.ugv_connection.system_status.state,
                             "heartbeat":self.ugv_connection.last_heartbeat,
+                            "ip": self.RoverIP
 
                         }
                         try:

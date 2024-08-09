@@ -150,6 +150,7 @@ class DroneController:
 						"heading":self.uav_connection.heading,
 						"heartbeat":self.uav_connection.last_heartbeat,
 						"locations":locations,
+						"ip":self.DroneIP,
 					}
 						try:
 							self.sio.emit('telemetry',telemetry_data,namespace="/python")

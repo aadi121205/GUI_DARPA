@@ -57,8 +57,8 @@ const Teleminforov = ({ vehicle }) => {
               </h5>
               </Button>
         </Col>
-        <Col style={{display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: "50px"}}>  
-              <SignalBars st={vehicle.signalStrength} />
+        <Col style={{justifyContent: "center", alignItems: "center", paddingTop: "30px", paddingBottom: "30px"}}>  
+              <SignalBars st={vehicle} />
         </Col>
         <Col style={{display: "flex", justifyContent: "center", alignItems: "center"}}>  
         <Modal vehicle={vehicle} />

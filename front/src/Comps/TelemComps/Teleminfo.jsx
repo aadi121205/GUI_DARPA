@@ -18,12 +18,12 @@ const Teleminfo = ({ vehicle }) => {
   
   return (
     <div>
-    <Container style={{display: "flex", justifyContent: "flex-start", alignItems: "left", paddingLeft: "50px", paddingRight: "40px", paddingBottom: "10px", paddingTop: "10px", margin: "5px"}}>
-        <Col style={{display: "flex", justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-            <h3 style={style}>
-                {vehicle.name}
-            </h3>
-        </Col>
+      <Container style={{display: "flex", justifyContent: "flex-start", alignItems: "left", paddingLeft: "50px", paddingRight: "40px", paddingBottom: "10px", paddingTop: "10px", margin: "5px"}}>
+          <Col style={{display: "flex", justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
+              <h3 style={style}>
+                  {vehicle.name}
+              </h3>
+          </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
               <h6>ALTITUDE</h6>
               <h5>
@@ -56,8 +56,8 @@ const Teleminfo = ({ vehicle }) => {
               </h5>
               </Button>
         </Col>
-        <Col style={{display: "flex", justifyContent: "center", alignItems: "center", paddingBottom: "50px"}}>  
-              <SignalBars st={vehicle.signalStrength} />
+        <Col style={{justifyContent: "center", alignItems: "center", paddingTop: "30px", paddingBottom: "30px"}}>  
+          <SignalBars st={vehicle} />
         </Col>
         <Col style={{display: "flex", justifyContent: "center", alignItems: "center"}}>  
         <Modal vehicle={vehicle} />
