@@ -99,57 +99,53 @@ Before you begin, ensure you have the following installed:
 
    - Create and upload missions to the UAVs and UGVs.
    - Monitor mission progress in real-time.
+   
 ## Project Structure
 
 ```plaintext
 GUI_DARPA/
+├── .gitignore
+├── back/
+│   ├── .env
+│   ├── data.json
+│   ├── index.js
+│   ├── package.json
 ├── front/
+│   ├── .eslintrc.cjs
+│   ├── .gitignore
+│   ├── index.html
+│   ├── package.json
 │   ├── public/                # Static assets
-│   ├── src/
-│   │   ├── assets/            # Images, icons, etc.
-│   │   ├── components/        # Reusable UI components
-│   │   ├── hooks/             # Custom React hooks
-│   │   ├── pages/             # Application pages
-│   │   ├── services/          # API services and Socket.io integration
-│   │   ├── styles/            # Global and component-specific styles
-│   │   ├── App.jsx            # Main app component
-│   │   └── main.jsx           # Entry point
-│   │
-│   ├── package.json           # Project metadata and dependencies
-│   ├── README.md              # Project documentation
-│   └── vite.config.js         # Vite configuration
-
-├── Back/
-│   ├── public/                # Static assets
-│   ├── src/
-│   │   ├── assets/            # Images, icons, etc.
-│   │   ├── components/        # Reusable UI components
-│   │   ├── hooks/             # Custom React hooks
-│   │   ├── pages/             # Application pages
-│   │   ├── services/          # API services and Socket.io integration
-│   │   ├── styles/            # Global and component-specific styles
-│   │   ├── App.jsx            # Main app component
-│   │   └── main.jsx           # Entry point
-│   │
-│   ├── package.json           # Project metadata and dependencies
-│   ├── README.md              # Project documentation
-│   └── vite.config.js         # Vite configuration
-
+│   └── src/
+│       ├── App.css
+│       ├── App.jsx            # Main app component
+│       ├── assets/            # Images, icons, etc.
+│       ├── Comps/
+│       │   └── Control.jsx    # Reusable UI components
+│       ├── config.jsx
+│       ├── context/
+│       ├── data/
+│       ├── index.css
+│       └── main.jsx           # Entry point
+│   ├── vite.config.js         # Vite configuration
+├── gitpush.sh
 ├── Python/
-│   ├── public/                # Static assets
-│   ├── src/
-│   │   ├── assets/            # Images, icons, etc.
-│   │   ├── components/        # Reusable UI components
-│   │   ├── hooks/             # Custom React hooks
-│   │   ├── pages/             # Application pages
-│   │   ├── services/          # API services and Socket.io integration
-│   │   ├── styles/            # Global and component-specific styles
-│   │   ├── App.jsx            # Main app component
-│   │   └── main.jsx           # Entry point
-│   │
-│   ├── package.json           # Project metadata and dependencies
-│   ├── README.md              # Project documentation
-│   └── vite.config.js         # Vite configuration
+│   ├── .env
+│   ├── config/
+│   │   ├── coordinates.txt
+│   │   ├── mission.txt
+│   │   ├── waypoints.txt
+│   ├── image_capture.py
+│   ├── main.py
+│   ├── mission_rover.txt
+│   ├── socket_client.py
+│   ├── UAV.py
+│   ├── UGV.py
+│   ├── UGV2.py
+│   ├── UGV3.py
+│   ├── waypoints.txt
+│   └── waypointsr.txt
+├── README.md
 
 ```
 ## Configuration
