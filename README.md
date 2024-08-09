@@ -12,6 +12,7 @@ This project is a graphical user interface (GUI) built with React and Vite. It i
 - [Configuration](#configuration)
 - [Contributing](#contributing)
 - [License](#license)
+- [Contributors](#contributors)
 
 ## Features
 
