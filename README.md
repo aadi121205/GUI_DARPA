@@ -99,61 +99,59 @@ Before you begin, ensure you have the following installed:
 
    - Create and upload missions to the UAVs and UGVs.
    - Monitor mission progress in real-time.
-
 ## Project Structure
 
 ```plaintext
 GUI_DARPA/
 ├── front/
-    ├── public/                # Static assets
-    ├── src/
-    │   ├── assets/            # Images, icons, etc.
-    │   ├── components/        # Reusable UI components
-    │   ├── hooks/             # Custom React hooks
-    │   ├── pages/             # Application pages
-    │   ├── services/          # API services and Socket.io integration
-    │   ├── styles/            # Global and component-specific styles
-    │   ├── App.jsx            # Main app component
-    │   └── main.jsx           # Entry point
-    │
-    ├── package.json           # Project metadata and dependencies
-    ├── README.md              # Project documentation
-    └── vite.config.js         # Vite configuration
+│   ├── public/                # Static assets
+│   ├── src/
+│   │   ├── assets/            # Images, icons, etc.
+│   │   ├── components/        # Reusable UI components
+│   │   ├── hooks/             # Custom React hooks
+│   │   ├── pages/             # Application pages
+│   │   ├── services/          # API services and Socket.io integration
+│   │   ├── styles/            # Global and component-specific styles
+│   │   ├── App.jsx            # Main app component
+│   │   └── main.jsx           # Entry point
+│   │
+│   ├── package.json           # Project metadata and dependencies
+│   ├── README.md              # Project documentation
+│   └── vite.config.js         # Vite configuration
 
 ├── Back/
-    ├── public/                # Static assets
-    ├── src/
-    │   ├── assets/            # Images, icons, etc.
-    │   ├── components/        # Reusable UI components
-    │   ├── hooks/             # Custom React hooks
-    │   ├── pages/             # Application pages
-    │   ├── services/          # API services and Socket.io integration
-    │   ├── styles/            # Global and component-specific styles
-    │   ├── App.jsx            # Main app component
-    │   └── main.jsx           # Entry point
-    │
-    ├── package.json           # Project metadata and dependencies
-    ├── README.md              # Project documentation
-    └── vite.config.js         # Vite configuration
-
+│   ├── public/                # Static assets
+│   ├── src/
+│   │   ├── assets/            # Images, icons, etc.
+│   │   ├── components/        # Reusable UI components
+│   │   ├── hooks/             # Custom React hooks
+│   │   ├── pages/             # Application pages
+│   │   ├── services/          # API services and Socket.io integration
+│   │   ├── styles/            # Global and component-specific styles
+│   │   ├── App.jsx            # Main app component
+│   │   └── main.jsx           # Entry point
+│   │
+│   ├── package.json           # Project metadata and dependencies
+│   ├── README.md              # Project documentation
+│   └── vite.config.js         # Vite configuration
 
 ├── Python/
-    ├── public/                # Static assets
-    ├── src/
-    │   ├── assets/            # Images, icons, etc.
-    │   ├── components/        # Reusable UI components
-    │   ├── hooks/             # Custom React hooks
-    │   ├── pages/             # Application pages
-    │   ├── services/          # API services and Socket.io integration
-    │   ├── styles/            # Global and component-specific styles
-    │   ├── App.jsx            # Main app component
-    │   └── main.jsx           # Entry point
-    │
-    ├── package.json           # Project metadata and dependencies
-    ├── README.md              # Project documentation
-    └── vite.config.js         # Vite configuration
-```
+│   ├── public/                # Static assets
+│   ├── src/
+│   │   ├── assets/            # Images, icons, etc.
+│   │   ├── components/        # Reusable UI components
+│   │   ├── hooks/             # Custom React hooks
+│   │   ├── pages/             # Application pages
+│   │   ├── services/          # API services and Socket.io integration
+│   │   ├── styles/            # Global and component-specific styles
+│   │   ├── App.jsx            # Main app component
+│   │   └── main.jsx           # Entry point
+│   │
+│   ├── package.json           # Project metadata and dependencies
+│   ├── README.md              # Project documentation
+│   └── vite.config.js         # Vite configuration
 
+```
 ## Configuration
 
 - **Socket.io Server URL**: Update the `.env` file with the URL of your Socket.io server.
