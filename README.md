@@ -171,6 +171,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contributors
 
-- **[Contributor Name 1](https://github.com/username1)** - [GitHub](https://github.com/username1) | [LinkedIn](https://www.linkedin.com/in/username1)
+- **[Aaditya Bhatia](https://github.com/aadi121205)** - [GitHub](https://github.com/aadi121205) | [LinkedIn](https://www.linkedin.com/in/aaditya-bhatia-170b76187/)
 - **[Contributor Name 2](https://github.com/username2)** - [GitHub](https://github.com/username2) | [LinkedIn](https://www.linkedin.com/in/username2)
 - **[Contributor Name 3](https://github.com/username3)** - [GitHub](https://github.com/username3) | [LinkedIn](https://www.linkedin.com/in/username3)
