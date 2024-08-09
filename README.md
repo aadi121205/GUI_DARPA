@@ -1,6 +1,3 @@
-Here's the corrected version with everything in code format:
-
-```markdown
 # Multi-UAV/UGV Control GUI
 
 This project is a graphical user interface (GUI) built with React and Vite. It is designed to control and monitor multiple Unmanned Aerial Vehicles (UAVs) and Unmanned Ground Vehicles (UGVs) using DroneKit and Socket.io. The system is developed specifically for the DARPA Triage Challenge, enabling real-time control and data visualization of multiple drones and ground robots.
