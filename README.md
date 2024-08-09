@@ -22,8 +22,7 @@ This project is a graphical user interface (GUI) built with React and Vite. It i
 - **Socket.io integration**: Seamless communication between the frontend and backend.
 - **Responsive UI**: Accessible from various devices.
 
-![Gui IMG](https://postimg.cc/9RLM620F)
-
+[![Screenshot-from-2024-08-09-23-50-07.png](https://i.postimg.cc/MHSQjK8R/Screenshot-from-2024-08-09-23-50-07.png)](https://postimg.cc/9RLM620F)
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
