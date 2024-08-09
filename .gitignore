@@ -1,8 +1,3 @@
-new_backend/sample.json
-new_backend/node_modules/
-new_backend/GlobalJSON.json
-nstance_*
-siltsim
 node_modules
 # Frontend ignores:
 frontend/node_modules
@@ -13,5 +8,5 @@ backend/node_modules
 #python ignores
 /Python/Weights
 /Python/__pycache__
+
 /Python/Missions
-NEW-GUI/Python/__pycache__
