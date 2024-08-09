@@ -68,16 +68,21 @@ Before you begin, ensure you have the following installed:
 4. **Start the development server:**
 
    ```bash
+   cd front
    npm run dev
    ```
 
-   Or using Yarn:
-
    ```bash
-   yarn dev
+   cd back
+   npm run start
    ```
 
-   The app will be available at `http://localhost:3000`.
+   ```bash
+   cd Python
+   Python main.py
+   ```
+
+   The app will be available at `http://localhost:5173/`.
 
 ## Usage
 
@@ -98,23 +103,55 @@ Before you begin, ensure you have the following installed:
 ## Project Structure
 
 ```plaintext
-multi-uav-ugv-control-gui/
-│
-├── public/                # Static assets
-├── src/
-│   ├── assets/            # Images, icons, etc.
-│   ├── components/        # Reusable UI components
-│   ├── hooks/             # Custom React hooks
-│   ├── pages/             # Application pages
-│   ├── services/          # API services and Socket.io integration
-│   ├── styles/            # Global and component-specific styles
-│   ├── App.jsx            # Main app component
-│   └── main.jsx           # Entry point
-│
-├── .env                   # Environment variables
-├── package.json           # Project metadata and dependencies
-├── README.md              # Project documentation
-└── vite.config.js         # Vite configuration
+GUI_DARPA/
+├── front/
+    ├── public/                # Static assets
+    ├── src/
+    │   ├── assets/            # Images, icons, etc.
+    │   ├── components/        # Reusable UI components
+    │   ├── hooks/             # Custom React hooks
+    │   ├── pages/             # Application pages
+    │   ├── services/          # API services and Socket.io integration
+    │   ├── styles/            # Global and component-specific styles
+    │   ├── App.jsx            # Main app component
+    │   └── main.jsx           # Entry point
+    │
+    ├── package.json           # Project metadata and dependencies
+    ├── README.md              # Project documentation
+    └── vite.config.js         # Vite configuration
+
+├── Back/
+    ├── public/                # Static assets
+    ├── src/
+    │   ├── assets/            # Images, icons, etc.
+    │   ├── components/        # Reusable UI components
+    │   ├── hooks/             # Custom React hooks
+    │   ├── pages/             # Application pages
+    │   ├── services/          # API services and Socket.io integration
+    │   ├── styles/            # Global and component-specific styles
+    │   ├── App.jsx            # Main app component
+    │   └── main.jsx           # Entry point
+    │
+    ├── package.json           # Project metadata and dependencies
+    ├── README.md              # Project documentation
+    └── vite.config.js         # Vite configuration
+
+
+├── Python/
+    ├── public/                # Static assets
+    ├── src/
+    │   ├── assets/            # Images, icons, etc.
+    │   ├── components/        # Reusable UI components
+    │   ├── hooks/             # Custom React hooks
+    │   ├── pages/             # Application pages
+    │   ├── services/          # API services and Socket.io integration
+    │   ├── styles/            # Global and component-specific styles
+    │   ├── App.jsx            # Main app component
+    │   └── main.jsx           # Entry point
+    │
+    ├── package.json           # Project metadata and dependencies
+    ├── README.md              # Project documentation
+    └── vite.config.js         # Vite configuration
 ```
 
 ## Configuration
