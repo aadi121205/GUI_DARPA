@@ -37,3 +37,5 @@ Before you begin, ensure you have the following installed:
    ```bash
    git clone https://github.com/yourusername/multi-uav-ugv-control-gui.git
    cd multi-uav-ugv-control-gui
+
+2. **Install dependencies:**
