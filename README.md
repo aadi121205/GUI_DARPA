@@ -159,6 +159,7 @@ GUI_DARPA/
 - **Socket.io Server URL**: Update the `.env` file with the URL of your Socket.io server.
 - **API Endpoints**: Configure any necessary API endpoints in the `.env` file or in the `services` folder.
 
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository and create a pull request with your changes.
@@ -172,3 +173,9 @@ Contributions are welcome! Please fork the repository and create a pull request 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contributors
+
+- **[Contributor Name 1](https://github.com/username1)** - [GitHub](https://github.com/username1) | [LinkedIn](https://www.linkedin.com/in/username1)
+- **[Contributor Name 2](https://github.com/username2)** - [GitHub](https://github.com/username2) | [LinkedIn](https://www.linkedin.com/in/username2)
+- **[Contributor Name 3](https://github.com/username3)** - [GitHub](https://github.com/username3) | [LinkedIn](https://www.linkedin.com/in/username3)
