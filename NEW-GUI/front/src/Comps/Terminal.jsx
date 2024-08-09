@@ -1,40 +1,46 @@
-// src/components/GenomeTerminal.js
 import React, { useEffect, useRef } from 'react';
 import { Terminal } from 'xterm';
 import { FitAddon } from 'xterm-addon-fit';
 import 'xterm/css/xterm.css';
 
-const GenomeTerminal = () => {
+const TerminalComponent = () => {
   const terminalRef = useRef(null);
-  const terminal = useRef(null);
   const fitAddon = new FitAddon();
 
   useEffect(() => {
-    terminal.current = new Terminal();
-    terminal.current.loadAddon(fitAddon);
-    terminal.current.open(terminalRef.current);
+    const terminal = new Terminal();
+    terminal.loadAddon(fitAddon);
+
+    terminal.open(terminalRef.current);
     fitAddon.fit();
 
-    terminal.current.writeln('Welcome to Genome Terminal');
-    terminal.current.writeln('Type your commands below:');
-    
-    // Handle user input
-    terminal.current.onKey(({ key, domEvent }) => {
-      if (domEvent.keyCode === 13) { // Enter key
-        terminal.current.writeln('');
-        // Add logic to handle the command
-        // Example: terminal.current.writeln(`You typed: ${command}`);
-      } else {
-        // Append key to the command
+    terminal.write('Welcome to the React Terminal!\r\n');
+    terminal.write('$ ');
+
+    terminal.onKey(({ key, domEvent }) => {
+      const char = key;
+      const printable = (
+        !domEvent.altKey && !domEvent.ctrlKey && !domEvent.metaKey
+      );
+
+      if (domEvent.keyCode === 13) { // Enter
+        terminal.write('\r\n$ ');
+      } else if (domEvent.keyCode === 8) { // Backspace
+        if (terminal._core.buffer.x > 2) {
+          terminal.write('\b \b');
+        }
+      } else if (printable) {
+        terminal.write(char);
       }
     });
 
+    // Cleanup
     return () => {
-      terminal.current.dispose();
+      terminal.dispose();
     };
   }, []);
 
-  return <div ref={terminalRef} style={{ width: '100%', height: '100vh' }} />;
+  return <div ref={terminalRef} style={{ height: '100%', width: '100%' }} />;
 };
 
-export default GenomeTerminal;
+export default TerminalComponent;

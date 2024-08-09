@@ -12,10 +12,9 @@ export default function Map() {
   const map = useRef();
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
-  const [zoom, setZoom] = useState(16.3);
-  const { telemetryData, telemetryData_rover,telemetryData_rover2,telemetryData_rover3 } = React.useContext(telemContext);
+  const [zoom, setZoom] = useState(17.3);
+  const { telemetryData } = React.useContext(telemContext);
   const [uavMarker, setUavMarker] = useState(null);
-  const [roverMarker, setRoverMarker] = useState(null);
 
   useEffect(() => {
     if (map.current) return; // Initialize map only once
@@ -63,7 +62,7 @@ export default function Map() {
         layout: {},
         paint: {
           "fill-color": "#798b90",
-          "fill-opacity": 0.5,
+          "fill-opacity": 0.35,
         },
       });
       map.current.addLayer({
@@ -73,7 +72,7 @@ export default function Map() {
         layout: {},
         paint: {
           "line-color": "#000",
-          "line-width": 3,
+          "line-width": 4,
         },
       });
     });
@@ -115,12 +114,12 @@ export default function Map() {
       essential: true,
     });
   }, [telemetryData]);
-  
+
   return (
     <div>
       <div id="map" className="map">
         <div className="sidebar">
-          <strong>UAV1:-</strong> Longitude: {telemetryData?.longitude} | Latitude:{" "}
+          <strong>UAV:-</strong> Longitude: {telemetryData?.longitude} | Latitude:{" "}
           {telemetryData?.latitude}
           <br />
           <strong>DTU Campus  | Zoom: {zoom}</strong>
