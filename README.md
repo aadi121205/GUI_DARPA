@@ -35,8 +35,8 @@ Before you begin, ensure you have the following installed:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/multi-uav-ugv-control-gui.git
-   cd multi-uav-ugv-control-gui
+   git clone https://github.com/aadi121205/GUI_DARPA.git
+   cd GUI_DARPA
    ```
 
 2. **Install dependencies:**
@@ -44,18 +44,26 @@ Before you begin, ensure you have the following installed:
    Using npm:
 
    ```bash
+   cd front
+   npm install
+   cd ..
+   cd back
    npm install
    ```
 
    Or using Yarn:
 
    ```bash
+   cd front
+   yarn install
+   cd ..
+   cd back
    yarn install
    ```
 
 3. **Configure the environment:**
 
-   Create a `.env` file in the root directory and add your configurations (e.g., API endpoints, Socket.io server URL).
+   change the `.env` files in the Python and back directory and add your configurations to front/src/config.jsx(e.g., API endpoints, Socket.io server URL).
 
 4. **Start the development server:**
 
