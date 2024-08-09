@@ -26,9 +26,10 @@ This project is a graphical user interface (GUI) built with React and Vite. It i
 
 Before you begin, ensure you have the following installed:
 
-- **Node.js** (v14 or later)
-- **npm** (v6 or later) or **Yarn** (v1.22 or later)
-- **Python** (v3.7 or later) with DroneKit installed
+- **Node.js** (v18 or later)
+- **npm** (v9 or later) or **Yarn** (v1.22 or later)
+- **Python** (v3.8 or later) with DroneKit installed
+- **SITL** (Optional) for testing before deployment
 - **Socket.io** backend server setup
 
 ## Installation
@@ -62,9 +63,23 @@ Before you begin, ensure you have the following installed:
    yarn install
    ```
 
+   For Python:
+
+   ```bash
+   # Step 1: Create the Conda environment with Python 3.10
+   conda create --name myenv python=3.10
+
+   # Step 2: Activate the environment
+   conda activate myenv
+
+   # Step 3: Install dependencies from requirements.txt
+   pip install -r requirements.txt
+
+   ```
+
 3. **Configure the environment:**
 
-   change the `.env` files in the Python and back directory and add your configurations to front/src/config.jsx(e.g., API endpoints, Socket.io server URL).
+   change the `.env` files in the Python and back directory and add your configurations to front/src/config.jsx (e.g., API endpoints, Socket.io server URL).
 
 4. **Start the development server:**
 
