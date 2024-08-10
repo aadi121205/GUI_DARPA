@@ -15,3 +15,6 @@ backend/node_modules
 /Python/__pycache__
 /Python/Missions
 NEW-GUI/Python/__pycache__
+
+.DS_Store
+NEW-GUI/.DS_Store

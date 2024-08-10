@@ -36,10 +36,16 @@ const roverNamespace2 = io.of('/rover2');
 const roverNamespace3 = io.of('/rover3');
 const reactNamespace = io.of('/react');
 
+const dataRover1 = io.of ('/datarover1')
+const dataRover2 = io.of ('/datarover2')
+const dataRover3 = io.of ('/datarover3')
+const dataNamespace = io.of('/data')
+
+
 // Python namespace
 pythonNamespace.on('connection', (socket) => {
     console.log('A Python client connected_UAV');
-
+    
     socket.on('telemetry', (data) => {
         counter = 0
         if (telemetryActive) {
@@ -59,64 +65,114 @@ pythonNamespace.on('connection', (socket) => {
 // Rover namespace
 roverNamespace.on('connection', (socket) => {
     console.log('A Python client connected');
-
+    
     socket.on("image_rover",(payload)=>{
         reactNamespace.emit('video_image_rover',payload)
     })
     socket.on('telemetry_rover', (data) => {
         counter = 0
-
+        
         // console.log("Telemetry received:", data);
         if(telemetryroverActive){
             reactNamespace.emit('telemetryServer_rover', data);
         }
     })
-
+    
     socket.on('disconnect_rover', () => {
         console.log('A Python client disconnected');
     });
 });
 roverNamespace2.on('connection', (socket) => {
     console.log('A Python client 2 connected');
-
+    
     socket.on("image_rover2",(payload)=>{
         reactNamespace.emit('video_image_rover2',payload)
     })
     socket.on('telemetry_rover2', (data) => {
         counter = 0
-
+        
         // console.log("Telemetry received:", data);
         if(telemetryroverActive){
             reactNamespace.emit('telemetryServer_rover2', data);
         }
     })
-
+    
     socket.on('disconnect_rover3', () => {
         console.log('A Python client 3 disconnected');
     });
 });
 roverNamespace3.on('connection', (socket) => {
     console.log('A Python client 3 connected');
-
+    
     socket.on("image_rover3",(payload)=>{
         reactNamespace.emit('video_image_rover3',payload)
     })
     socket.on('telemetry_rover3', (data) => {
         counter = 0
-
+        
         // console.log("Telemetry received:", data);
         if(telemetryroverActive){
             reactNamespace.emit('telemetryServer_rover3', data);
         }
     })
-
+    
     socket.on('disconnect_rover3', () => {
         console.log('A Python client 3 disconnected');
     });
 });
+// Handle connections to dataRover1 namespace
+dataRover1.on('connection', (socket) => {
+    console.log('Data Rover 1 connected');
+    socket.on('data1', (data) => {
+        // console.log('Data Rover 1 received:', data);
+        dataNamespace.emit('dataRover1', data);
+    });
+    socket.on('disconnect', () => {
+        console.log('Data Rover 1 disconnected');
+    });
+});
 
+// Handle connections to dataRover2 namespace
+dataRover2.on('connection', (socket) => {
+    console.log('Data Rover 2 connected');
+    socket.on('data2', (data) => {
+        // console.log('Data Rover 2 received:', data);
+        dataNamespace.emit('dataRover2', data);
+    });
+    socket.on('disconnect', () => {
+        console.log('Data Rover 2 disconnected');
+    });
+});
 
-// React namespace
+// Handle connections to dataRover3 namespace
+dataRover3.on('connection', (socket) => {
+    console.log('Data Rover 3 connected');
+    socket.on('data3', (data) => {
+        // console.log('Data Rover 3 received:', data);
+        dataNamespace.emit('dataRover3', data);
+    });
+    socket.on('disconnect', () => {
+        console.log('Data Rover 3 disconnected');
+    });
+});
+
+// Handle connections to data namespace
+dataNamespace.on('connection', (socket) => {
+    console.log('A Data client connected');
+    socket.on('dataRover1', (data) => {
+        console.log('Data received for Rover 1:', data);
+        // dataRover1.emit('Rover1_data', data);
+    });
+    socket.on('dataRover2', (data) => {
+        console.log('Data received for Rover 2:', data);
+        // dataRover2.emit('Rover2_data', data);
+    });
+    socket.on('dataRover3', (data) => {
+        console.log('Data received for Rover 3:', (data));
+        // dataRover3.emit('Rover3_data', data);
+    });
+});
+
 reactNamespace.on('connection', (socket) => {
     console.log('A React client connected_ROVER');
 
