@@ -13,18 +13,18 @@ export default function Map() {
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
   const [zoom, setZoom] = useState(16.3);
-  const { telemetryData, telemetryData_rover,telemetryData_rover2,telemetryData_rover3 } = React.useContext(telemContext);
+  const { telemetryData, telemetryData_rover, telemetryData_rover2, telemetryData_rover3 } = useContext(telemContext);
   const [uavMarker, setUavMarker] = useState(null);
   const [roverMarker, setRoverMarker] = useState(null);
   const [roverMarker2, setRoverMarker2] = useState(null);
   const [roverMarker3, setRoverMarker3] = useState(null);
+  const [uav_point_marker, setPointuavmarker] = useState([]);
 
   useEffect(() => {
     if (map.current) return; // Initialize map only once
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/satellite-streets-v12",
-      //style: "mapbox://styles/mapbox/satellite-v9",
       center: [lng, lat],
       zoom: zoom,
     });
@@ -36,7 +36,6 @@ export default function Map() {
     });
 
     map.current.on("load", () => {
-      // Add a data source containing GeoJSON data.
       map.current.addSource("dtuCampus", {
         type: "geojson",
         data: {
@@ -103,7 +102,7 @@ export default function Map() {
     uavElement.style.cursor = 'pointer';
 
     uavElement.addEventListener('click', () => {
-    window.alert('UAV Location: ' + latitude + ', ' + longitude);
+      window.alert('UAV Location: ' + latitude + ', ' + longitude);
     });
 
     const newUavMarker = new mapboxgl.Marker(uavElement)
@@ -124,7 +123,7 @@ export default function Map() {
     }
     if (!telemetryData_rover || !telemetryData_rover.latitude || !telemetryData_rover.longitude) return;
 
-    const { latitude , longitude } = telemetryData_rover;
+    const { latitude, longitude } = telemetryData_rover;
 
     const roverElement = document.createElement('div');
     roverElement.className = 'marker';
@@ -139,7 +138,6 @@ export default function Map() {
     roverElement.addEventListener('click', () => {
       window.alert('Rover Location');
     });
-
 
     const newRoverMarker = new mapboxgl.Marker(roverElement)
       .setLngLat([longitude, latitude])
@@ -172,13 +170,12 @@ export default function Map() {
       window.alert('Rover Location');
     });
 
-    const newRoverMarker3 = new mapboxgl.Marker(roverElement)
+    const newRoverMarker2 = new mapboxgl.Marker(roverElement)
       .setLngLat([longitude, newLatitude])
       .addTo(map.current);
 
-    setRoverMarker(newRoverMarker3);
-  }
-  , [telemetryData_rover2]);
+    setRoverMarker2(newRoverMarker2);
+  }, [telemetryData_rover2]);
 
   useEffect(() => {
     if (roverMarker3) {
@@ -188,7 +185,6 @@ export default function Map() {
 
     const { latitude, longitude } = telemetryData_rover3;
     const newLatitude = latitude - 0.0001;
-
 
     const roverElement = document.createElement('div');
     roverElement.className = 'marker';
@@ -208,40 +204,40 @@ export default function Map() {
       .setLngLat([longitude, newLatitude])
       .addTo(map.current);
 
-    setRoverMarker(newRoverMarker3);
-  } , [telemetryData_rover3]);
+    setRoverMarker3(newRoverMarker3);
+  }, [telemetryData_rover3]);
 
+  // New useEffect for handling multiple UAV point markers
   useEffect(() => {
-    if (roverMarker3) {
-      roverMarker3.remove();
+    // Remove previous markers if they exist
+    if (uav_point_marker) {
+      uav_point_marker.forEach(marker => marker.remove());
     }
-    if (!telemetryData_rover3 || !telemetryData_rover3.latitude || !telemetryData_rover3.longitude) return;
 
-    const { latitude, longitude } = telemetryData_rover3;
-    const newLatitude = latitude - 0.0001;
+    if (!telemetryData || !telemetryData.locations || telemetryData.locations.length === 0) return;
 
+    const newMarkers = telemetryData.locations.map(([latitude, longitude, altitude]) => {
+      const uavElement = document.createElement('div');
+      uavElement.className = 'marker';
+      uavElement.style.backgroundImage = 'url(https://iili.io/d05PIou.md.png)';
+      uavElement.style.width = '30px';
+      uavElement.style.height = '30px';
+      uavElement.style.backgroundSize = '100%';
+      uavElement.style.border = 'none';
+      uavElement.style.borderRadius = '50%';
+      uavElement.style.cursor = 'pointer';
 
-    const roverElement = document.createElement('div');
-    roverElement.className = 'marker';
-    roverElement.style.backgroundImage = 'url(https://iili.io/dBmOJb1.png)';
-    roverElement.style.width = '30px';
-    roverElement.style.height = '30px';
-    roverElement.style.backgroundSize = '100%';
-    roverElement.style.border = 'none';
-    roverElement.style.borderRadius = '50%';
-    roverElement.style.cursor = 'pointer';
+      uavElement.addEventListener('click', () => {
+        window.alert(`UAV Location: Lat ${latitude}, Lng ${longitude}, Alt ${altitude}`);
+      });
 
-    roverElement.addEventListener('click', () => {
-      window.alert('Rover Location');
+      return new mapboxgl.Marker(uavElement)
+        .setLngLat([longitude, latitude])
+        .addTo(map.current);
     });
 
-    const newRoverMarker3 = new mapboxgl.Marker(roverElement)
-      .setLngLat([longitude, newLatitude])
-      .addTo(map.current);
-
-    setRoverMarker(newRoverMarker3);
-  } , [telemetryData_rover3]);
-
+    setPointuavmarker(newMarkers);
+  }, [telemetryData.locations]);
 
   return (
     <div>
@@ -260,6 +256,8 @@ export default function Map() {
           {telemetryData_rover3?.latitude}
           <br />
           <strong>DTU Campus  | Zoom: {zoom}</strong>
+          <br />
+          <strong>{telemetryData.locations && telemetryData.locations.length} UAV Points</strong>
         </div>
         <Modal />
         <div ref={mapContainer} className="map-container" />

@@ -43,7 +43,7 @@ pythonNamespace.on('connection', (socket) => {
     socket.on('telemetry', (data) => {
         counter = 0
         if (telemetryActive) {
-            // console.log("Telemetry received:", data);
+            console.log("Telemetry received:", data);
             reactNamespace.emit('telemetryServer', data);
         }
     });
