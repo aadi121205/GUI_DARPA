@@ -193,4 +193,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 - **[Aaditya Bhatia](https://github.com/aadi121205)** - [GitHub](https://github.com/aadi121205) | [LinkedIn](https://www.linkedin.com/in/aaditya-bhatia-170b76187/) | [Instgarm](https://www.instagram.com/aaadi_b/)
 - **[Bhavya Singh](https://github.com/Bhavya092003)** - [GitHub](https://github.com/Bhavya092003) | [LinkedIn](https://www.linkedin.com/in/bhavya-singh-5732b6250/) | [Instgarm](https://www.instagram.com/bhavyasingh_404) 
-- **[Contributor Name 3](https://github.com/username3)** - [GitHub](https://github.com/username3) | [LinkedIn](https://www.linkedin.com/in/username3)
+- **[Harshit Jain](https://github.com/Harshitjain18)** - [GitHub](https://github.com/Harshitjain18) | [LinkedIn](https://www.linkedin.com/in/harshit-jain-b383941b4) | [Instgarm](https://www.instagram.com/harshitjain110)
