@@ -12,7 +12,7 @@ export default function Map() {
   const map = useRef();
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
-  const [zoom, setZoom] = useState(16.3);
+  const [zoom, setZoom] = useState(18);
   const { telemetryData, telemetryData_rover, telemetryData_rover2, telemetryData_rover3 } = useContext(telemContext);
   const [uavMarker, setUavMarker] = useState(null);
   const [roverMarker, setRoverMarker] = useState(null);
@@ -219,9 +219,9 @@ export default function Map() {
     const newMarkers = telemetryData.locations.map(([latitude, longitude, altitude]) => {
       const uavElement = document.createElement('div');
       uavElement.className = 'marker';
-      uavElement.style.backgroundImage = 'url(https://iili.io/d05PIou.md.png)';
-      uavElement.style.width = '30px';
-      uavElement.style.height = '30px';
+      uavElement.style.backgroundImage = 'url(https://iili.io/d0YXcEF.md.png)';
+      uavElement.style.width = '20px';
+      uavElement.style.height = '20px';
       uavElement.style.backgroundSize = '100%';
       uavElement.style.border = 'none';
       uavElement.style.borderRadius = '50%';
