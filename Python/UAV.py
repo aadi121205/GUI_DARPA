@@ -210,26 +210,31 @@ class DroneController:
 		print("Mission completed")
 
 	def flyMission(self):
-		self.arm_and_takeoff(10)
-		with open('waypoints.txt', 'r') as file:
-			for line in file:
-				lat, lon, alt = line.strip().split(',')
-				target_location = LocationGlobalRelative(float(lat), float(lon), float(alt))
-				self.uav_connection.simple_goto(target_location)
+		if self.uav_connection.armed:
+			if self.uav_connection.location.global_relative_frame.alt >= 10:			
+				with open('waypoints.txt', 'r') as file:
+					for line in file:
+						lat, lon, alt = line.strip().split(',')
+						target_location = LocationGlobalRelative(float(lat), float(lon), float(alt))
+						self.uav_connection.simple_goto(target_location)
 
-				uav_lat, uav_lon = self.uav_connection.location.global_frame.lat, self.uav_connection.location.global_frame.lon
+						uav_lat, uav_lon = self.uav_connection.location.global_frame.lat, self.uav_connection.location.global_frame.lon
 
-				while True:
-					uav_lat, uav_lon = self.uav_connection.location.global_frame.lat, self.uav_connection.location.global_frame.lon
+						while True:
+							uav_lat, uav_lon = self.uav_connection.location.global_frame.lat, self.uav_connection.location.global_frame.lon
 
-					remaining_distance = haversine(float(lat), float(lon), uav_lat, uav_lon)
+							remaining_distance = haversine(float(lat), float(lon), uav_lat, uav_lon)
 
-					if remaining_distance < 1:
-						break
-				
-					print(f"Distance to target: {remaining_distance}m")
+							if remaining_distance < 1:
+								break
+						
+							print(f"Distance to target: {remaining_distance}m")
 
-				print("Reached target")
-				time.sleep(1)
-		self.uav_connection.mode = "RTL"
-		print("Mission completed")	
+						print("Reached target")
+						time.sleep(1)
+				self.uav_connection.mode = "RTL"
+				print("Mission completed")	
+			else:
+				print("Drone not Takeoff")
+		else:
+			print("Drone not armed")

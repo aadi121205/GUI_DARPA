@@ -54,7 +54,7 @@ const Modal = ({ vehicle }) => {
             <Button variant="primary" onClick={vehicle.arm}>{vehicle.armed ? "Disarm" : "Arm"}</Button>
             <Button variant="primary" onClick={vehicle.goto}>Goto</Button>
             <Button variant="primary" onClick={vehicle.flymission}>Fly Mission</Button>
-            <Button variant="primary" onClick={vehicle.takeoff}>Takeoff</Button>
+            <Button variant="primary" onClick={vehicle.takeoff}>Arm & Takeoff</Button>
             <Button variant="primary" onClick={vehicle.rtl}>Emergency Stop</Button>
             <Button
               onClick={handleOpen}
