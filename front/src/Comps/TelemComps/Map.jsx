@@ -124,7 +124,7 @@ export default function Map() {
     }
     if (!telemetryData_rover || !telemetryData_rover.latitude || !telemetryData_rover.longitude) return;
 
-    const { latitude, longitude } = telemetryData_rover;
+    const { latitude , longitude } = telemetryData_rover;
 
     const roverElement = document.createElement('div');
     roverElement.className = 'marker';
@@ -139,6 +139,7 @@ export default function Map() {
     roverElement.addEventListener('click', () => {
       window.alert('Rover Location');
     });
+
 
     const newRoverMarker = new mapboxgl.Marker(roverElement)
       .setLngLat([longitude, latitude])
@@ -154,6 +155,8 @@ export default function Map() {
     if (!telemetryData_rover2 || !telemetryData_rover2.latitude || !telemetryData_rover2.longitude) return;
 
     const { latitude, longitude } = telemetryData_rover2;
+    const newLatitude = latitude + 0.0001;
+    const newLongitude = longitude + 0.0001;
 
     const roverElement = document.createElement('div');
     roverElement.className = 'marker';
@@ -169,21 +172,23 @@ export default function Map() {
       window.alert('Rover Location');
     });
 
-    const newRoverMarker = new mapboxgl.Marker(roverElement)
-      .setLngLat([longitude, latitude])
+    const newRoverMarker3 = new mapboxgl.Marker(roverElement)
+      .setLngLat([longitude, newLatitude])
       .addTo(map.current);
 
-    setRoverMarker(newRoverMarker);
+    setRoverMarker(newRoverMarker3);
   }
   , [telemetryData_rover2]);
 
   useEffect(() => {
-    if (roverMarker) {
-      roverMarker.remove();
+    if (roverMarker3) {
+      roverMarker3.remove();
     }
     if (!telemetryData_rover3 || !telemetryData_rover3.latitude || !telemetryData_rover3.longitude) return;
 
     const { latitude, longitude } = telemetryData_rover3;
+    const newLatitude = latitude - 0.0001;
+
 
     const roverElement = document.createElement('div');
     roverElement.className = 'marker';
@@ -199,12 +204,44 @@ export default function Map() {
       window.alert('Rover Location');
     });
 
-    const newRoverMarker = new mapboxgl.Marker(roverElement)
-      .setLngLat([longitude, latitude])
+    const newRoverMarker3 = new mapboxgl.Marker(roverElement)
+      .setLngLat([longitude, newLatitude])
       .addTo(map.current);
 
-    setRoverMarker(newRoverMarker);
+    setRoverMarker(newRoverMarker3);
   } , [telemetryData_rover3]);
+
+  useEffect(() => {
+    if (roverMarker3) {
+      roverMarker3.remove();
+    }
+    if (!telemetryData_rover3 || !telemetryData_rover3.latitude || !telemetryData_rover3.longitude) return;
+
+    const { latitude, longitude } = telemetryData_rover3;
+    const newLatitude = latitude - 0.0001;
+
+
+    const roverElement = document.createElement('div');
+    roverElement.className = 'marker';
+    roverElement.style.backgroundImage = 'url(https://iili.io/dBmOJb1.png)';
+    roverElement.style.width = '30px';
+    roverElement.style.height = '30px';
+    roverElement.style.backgroundSize = '100%';
+    roverElement.style.border = 'none';
+    roverElement.style.borderRadius = '50%';
+    roverElement.style.cursor = 'pointer';
+
+    roverElement.addEventListener('click', () => {
+      window.alert('Rover Location');
+    });
+
+    const newRoverMarker3 = new mapboxgl.Marker(roverElement)
+      .setLngLat([longitude, newLatitude])
+      .addTo(map.current);
+
+    setRoverMarker(newRoverMarker3);
+  } , [telemetryData_rover3]);
+
 
   return (
     <div>

@@ -2,7 +2,6 @@ from dronekit import connect, VehicleMode, Command, LocationGlobalRelative, APIE
 import time
 import os
 import threading
-from dotenv import load_dotenv
 from pymavlink import mavutil
 from math import radians, cos, sin, asin, sqrt
 import subprocess
@@ -198,32 +197,3 @@ class RoverController:
     def set_stop_rover(self):
         self.ugv_connection.mode = VehicleMode("HOLD")
         print("Rover stopped")
-
-    def gotoMission_rover(self):
-        global i
-        self.arm_rover()
-        with open('waypoints.txt', 'r') as file:
-            for line in file:
-                lat, lon = line.strip().split(',')
-                target_location = LocationGlobalRelative(float(lat), float(lon))
-                self.ugv_connection.simple_goto(target_location)
-                ugv_lat, uav_lon = self.ugv_connection.location.global_frame.lat, self.ugv_connection.location.global_frame.lon
-                subprocess.call('python3 doit.py', shell=True)
-                print(f"Distance to target: {remaining_distance}m")
-                while True:
-                    ugv_lat, ugv_lon = self.ugv_connection.location.global_frame.lat, self.ugv_connection.location.global_frame.lon
-                    remaining_distance = haversine(float(lat), float(lon), ugv_lat, ugv_lon)
-                    if remaining_distance < 1:
-                        break
-                print("Reached target")
-                time.sleep(1)
-                target_location = LocationGlobalRelative(float(lat), float(lon))
-                self.ugv_connection.simple_goto(target_location)
-                time.sleep(10)
-                ugv_lat, ugv_lon = self.ugv_connection.location.global_frame.lat, self.ugv_connection.location.global_frame.alt
-                print(f"UGV location: {ugv_lat}, {ugv_lon}")
-                with open('sd.txt', 'w') as file:
-                    file.write(str(i))
-                subprocess.call('python3 doit.py', shell=True)
-                time.sleep(10)
-                i += 1
