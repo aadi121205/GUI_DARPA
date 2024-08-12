@@ -132,6 +132,11 @@ class RoverController:
 
     def send_telemetry_data_rover(self):
         # Continuously send telemetry data from the rover
+        locations = []
+        with open(self.goto_mission, 'r') as file:
+            for line in file:
+                lat, lon = line.strip().split(',')
+                locations.append((float(lat), float(lon)))
         while True:
             try:
                 if self.ugv_connected and not self.ugv_connection._heartbeat_timeout:
@@ -148,6 +153,7 @@ class RoverController:
                             "velocity": self.ugv_connection.velocity,
                             "status": self.ugv_connection.system_status.state,
                             "heartbeat": self.ugv_connection.last_heartbeat,
+                            "locations":locations,
                             "ip": self.RoverIP,
                         }
                         self.sio.emit('telemetry_rover', telemetry_data, namespace="/rover")

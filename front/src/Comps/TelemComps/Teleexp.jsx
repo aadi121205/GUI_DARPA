@@ -79,6 +79,7 @@ function Telemexp() {
       armUgv();
     }
   }
+  
   const [telemetryStarted, setTelemetryStarted] = React.useState(true);
   const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(true);
   telemetryData.groundspeed = Math.round(telemetryData.groundspeed * 100) / 100;
@@ -189,7 +190,6 @@ function Telemexp() {
             <Col>
             <Container style={{ padding: "0px", overflow: "hidden",margin: "0px", paddingLeft: "0px", backgroundColor: "black"}}>
               <Map />
-              {/* <MapOF /> */}
            </Container>
             </Col>
         </Row>

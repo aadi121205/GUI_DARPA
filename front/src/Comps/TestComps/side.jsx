@@ -10,6 +10,7 @@ function Side() {
 
   return (
     <>
+    <h1>{telemetryData.locations}</h1>
     <Map />
     </>
   );

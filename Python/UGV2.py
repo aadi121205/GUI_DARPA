@@ -119,12 +119,18 @@ class RoverController2:
             missionList.append(cmd)
         return missionList
 
-    def send_telemetry_data_rover2(self):
+    def send_telemetry_data_rover(self):
+        # Continuously send telemetry data from the rover
+        locations = []
+        with open(self.goto_mission, 'r') as file:
+            for line in file:
+                lat, lon = line.strip().split(',')
+                locations.append((float(lat), float(lon)))
         while True:
             try:
                 if self.ugv_connected and not self.ugv_connection._heartbeat_timeout:
                     try:
-                        telemetry_data_rover2 = {
+                        telemetry_data = {
                             "latitude": self.ugv_connection.location.global_relative_frame.lat,
                             "longitude": self.ugv_connection.location.global_relative_frame.lon,
                             "altitude": round(self.ugv_connection.location.global_relative_frame.alt, 2),
@@ -135,24 +141,19 @@ class RoverController2:
                             "armed": self.ugv_connection.armed,
                             "velocity": self.ugv_connection.velocity,
                             "status": self.ugv_connection.system_status.state,
-                            "heartbeat":self.ugv_connection.last_heartbeat,
-                            "ip": self.RoverIP
-
+                            "heartbeat": self.ugv_connection.last_heartbeat,
+                            "locations":locations,
+                            "ip": self.RoverIP,
                         }
-                        try:
-                            self.sio.emit('telemetry_rover2', telemetry_data_rover2, namespace="/rover2")
-                        except Exception as e:
-                            print("[Telem] Telemetry not sent ERROR by rover:", str(e))
-                            self.ugv_connected = False
+                        self.sio.emit('telemetry_rover', telemetry_data, namespace="/rover")
                     except Exception as e:
-                        print("[Telem] Telemetry Error:", str(e))
+                        print(f"[Telem] Error sending telemetry data: {e}")
                         self.ugv_connected = False
-                        pass
                     time.sleep(1)
                 else:
                     self.connect_ugv()
             except Exception as e:
-                print("ROVER 2 not connected")
+                print("Rover connection lost, attempting to reconnect...")
                 self.connect_ugv()
 
     def arm_rover2(self):
