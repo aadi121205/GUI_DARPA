@@ -5,21 +5,23 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server, {
+const defaultParams = {
     maxHttpBufferSize: 1e8,
     pingTimeout: 60000,
     pingInterval: 500,
     cors: {
-        origin: "*",  // Allow all origins for testing
-        methods: ["GET", "POST"],
+      origin: "*",  // Allow all origins for testing
+      methods: ["GET", "POST"],
     }
-});
+};
 
-// Variables 
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, defaultParams);
+
+// Variables
 let telemetryActive = false;
-let telemetryRoverActive = false;
+let telemetryroverActive = false;
 let counter = 1;
 let flag = false;
 
@@ -28,24 +30,20 @@ const chartData = [
     { name: 2, x: Math.random() * 10, y: Math.random() * 10 }
 ];
 
-// Namespaces
 const pythonNamespace = io.of('/python');
 const roverNamespace = io.of('/rover');
 const roverNamespace2 = io.of('/rover2');
 const roverNamespace3 = io.of('/rover3');
 const reactNamespace = io.of('/react');
-const dataRover1 = io.of('/datarover1');
-const dataRover2 = io.of('/datarover2');
-const dataRover3 = io.of('/datarover3');
-const dataNamespace = io.of('/data');
 
 // Python namespace
 pythonNamespace.on('connection', (socket) => {
-    console.log('A Python client connected (UAV)');
+    console.log('A Python client connected_UAV');
 
     socket.on('telemetry', (data) => {
         counter = 0;
         if (telemetryActive) {
+            console.log("Telemetry received:", data);
             reactNamespace.emit('telemetryServer', data);
         }
     });
@@ -55,115 +53,85 @@ pythonNamespace.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        console.log('A Python client disconnected (UAV)');
+        console.log('A Python client disconnected');
     });
 });
 
-// Rover namespace handler
-const handleRoverNamespace = (namespace, name, telemetryEvent) => {
+// Rover namespace handlers
+const handleRoverConnection = (namespace, roverId) => {
     namespace.on('connection', (socket) => {
-        console.log(`A Python client connected (${name})`);
+        console.log(`A Python client ${roverId} connected`);
 
-        socket.on(`image_${name.toLowerCase()}`, (payload) => {
-            reactNamespace.emit(`video_image_${name.toLowerCase()}`, payload);
+        socket.on(`image_${roverId}`, (payload) => {
+            reactNamespace.emit(`video_image_${roverId}`, payload);
         });
 
-        socket.on(telemetryEvent, (data) => {
+        socket.on(`telemetry_${roverId}`, (data) => {
             counter = 0;
-            if (telemetryRoverActive) {
-                reactNamespace.emit(`telemetryServer_${name.toLowerCase()}`, data);
+            if (telemetryroverActive) {
+                reactNamespace.emit(`telemetryServer_${roverId}`, data);
+                console.log(`Telemetry received:`, data);
             }
         });
 
         socket.on('disconnect', () => {
-            console.log(`A Python client disconnected (${name})`);
+            console.log(`A Python client ${roverId} disconnected`);
         });
     });
 };
 
 // Initialize rover namespaces
-handleRoverNamespace(roverNamespace, 'Rover', 'telemetry_rover');
-handleRoverNamespace(roverNamespace2, 'Rover2', 'telemetry_rover2');
-handleRoverNamespace(roverNamespace3, 'Rover3', 'telemetry_rover3');
-
-// Data Rover namespaces
-const handleDataRoverNamespace = (namespace, name) => {
-    namespace.on('connection', (socket) => {
-        console.log(`${name} connected`);
-        socket.on(`data${name[name.length - 1]}`, (data) => {
-            dataNamespace.emit(`${name}`, data);
-        });
-        socket.on('disconnect', () => {
-            console.log(`${name} disconnected`);
-        });
-    });
-};
-
-handleDataRoverNamespace(dataRover1, 'Data Rover 1');
-handleDataRoverNamespace(dataRover2, 'Data Rover 2');
-handleDataRoverNamespace(dataRover3, 'Data Rover 3');
-
-// Data namespace
-dataNamespace.on('connection', (socket) => {
-    console.log('A Data client connected');
-
-    ['dataRover1', 'dataRover2', 'dataRover3'].forEach((event) => {
-        socket.on(event, (data) => {
-            console.log(`Data received for ${event.replace('data', 'Rover ')}:`, data);
-        });
-    });
-
-    socket.on('disconnect', () => {
-        console.log('A Data client disconnected');
-    });
-});
+handleRoverConnection(roverNamespace, 'rover');
+handleRoverConnection(roverNamespace2, 'rover2');
+handleRoverConnection(roverNamespace3, 'rover3');
 
 // React namespace
 reactNamespace.on('connection', (socket) => {
-    console.log('A React client connected');
+    console.log('A React client connected_ROVER');
 
-    // Video control
-    ['startvideo', 'startvideo_rover', 'startvideo_rover2', 'startvideo_rover3'].forEach((event) => {
-        socket.on(event, () => {
-            console.log(`Video started (${event})`);
-            const namespace = event.split('_').pop();
-            const targetNamespace = namespace === 'video' ? pythonNamespace : io.of(`/${namespace}`);
-            targetNamespace.emit(`start_video_${namespace}`);
-        });
+    const emitEventToNamespace = (event, namespace, payload) => {
+        console.log(`${event} event received`);
+        namespace.emit(event, payload);
+    };
+
+    socket.on('startvideo', () => emitEventToNamespace('start_video', pythonNamespace));
+    socket.on('startvideo_rover', () => emitEventToNamespace('start_video_rover', roverNamespace));
+    socket.on('startvideo_rover2', () => emitEventToNamespace('start_video_rover2', roverNamespace2));
+    socket.on('startvideo_rover3', () => emitEventToNamespace('start_video_rover3', roverNamespace3));
+
+    socket.on('stopvideo', () => emitEventToNamespace('stop_video', pythonNamespace));
+    socket.on('stopvideo_rover', () => emitEventToNamespace('stop_video_rover', roverNamespace));
+    socket.on('stopvideo_rover2', () => emitEventToNamespace('stop_video_rover2', roverNamespace2));
+    socket.on('stopvideo_rover3', () => emitEventToNamespace('stop_video_rover3', roverNamespace3));
+
+    socket.on('start_Telem_rover', () => {
+        console.log("Telemetry start requested for ROVER");
+        telemetryroverActive = true;
+    });
+    socket.on('start_Telem_rover2', () => {
+        console.log("Telemetry start requested for ROVER 2");
+        telemetryroverActive = true;
+    });
+    socket.on('start_Telem_rover3', () => {
+        console.log("Telemetry start requested for ROVER 3");
+        telemetryroverActive = true;
+    });
+    socket.on('stop_Telem_rover', () => {
+        console.log('Rover Telemetry stopped');
+        telemetryroverActive = false;
+    });
+    socket.on('stop_Telem_rover2', () => {
+        console.log('Rover 2 Telemetry stopped');
+        telemetryroverActive = false;
+    });
+    socket.on('stop_Telem_rover3', () => {
+        console.log('Rover 3 Telemetry stopped');
+        telemetryroverActive = false;
     });
 
-    ['stopvideo', 'stopvideo_rover', 'stopvideo_rover2', 'stopvideo_rover3'].forEach((event) => {
-        socket.on(event, () => {
-            console.log(`Video stopped (${event})`);
-            const namespace = event.split('_').pop();
-            const targetNamespace = namespace === 'video' ? pythonNamespace : io.of(`/${namespace}`);
-            targetNamespace.emit(`stop_video_${namespace}`);
-        });
-    });
-
-    // Telemetry control
-    ['start_Telem_rover', 'start_Telem_rover2', 'start_Telem_rover3'].forEach((event) => {
-        socket.on(event, () => {
-            console.log(`Telemetry start requested (${event})`);
-            telemetryRoverActive = true;
-        });
-    });
-
-    ['stop_Telem_rover', 'stop_Telem_rover2', 'stop_Telem_rover3'].forEach((event) => {
-        socket.on(event, () => {
-            console.log(`Telemetry stopped (${event})`);
-            telemetryRoverActive = false;
-        });
-    });
-
-    // Emergency stop
-    ['stopRover', 'stopRover2', 'stopRover3'].forEach((event) => {
-        socket.on(event, () => {
-            console.log(`Emergency stop (${event})`);
-            const namespace = event.replace('stopRover', 'rover');
-            io.of(`/${namespace}`).emit('emergency_stop');
-        });
-    });
+    socket.on('stopRover', () => roverNamespace.emit('emergency_stop'));
+    socket.on('stopRover2', () => roverNamespace2.emit('emergency_stop2'));
+    socket.on('stopRover3', () => roverNamespace3.emit('emergency_stop3'));
 
     socket.on('startTelem', () => {
         console.log("Telemetry start requested for UAV");
@@ -175,51 +143,65 @@ reactNamespace.on('connection', (socket) => {
         telemetryActive = false;
     });
 
-    // Mission control
-    const missionEvents = [
-        { event: 'downloadMission', namespace: pythonNamespace },
-        { event: 'readMission', namespace: pythonNamespace },
-        { event: 'uploadMission', namespace: pythonNamespace },
-        { event: 'saveMission', namespace: pythonNamespace },
-        { event: 'circle', namespace: pythonNamespace },
-        { event: 'flyMission', namespace: pythonNamespace },
-        { event: 'takeoffBackend', namespace: pythonNamespace },
-        { event: 'armingBackend', namespace: pythonNamespace },
-        { event: 'disarmingBackend', namespace: pythonNamespace },
-        { event: 'set_gimbal_point', namespace: pythonNamespace },
-        { event: 'setRTL', namespace: pythonNamespace },
-        { event: 'landUAV', namespace: pythonNamespace },
-        { event: 'mission_goto', namespace: pythonNamespace },
-    ];
+    socket.on('downloadMission', () => emitEventToNamespace('download_mission', pythonNamespace));
+    socket.on('downloadMission_rover', () => emitEventToNamespace('download_mission_rover', roverNamespace));
+    socket.on('downloadMission_rover2', () => emitEventToNamespace('download_mission_rover2', roverNamespace2));
+    socket.on('downloadMission_rover3', () => emitEventToNamespace('download_mission_rover3', roverNamespace3));
 
-    missionEvents.forEach(({ event, namespace }) => {
-        socket.on(event, (data) => {
-            console.log(`${event} command received`, data ? `with data: ${JSON.stringify(data)}` : '');
-            namespace.emit(event, data);
-        });
-    });
+    socket.on('readMission', () => emitEventToNamespace('readmission', pythonNamespace));
+    socket.on('readMission_rover', () => emitEventToNamespace('readmission_rover', roverNamespace));
+    socket.on('readMission_rover2', () => emitEventToNamespace('readmission_rover2', roverNamespace2));
+    socket.on('readMission_rover3', () => emitEventToNamespace('readmission_rover3', roverNamespace3));
 
-    // Gimbal and stop commands for rovers
-    ['set_gimbal_point_rover', 'set_gimbal_point_rover2', 'set_gimbal_point_rover3'].forEach((event) => {
-        socket.on(event, (data) => {
-            console.log(`Set gimbal point (${event}) to`, data);
-            io.of(`/${event.split('_')[2]}`).emit('gimbal_point', data);
-        });
-    });
+    socket.on('uploadMission', () => emitEventToNamespace('upload_mission', pythonNamespace));
+    socket.on('uploadMission_rover', () => emitEventToNamespace('upload_mission_rover', roverNamespace));
+    socket.on('uploadMission_rover2', () => emitEventToNamespace('upload_mission_rover2', roverNamespace2));
+    socket.on('uploadMission_rover3', () => emitEventToNamespace('upload_mission_rover3', roverNamespace3));
 
-    ['setRTL_rover', 'setRTL_rover2', 'setRTL_rover3'].forEach((event) => {
-        socket.on(event, () => {
-            console.log(`RTL command (${event})`);
-            io.of(`/${event.split('_')[1]}`).emit('RTL');
-        });
-    });
+    socket.on('saveMission', () => emitEventToNamespace('save_mission', pythonNamespace));
+    socket.on('saveMission_rover', () => emitEventToNamespace('save_mission_rover', roverNamespace));
+    socket.on('saveMission_rover2', () => emitEventToNamespace('save_mission_rover2', roverNamespace2));
+    socket.on('saveMission_rover3', () => emitEventToNamespace('save_mission_rover3', roverNamespace3));
 
-    ['setSTOP_rover', 'setSTOP_rover2', 'setSTOP_rover3'].forEach((event) => {
-        socket.on(event, () => {
-            console.log(`Stop command (${event})`);
-            io.of(`/${event.split('_')[1]}`).emit('STOP');
-        });
-    });
+    socket.on('circle', () => pythonNamespace.emit('circle'));
+
+    socket.on('flyMission', () => pythonNamespace.emit('fly_mission'));
+
+    socket.on('takeoffBackend', () => pythonNamespace.emit('takeoff'));
+
+    socket.on('armingBackend', () => pythonNamespace.emit('arm_drone'));
+    socket.on('armingBackend_rover', () => roverNamespace.emit('arm_rover'));
+    socket.on('armingBackend_rover2', () => roverNamespace2.emit('arm_rover2'));
+    socket.on('armingBackend_rover3', () => roverNamespace3.emit('arm_rover3'));
+
+    socket.on('disarmingBackend', () => pythonNamespace.emit('disarm_drone'));
+    socket.on('disarmingBackend_rover', () => roverNamespace.emit('disarm_rover'));
+    socket.on('disarmingBackend_rover2', () => roverNamespace2.emit('disarm_rover2'));
+    socket.on('disarmingBackend_rover3', () => roverNamespace3.emit('disarm_rover3'));
+
+    socket.on('set_gimbal_point', (data) => pythonNamespace.emit('gimbal_point', data));
+    socket.on('set_gimbal_point_rover', (data) => roverNamespace.emit('gimbal_point_rover', data));
+    socket.on('set_gimbal_point_rover2', (data) => roverNamespace2.emit('gimbal_point_rover2', data));
+    socket.on('set_gimbal_point_rover3', (data) => roverNamespace3.emit('gimbal_point_rover3', data));
+
+    socket.on('setRTL', () => pythonNamespace.emit('RTL'));
+    socket.on('setRTL_rover', () => roverNamespace.emit('RTL_rover'));
+    socket.on('setRTL_rover2', () => roverNamespace2.emit('RTL_rover2'));
+    socket.on('setRTL_rover3', () => roverNamespace3.emit('RTL_rover3'));
+
+    socket.on('setSTOP_rover', () => roverNamespace.emit('STOP_rover'));
+    socket.on('setSTOP_rover2', () => roverNamespace2.emit('STOP_rover2'));
+    socket.on('setSTOP_rover3', () => roverNamespace3.emit('STOP_rover3'));
+
+    socket.on('landUAV', () => pythonNamespace.emit('landUav'));
+
+    socket.on("mission_goto", () => pythonNamespace.emit("goto_drone"));
+    socket.on("mission_goto_rover", () => roverNamespace.emit("goto_rover"));
+    socket.on("mission_auto_rover", () => roverNamespace.emit("auto_rover"));
+    socket.on("mission_goto_rover2", () => roverNamespace2.emit("goto_rover2"));
+    socket.on("mission_auto_rover2", () => roverNamespace2.emit("auto_rover2"));
+    socket.on("mission_goto_rover3", () => roverNamespace3.emit("goto_rover3"));
+    socket.on("mission_auto_rover3", () => roverNamespace3.emit("auto_rover3"));
 
     setInterval(() => {
         socket.emit('chart', chartData);
@@ -235,12 +217,16 @@ reactNamespace.on('connection', (socket) => {
 });
 
 setInterval(() => {
-    flag = counter <= 5;
+    if (counter > 5) {
+        flag = false;
+    } else if (counter == 0) {
+        flag = true;
+    }
     counter++;
 }, 2000);
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(__dirname + '/index.html');
 });
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
