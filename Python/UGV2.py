@@ -145,7 +145,7 @@ class RoverController2:
                             "locations":locations,
                             "ip": self.RoverIP,
                         }
-                        self.sio.emit('telemetry_rover', telemetry_data, namespace="/rover")
+                        self.sio.emit('telemetry_rover2', telemetry_data, namespace="/rover2")
                     except Exception as e:
                         print(f"[Telem] Error sending telemetry data: {e}")
                         self.ugv_connected = False
