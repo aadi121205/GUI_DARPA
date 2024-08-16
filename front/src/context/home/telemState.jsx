@@ -31,7 +31,7 @@ const TelemState = ({ children }) => {
     socket.emit("mission_goto_rover3");
   };
   const auto_command = () => {
-    socket.emit("mission_auto_rover");
+    socket.emit("mission_auto");
   };
   const stop_Telem_rover = () => {
     socket.emit("stop_Telem_rover");

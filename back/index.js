@@ -43,7 +43,6 @@ pythonNamespace.on('connection', (socket) => {
     socket.on('telemetry', (data) => {
         counter = 0;
         if (telemetryActive) {
-            console.log("Telemetry received:", data);
             reactNamespace.emit('telemetryServer', data);
         }
     });
@@ -70,7 +69,6 @@ const handleRoverConnection = (namespace, roverId) => {
             counter = 0;
             if (telemetryroverActive) {
                 reactNamespace.emit(`telemetryServer_${roverId}`, data);
-                console.log(`Telemetry received:`, data);
             }
         });
 
@@ -194,6 +192,7 @@ reactNamespace.on('connection', (socket) => {
     socket.on('landUAV', () => pythonNamespace.emit('landUav'));
 
     socket.on("mission_goto", () => pythonNamespace.emit("goto_drone"));
+    socket.on("mission_auto", () => pythonNamespace.emit("auto_mission"));
     socket.on("mission_goto_rover", () => roverNamespace.emit("goto_rover"));
     socket.on("mission_auto_rover", () => roverNamespace.emit("auto_rover"));
     socket.on("mission_goto_rover2", () => roverNamespace2.emit("goto_rover2"));

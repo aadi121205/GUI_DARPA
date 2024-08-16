@@ -113,6 +113,7 @@ function Telemexp() {
     flymission: flyMission,
     circle: circle,
     ip: telemetryData.ip,
+    uploadMission: uploadMission,
   };
 
   const UGVvehicleData = {
