@@ -7,6 +7,7 @@ import Data from './Comps/Data';
 import Home from './Comps/Home';
 import Test from './Comps/Test';
 import TestUgv from './Comps/TestUgv';
+import TestUgv2 from './Comps/TestUgv2';
 import Control from './Comps/Control';
 import GenomeTerminal from './Comps/Terminal';
 
@@ -19,7 +20,8 @@ function App() {
         <Route path="/telem" element={<Telem />} />
         <Route path="/Data" element={<Data />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/testUgv" element={<TestUgv />} />
+        <Route path="/testugv" element={<TestUgv />} />
+        <Route path="/testugv2" element={<TestUgv2 />} />
         <Route path="/control" element={<Control />} />
         <Route path="/terminal" element={<GenomeTerminal />} />
       </Routes>

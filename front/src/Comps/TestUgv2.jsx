@@ -1,9 +1,9 @@
 import * as React from "react";
 import { SocketState } from "../context/socketContext";
 import { TelemState } from "../context/home/telemState";
-import Side from "./TestUgvComps/side";
+import Side from "./TestUgv2Comps/side";
 
-export default function TestUgv() {
+export default function TestUgv2() {
   return (
     <SocketState>
       <TelemState>
