@@ -75,6 +75,7 @@ class RoverController:
         # Set the rover to return-to-launch mode
         print("Setting Rover to RTL mode...")
         self.ugv_connection.mode = VehicleMode("RTL")
+        self.sio.on('upload_mission', self.send_mission, namespace="/python")
 
     def upload_mission_rover(self, *args):
         # Upload mission waypoints to the rover

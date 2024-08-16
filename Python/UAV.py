@@ -103,6 +103,7 @@ class DroneController:
             except Exception as e:
                 print("UAV 1 not connected")
                 self.connect_uav()
+    
     def send_mission(self, *args):
         waypoints = []
         with open('waypoints.txt', 'r') as file:
@@ -121,7 +122,6 @@ class DroneController:
             cmds.add(cmd)
         cmds.upload()  # Upload the mission to the vehicle
         print("Mission uploaded successfully.")
-
 
     def arm_and_takeoff(self, target_altitude):
         print("Checking basic pre-arm")
