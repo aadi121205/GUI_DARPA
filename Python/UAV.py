@@ -21,10 +21,6 @@ class DroneController:
 		self.sio.on('arm_drone',self.on_arm_drone,namespace="/python")
 		self.sio.on('takeoff',self.takeoff,namespace="/python")
 		self.sio.on('disarm_drone',self.on_disarm_drone,namespace="/python")
-		self.sio.on('upload_mission',self.upload_mission,namespace="/python")
-		self.sio.on('readmission',self.readmission,namespace="/python")
-		self.sio.on('save_mission',self.save_mission,namespace="/python")
-		self.sio.on('download_mission',self.download_mission,namespace="/python")
 		self.sio.on('RTL',self.set_rtl,namespace="/python")
 		self.sio.on('landUav',self.land_Uav,namespace="/python")
 		self.sio.on('fly_mission',self.flyMission,namespace="/python")
@@ -65,67 +61,13 @@ class DroneController:
 	def land_Uav(self):
 		self.uav_connection.mode = "LAND"
 
-	def upload_mission(self):
-		missionList = self.readmission()
-		print(f"\nUpload mission from a file: {self.filename}")
-		print("Clear Mission")
-		self.cmds.clear()
-		for command in missionList:
-			self.cmds.add(command)
-		print("Upload Mission")
-		self.cmds.upload()
-		
-	def readmission(self):
-		print(f"\nReading mission from a file: {self.filename}")
-		missionList =[]
-		with open(self.filename) as f:
-			for i,line in enumerate(f):
-				if i==0:
-					if not line.startswith('QGC WPL 110\n'):
-						raise Exception("File is not supported WP version")
-					else:
-						continue
-				linearray=line.split('\t')
-				ln_currentwp=int(linearray[1])
-				ln_frame=int(linearray[2])
-				ln_command=int(linearray[3])
-				ln_param1=float(linearray[4])
-				ln_param2=float(linearray[5])
-				ln_param3=float(linearray[6])
-				ln_param4=float(linearray[7])
-				ln_param5=float(linearray[8])
-				ln_param6=float(linearray[9])
-				ln_param7=float(linearray[10])
-				ln_autocontinue=int(linearray[11].strip())
-				cmd = Command( 0, 0, 0, ln_frame, ln_command, ln_currentwp, ln_autocontinue, ln_param1, ln_param2, ln_param3, ln_param4, ln_param5, ln_param6, ln_param7)
-				missionList.append(cmd)
-		return missionList
-	
-	def save_mission(self):
-		missionList = self.download_mission()
-		output = "QGC WPL 110"
-		for cmd in missionList:
-			commandline="%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n" % (cmd.seq,cmd.current,cmd.frame,cmd.command,cmd.param1,cmd.param2,cmd.param3,cmd.param4,cmd.x,cmd.y,cmd.z,cmd.autocontinue)
-			output+=commandline
-		with open(self.filename,'w') as f:
-			f.write(output)
-		print("mission Saved")
-	
-	def download_mission(self):
-		missionList = []
-		self.cmds.download()
-		self.cmds.wait_ready()
-		for cmd in self.cmds:
-			missionList.append(cmd)
-		return missionList
-
 	def send_telemetry_data(self):
-		locations = []
-		with open('waypoints.txt', 'r') as file:
-			for line in file:
-				lat, lon, alt = line.strip().split(',')
-				locations.append((float(lat), float(lon), float(alt)))
 		while True:
+			locations = []
+			with open('waypoints.txt', 'r') as file:
+				for line in file:
+					lat, lon, alt = line.strip().split(',')
+					locations.append((float(lat), float(lon), float(alt)))
 			try:
 				if (self.uav_connected):
 					try:
@@ -177,7 +119,6 @@ class DroneController:
 				break
 			time.sleep(1)
 	
-
 	def flyMission(self):
 		if self.uav_connection.armed:
 			if self.uav_connection.location.global_relative_frame.alt >= 10:			
