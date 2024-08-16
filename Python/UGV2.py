@@ -119,7 +119,7 @@ class RoverController2:
             missionList.append(cmd)
         return missionList
 
-    def send_telemetry_data_rover(self):
+    def send_telemetry_data_rover2(self):
         # Continuously send telemetry data from the rover
         locations = []
         with open(self.goto_mission, 'r') as file:

@@ -8,6 +8,7 @@ const VideoBackground = () => {
     React.useContext(telemContext);
     const [telemetryStarted, setTelemetryStarted] = React.useState(false);
     const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(false);
+    const [telemetryStarted_rover2, setTelemetryStarted_rover2] = React.useState(false);
     const toggleTelemetry = () => {
         if (telemetryStarted) {
           stop_Telem();

@@ -69,6 +69,7 @@ roverNamespace.on('connection', (socket) => {
         // console.log("Telemetry received:", data);
         if(telemetryroverActive){
             reactNamespace.emit('telemetryServer_rover', data);
+            console.log("Telemetry received:", data);
         }
     })
 
@@ -88,6 +89,7 @@ roverNamespace2.on('connection', (socket) => {
         // console.log("Telemetry received:", data);
         if(telemetryroverActive){
             reactNamespace.emit('telemetryServer_rover2', data);
+            console.log("Telemetry received:", data);
         }
     })
 
@@ -107,6 +109,7 @@ roverNamespace3.on('connection', (socket) => {
         // console.log("Telemetry received:", data);
         if(telemetryroverActive){
             reactNamespace.emit('telemetryServer_rover3', data);
+            console.log("Telemetry received:", data);
         }
     })
 
