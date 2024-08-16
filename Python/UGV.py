@@ -1,7 +1,6 @@
 from dronekit import connect, VehicleMode, LocationGlobalRelative
 import time
 import threading
-from pymavlink import mavutil
 from math import radians, cos, sin, asin, sqrt
 
 def haversine(lon1, lat1, lon2, lat2):

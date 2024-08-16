@@ -2,8 +2,6 @@ from dronekit import connect, VehicleMode, Command, LocationGlobalRelative, APIE
 import time
 import os
 import threading
-from dotenv import load_dotenv
-from pymavlink import mavutil
 from math import radians, cos, sin, asin, sqrt
 import subprocess
 
