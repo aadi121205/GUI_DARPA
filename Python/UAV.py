@@ -27,9 +27,7 @@ class DroneController:
 		self.sio.on('download_mission',self.download_mission,namespace="/python")
 		self.sio.on('RTL',self.set_rtl,namespace="/python")
 		self.sio.on('landUav',self.land_Uav,namespace="/python")
-		self.sio.on('goto_drone',self.goto,namespace="/python")
 		self.sio.on('fly_mission',self.flyMission,namespace="/python")
-		self.sio.on('circle',self.circle,namespace="/python")
 		self.filename = "mission.txt"
 		self.goto_mission = "waypoints.txt"
 		self.connect_uav()
@@ -66,9 +64,6 @@ class DroneController:
 	
 	def land_Uav(self):
 		self.uav_connection.mode = "LAND"
-
-	def circle(self):
-		self.uav_connection.mode = "CIRCLE"
 
 	def upload_mission(self):
 		missionList = self.readmission()
@@ -181,32 +176,7 @@ class DroneController:
 				print("Reached Target Altitude")
 				break
 			time.sleep(1)
-
-	def travel(self, lon, lat, alt):
-		print("travel called")
-		d = haversine(self.uav_connection.location.global_relative_frame.lon, self.uav_connection.location.global_relative_frame.lat, lon, lat)
-		self.uav_connection.simple_goto(LocationGlobalRelative(lat, lon, alt))
-		while d>2:
-			d = haversine(self.uav_connection.location.global_relative_frame.lon, self.uav_connection.location.global_relative_frame.lat, lon, lat)
-			# print(d)
-			time.sleep(1)
 	
-	def goto(self, alt=10):
-		self.arm_and_takeoff(10)
-		
-		Lat = []
-		Lon = []
-		with open("goto.txt", "r") as file:
-			for line in file:
-				# Split the line into latitude and longitude
-				latitude, longitude = line.strip().split(", ")
-				# Append the values to the corresponding lists
-				Lat.append(float(latitude))
-				Lon.append(float(longitude))
-		for c in range(len(Lat)):
-			self.travel(Lon[c], Lat[c], alt)
-			time.sleep(2)
-		print("Mission completed")
 
 	def flyMission(self):
 		if self.uav_connection.armed:
@@ -224,14 +194,19 @@ class DroneController:
 
 							remaining_distance = haversine(float(lat), float(lon), uav_lat, uav_lon)
 
+							if self.uav_connection.mode.name != "GUIDED":
+								break
+
 							if remaining_distance < 1:
 								break
 						
 							print(f"Distance to target: {remaining_distance}m")
+						
 
 						print("Reached target")
 						time.sleep(1)
-				self.uav_connection.mode = "RTL"
+						if self.uav_connection.mode.name != "GUIDED":
+							break
 				print("Mission completed")	
 			else:
 				print("Drone not Takeoff")

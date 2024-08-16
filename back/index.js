@@ -163,8 +163,6 @@ reactNamespace.on('connection', (socket) => {
     socket.on('saveMission_rover2', () => emitEventToNamespace('save_mission_rover2', roverNamespace2));
     socket.on('saveMission_rover3', () => emitEventToNamespace('save_mission_rover3', roverNamespace3));
 
-    socket.on('circle', () => pythonNamespace.emit('circle'));
-
     socket.on('flyMission', () => pythonNamespace.emit('fly_mission'));
 
     socket.on('takeoffBackend', () => pythonNamespace.emit('takeoff'));
