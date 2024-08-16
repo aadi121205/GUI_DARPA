@@ -25,6 +25,8 @@ export const haversine_distance = (lat1, lon1, lat2, lon2) => {
 };
 
 const Dts = (delaySec) => {
+  if (delaySec === undefined) return 0;
+  if (delaySec === null) return 0;
   // Define the min and max values of delay in seconds that correspond to 0 and 5 bars
   const minDelaySec = 0;
   const maxDelaySec = 1; // Assuming 100 seconds is the maximum delay for 5 bars
@@ -87,6 +89,8 @@ function Telemexp() {
 
   const scaledValue = Dts(telemetryData.heartbeat);
   const scaledValue_rover = Dts(telemetryData_rover.heartbeat);
+  const scaledValue_rover2 = Dts(telemetryData_rover2.heartbeat);
+  const scaledValue_rover3 = Dts(telemetryData_rover3.heartbeat);
 
   const UAVvehicleData = {
     name: "UAV",
@@ -140,7 +144,7 @@ function Telemexp() {
     battery: telemetryData_rover2.battery, // battery percentage
     status: telemetryData_rover2.status, // status
     throttle: telemetryData_rover2.armed ? "ARMED" : "DISARMED", // throttle status
-    signalStrength: scaledValue_rover,
+    signalStrength: scaledValue_rover2,
     arm: arm_rover,
     rtl: RTL_rover,
     land: STOP_rover,
@@ -160,7 +164,7 @@ function Telemexp() {
     battery: telemetryData_rover3.battery, // battery percentage
     status: telemetryData_rover3.status, // status
     throttle: telemetryData_rover3.armed ? "ARMED" : "DISARMED", // throttle status
-    signalStrength: scaledValue_rover,
+    signalStrength: scaledValue_rover3,
     arm: arm_rover,
     rtl: RTL_rover,
     land: STOP_rover,
