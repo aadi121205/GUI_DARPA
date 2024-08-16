@@ -1,0 +1,31 @@
+/* Timeline.css */
+.timeline {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .timeline-point {
+    position: relative;
+    padding: 10px;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    text-align: center;
+  }
+  
+  .timeline-point::before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 40px;
+    background-color: #007bff;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+  }
+  
+  .timeline-point:last-child::before {
+    display: none;
+  }
+  

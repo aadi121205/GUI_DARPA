@@ -1,12 +1,17 @@
 import * as React from "react";
 import Divider from "@mui/material/Divider";
 import telemContext from "../../context/home/telemContext";
-import { Container, Button, Row, Col, Card } from 'react-bootstrap';
+import { Container, Button, Row, Col, Card } from "react-bootstrap";
 import DropdownMenu from "./ConDrop";
-
+import Timelines from "./Timelines";
 
 function Telemexp() {
-  const { telemetryData, telemetryData_rover,telemetryData_rover2,telemetryData_rover3 } = React.useContext(telemContext);
+  const {
+    telemetryData,
+    telemetryData_rover,
+    telemetryData_rover2,
+    telemetryData_rover3,
+  } = React.useContext(telemContext);
   React.useContext(telemContext);
   const {
     goto_command,
@@ -44,11 +49,13 @@ function Telemexp() {
     } else {
       armUgv();
     }
-  }
+  };
   const [telemetryStarted, setTelemetryStarted] = React.useState(true);
-  const [telemetryStarted_rover, setTelemetryStarted_rover] = React.useState(true);
+  const [telemetryStarted_rover, setTelemetryStarted_rover] =
+    React.useState(true);
   telemetryData.groundspeed = Math.round(telemetryData.groundspeed * 100) / 100;
-  telemetryData_rover.groundspeed = Math.round(telemetryData_rover.groundspeed * 100) / 100;
+  telemetryData_rover.groundspeed =
+    Math.round(telemetryData_rover.groundspeed * 100) / 100;
 
   const UAVvehicleData = {
     name: "UAV",
@@ -64,7 +71,7 @@ function Telemexp() {
     land: landUAV,
     goto: goto_command,
     takeoff: flyUav,
-    state : telemetryData.state,
+    state: telemetryData.state,
     auto: auto_command,
     flymission: flyMission,
     circle: circle,
@@ -121,15 +128,36 @@ function Telemexp() {
     uploadMission_rover: uploadMission_rover,
     auto: auto_command_rover,
   };
-  const vehicles = [UAVvehicleData, UGVvehicleData, UGVvehicleData2, UGVvehicleData3];
+  const vehicles = [
+    UAVvehicleData,
+    UGVvehicleData,
+    UGVvehicleData2,
+    UGVvehicleData3,
+  ];
 
   return (
-    <div>
-      <h1>Select a UAV Vehicle</h1>
-      <DropdownMenu vehicles={vehicles} />
+    <>
+    <div style={{ padding: "15px", overflow: "hidden",backgroundColor: "black", color: "white" }}>
+      <Row>
+        <Col>
+          <Timelines />
+        </Col>
+        <Col>
+          <h1>PlaceHolder</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <h1>Control Panel</h1>
+          <DropdownMenu vehicles={vehicles} />
+        </Col>
+        <Col>
+          <h1>PlaceHolder</h1>
+        </Col>
+      </Row>
     </div>
+    </>
   );
-};
-
+}
 
 export default Telemexp;

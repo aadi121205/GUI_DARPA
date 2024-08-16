@@ -1,0 +1,12 @@
+/* App.css */
+.app-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .timelines {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
