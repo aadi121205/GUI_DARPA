@@ -4,5 +4,5 @@ node_modules
 /Python/Logs
 /Python/Models
 /Python/config
-
+.vs
 /Python/Missions
