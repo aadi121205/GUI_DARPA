@@ -84,90 +84,85 @@ export default function Map() {
   }, []);
 
   useEffect(() => {
-    if (uavMarker) {
-      uavMarker.remove();
+    if (roverMarker) {
+      roverMarker.remove();
     }
-    if (!telemetryData || !telemetryData.latitude || !telemetryData.longitude) return;
+    if (!telemetryData_rover || !telemetryData_rover.latitude || !telemetryData_rover.longitude) return;
 
-    const { latitude, longitude } = telemetryData;
+    const { latitude, longitude } = telemetryData_rover;
 
-    setLat(latitude);
-    setLng(longitude);
+    const roverElement = document.createElement('div');
+    roverElement.className = 'marker';
+    roverElement.style.backgroundImage = 'url(https://iili.io/dBmOJb1.png)';
+    roverElement.style.width = '30px';
+    roverElement.style.height = '30px';
+    roverElement.style.backgroundSize = '100%';
+    roverElement.style.border = 'none';
+    roverElement.style.borderRadius = '50%';
+    roverElement.style.cursor = 'pointer';
 
-    const uavElement = document.createElement('div');
-    uavElement.className = 'marker';
-    uavElement.style.backgroundImage = 'url(https://iili.io/dBbAcPf.md.png)';
-    uavElement.style.width = '35px';
-    uavElement.style.height = '35px';
-    uavElement.style.backgroundSize = '100%';
-    uavElement.style.border = 'none';
-    uavElement.style.borderRadius = '50%';
-    uavElement.style.cursor = 'pointer';
-
-    uavElement.addEventListener('click', () => {
-      window.alert('UAV Location: ' + latitude + ', ' + longitude);
+    roverElement.addEventListener('click', () => {
+      window.alert('Rover Location');
     });
 
-    const newUavMarker = new mapboxgl.Marker(uavElement)
+    const newRoverMarker = new mapboxgl.Marker(roverElement)
       .setLngLat([longitude, latitude])
       .addTo(map.current);
 
-    setUavMarker(newUavMarker);
-
+    setRoverMarker(newRoverMarker);
     map.current.flyTo({
       center: [longitude, latitude],
       essential: true,
     });
-  }, [telemetryData]);
+  }, [telemetryData_rover]);
 
-  // New useEffect for handling multiple UAV point markers
   useEffect(() => {
-    if (uavPointMarkers) {
-      uavPointMarkers.forEach(marker => marker.remove());
+    if (ugvPointMarkers) {
+      ugvPointMarkers.forEach(marker => marker.remove());
     }
 
-    if (uavPointsVisible && telemetryData.locations && telemetryData.locations.length > 0) {
-      const newMarkers = telemetryData.locations.map(([latitude, longitude, altitude]) => {
-        const uavElement = document.createElement('div');
-        uavElement.className = 'marker';
-        uavElement.style.backgroundImage = 'url(https://iili.io/d0YXcEF.md.png)';
-        uavElement.style.width = '20px';
-        uavElement.style.height = '20px';
-        uavElement.style.backgroundSize = '100%';
-        uavElement.style.border = 'none';
-        uavElement.style.borderRadius = '50%';
-        uavElement.style.cursor = 'pointer';
+    if (ugvPointsVisible && telemetryData_rover.locations && telemetryData_rover.locations.length > 0) {
+      const newugvMarkers = telemetryData_rover.locations.map(([latitude, longitude]) => {
+        const ugvElement = document.createElement('div');
+        ugvElement.className = 'marker';
+        ugvElement.style.backgroundImage = 'url(https://iili.io/d0YXcEF.md.png)';
+        ugvElement.style.width = '20px';
+        ugvElement.style.height = '20px';
+        ugvElement.style.backgroundSize = '100%';
+        ugvElement.style.border = 'none';
+        ugvElement.style.borderRadius = '50%';
+        ugvElement.style.cursor = 'pointer';
 
-        uavElement.addEventListener('click', () => {
-          window.alert(`UAV Location: Lat ${latitude}, Lng ${longitude}, Alt ${altitude}`);
+        ugvElement.addEventListener('click', () => {
+          window.alert(`UGV Location: Lat ${latitude}, Lng ${longitude}`);
         });
 
-        return new mapboxgl.Marker(uavElement)
+        return new mapboxgl.Marker(ugvElement)
           .setLngLat([longitude, latitude])
           .addTo(map.current);
       });
 
-      setUavPointMarkers(newMarkers);
+      setUgvPointMarkers(newugvMarkers);
     }
-  }, [telemetryData.locations, uavPointsVisible]);
+  }, [telemetryData_rover.locations, ugvPointsVisible]);
 
   return (
     <div>
       <div id="map" className="map">
         <div className="sidebar">
-          <strong>UAV1:-</strong> Longitude: {telemetryData?.longitude} | Latitude:{" "}
-          {telemetryData?.latitude}
+          <strong>Rover:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude:{" "}
+          {telemetryData_rover?.latitude}
           <br />
           <strong>DTU Campus  | Zoom: {zoom}</strong>
           <br />
-          <strong>{telemetryData.locations && telemetryData.locations.length} UAV Points &nbsp;</strong>
+          <strong>{telemetryData_rover.locations && telemetryData_rover.locations.length} UGV Points &nbsp;</strong>
           <label>
             <input
               type="checkbox"
-              checked={uavPointsVisible}
-              onChange={() => setUavPointsVisible(!uavPointsVisible)}
+              checked={ugvPointsVisible}
+              onChange={() => setUgvPointsVisible(!ugvPointsVisible)}
             />
-            Show UAV Points
+            Show UGV Points
           </label>
         </div>
         <div ref={mapContainer} className="map-container" />

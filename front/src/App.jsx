@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Telem from './Comps/Telem';
 import Data from './Comps/Data';
 import Home from './Comps/Home';
-import Sidebar from './Comps/Test';
+import Test from './Comps/Test';
+import TestUgv from './Comps/TestUgv';
 import Control from './Comps/Control';
 import GenomeTerminal from './Comps/Terminal';
 
@@ -17,7 +18,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/telem" element={<Telem />} />
         <Route path="/Data" element={<Data />} />
-        <Route path="/test" element={<Sidebar />} />
+        <Route path="/test" element={<Test />} />
+        <Route path="/testUgv" element={<TestUgv />} />
         <Route path="/control" element={<Control />} />
         <Route path="/terminal" element={<GenomeTerminal />} />
       </Routes>
