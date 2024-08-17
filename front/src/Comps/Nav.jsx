@@ -14,17 +14,17 @@ function NavigationBar() {
           />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Collapse bg="dark" variant="dark" expand="lg" id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/telem">Telem</Nav.Link>
             <Nav.Link href="/control">Controls</Nav.Link>
             <Nav.Link href="/data">Data</Nav.Link>
             <NavDropdown title="Test" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/test">Test</NavDropdown.Item>
-              <NavDropdown.Item href="/test2">Test 2</NavDropdown.Item>
-              <NavDropdown.Item href="/test3">Test 3</NavDropdown.Item>
-              <NavDropdown.Item href="/test4">Test 4</NavDropdown.Item>
+              <NavDropdown.Item href="/test">Test UAV</NavDropdown.Item>
+              <NavDropdown.Item href="/test2">Test UGV</NavDropdown.Item>
+              <NavDropdown.Item href="/test3">Test UGV 2</NavDropdown.Item>
+              <NavDropdown.Item href="/test4">Test UGV 3</NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="/terminal">Terminal</Nav.Link>
           </Nav>
