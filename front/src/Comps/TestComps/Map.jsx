@@ -167,6 +167,7 @@ export default function Map() {
               checked={uavPointsVisible}
               onChange={() => setUavPointsVisible(!uavPointsVisible)}
             />
+            &nbsp;
             Show UAV Points
           </label>
         </div>

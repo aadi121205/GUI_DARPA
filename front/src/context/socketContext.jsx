@@ -1,4 +1,4 @@
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import { SOCKET_URL } from "../config";
 
@@ -9,23 +9,25 @@ const SocketContext = createContext();
 const socket = io(`${SOCKET_URL}/react`);
 
 const SocketState = ({ children }) => {
+    const [receivedData, setReceivedData] = useState([]);
+
     useEffect(() => {
-        // Log data received from the socket
-        const logReceivedData = (event, data) => {
-            console.log(`Received event: ${event}`, data);
+        // Handle data received from the socket
+        const handleReceivedData = (event, data) => {
+            setReceivedData(prevData => [...prevData, { event, data }]);
         };
 
         // Add listener for all socket events
-        socket.onAny(logReceivedData);
+        socket.onAny(handleReceivedData);
 
         // Cleanup listeners on unmount
         return () => {
-            socket.offAny(logReceivedData);
+            socket.offAny(handleReceivedData);
         };
     }, []);
 
     return (
-        <SocketContext.Provider value={{ socket }}>
+        <SocketContext.Provider value={{ socket, receivedData }}>
             {children}
         </SocketContext.Provider>
     );

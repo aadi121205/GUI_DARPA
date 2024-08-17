@@ -1,1 +1,5 @@
-export const SOCKET_URL = 'http://localhost:7000';
+const protocol = window.location.protocol;
+const host = window.location.hostname;
+const port = '7000'; // or any other port you're using
+export const SOCKET_URL = `${protocol}//${host}:${port}`;
+console.log(SOCKET_URL);
