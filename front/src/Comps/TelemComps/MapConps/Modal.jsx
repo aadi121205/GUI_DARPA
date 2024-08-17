@@ -16,7 +16,7 @@ export default function TimerModal() {
     border: "solid 1px #ddd",
     background: "rgba(0, 0, 0, 0.85)",
     flexDirection: "column",
-    padding: "4px",
+    padding: "5px",
     position: "fixed",
     zIndex: 1000,
     textAlign: "center",
@@ -31,33 +31,22 @@ export default function TimerModal() {
         <Rnd
           style={modalStyle}
           default={{
-            x: window.innerWidth/2.65,
+            x: window.innerWidth/2.45,
             y: 0,
-            width: window.innerWidth/10,
-            height: window.innerHeight/13,
+            width: window.innerWidth/13,
+            height: window.innerHeight/20,
           }}
           bounds="window" // Ensure the modal stays within the window boundaries
         >
           <div
             style={{
               position: "absolute", // Ensure the div fits within the Rnd component
-              width: "100%",
+              width: "90%",
               height: "80%",
             }}
           >
             <Timer />
           </div>
-          <Button
-            onClick={toggleModal}
-            style={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              color: "white",
-            }}
-          >
-            <RiCloseCircleLine style={{ fontSize: 20 }} />
-          </Button>
         </Rnd>
       )}
     </div>

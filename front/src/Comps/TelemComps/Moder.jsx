@@ -50,12 +50,11 @@ const Modes = ({ vehicle }) => {
             default={{
               x: 1000,
               y: -80,
-              width: 300,
-              height: 200,
+              width: 150,
+              height: 120,
             }}
           >
             <Button variant="primary" onClick={vehicle.rtl}>RTL</Button>
-            <Button variant="primary" onClick={vehicle.land}>Land</Button>
             <Button variant="primary" onClick={vehicle.Hold}>Hold</Button>
             <Button variant="primary" onClick={vehicle.auto}>Auto</Button>
             <Button
