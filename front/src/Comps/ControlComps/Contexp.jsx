@@ -4,6 +4,7 @@ import telemContext from "../../context/home/telemContext";
 import { Container, Button, Row, Col, Card } from "react-bootstrap";
 import DropdownMenu from "./ConDrop";
 import Timelines from "./Timelines";
+import CSVDisplay from "./CSVDisplay";
 
 function Telemexp() {
   const {
@@ -137,25 +138,33 @@ function Telemexp() {
 
   return (
     <>
-    <div style={{ padding: "15px", overflow: "hidden",backgroundColor: "black", color: "white" }}>
-      <Row>
-        <Col>
-          <Timelines />
-        </Col>
-        <Col>
-          <h1>PlaceHolder</h1>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <h1>Control Panel</h1>
-          <DropdownMenu vehicles={vehicles} />
-        </Col>
-        <Col>
-          <h1>PlaceHolder</h1>
-        </Col>
-      </Row>
-    </div>
+      <div
+        style={{
+          padding: "15px",
+          overflow: "hidden",
+          backgroundColor: "black",
+          color: "white",
+        }}
+      >
+        <Row>
+          <Col>
+            <Timelines />
+          </Col>
+          <Col>
+            <h1>PlaceHolder</h1>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h1>Control Panel</h1>
+            <DropdownMenu vehicles={vehicles} />
+            <CSVDisplay />
+          </Col>
+          <Col>
+            <h1>PlaceHolder</h1>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 }

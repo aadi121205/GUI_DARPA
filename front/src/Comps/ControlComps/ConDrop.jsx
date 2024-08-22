@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { padding } from '@mui/system';
 
 const DropdownMenu = ({ vehicles }) => {
   const [selectedVehicle, setSelectedVehicle] = useState(vehicles[0].name);
@@ -33,6 +34,7 @@ const DropdownMenu = ({ vehicles }) => {
           {functions.map(func => (
             vehicle[func.name] && (
               <button
+                style={{margin: "15px", overflow: "hidden",backgroundColor: "black", color: "white" }}
                 key={func.name}
                 className={`btn btn-lg ${func.className} mr-2 mb-2`}
                 onClick={() => handleFunctionClick(func.name)}
