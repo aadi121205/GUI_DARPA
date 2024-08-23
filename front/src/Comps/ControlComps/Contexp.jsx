@@ -34,7 +34,11 @@ function Telemexp() {
     RTL_rover,
     STOP_rover,
     flyMission,
-    circle,
+    write_mission,
+    write_mission_rover,
+    write_mission_rover2,
+    write_mission_rover3,
+    
   } = React.useContext(telemContext);
   const arm_uav = () => {
     if (telemetryData.armed) {
@@ -67,6 +71,7 @@ function Telemexp() {
     battery: telemetryData.battery, // battery percentage
     status: telemetryData.status ? "Armable" : "Not Armable", // status
     throttle: telemetryData.armed ? "ARMED" : "DISARMED", // throttle status
+    locations: telemetryData.locations,
     arm: arm_uav,
     rtl: RTL,
     land: landUAV,
@@ -75,7 +80,7 @@ function Telemexp() {
     state: telemetryData.state,
     auto: auto_command,
     flymission: flyMission,
-    circle: circle,
+    uploadMission: write_mission,
   };
 
   const UGVvehicleData = {
@@ -94,6 +99,9 @@ function Telemexp() {
     flymission: goto_command_rover,
     uploadMission_rover: uploadMission_rover,
     auto: auto_command_rover,
+    locations: telemetryData_rover.locations,
+    uploadMission: write_mission_rover,
+
   };
   const UGVvehicleData2 = {
     name: "UGV2",
@@ -111,6 +119,9 @@ function Telemexp() {
     flymission: goto_command_rover,
     uploadMission_rover: uploadMission_rover,
     auto: auto_command_rover,
+    locations: telemetryData_rover2.locations,
+    uploadMission: write_mission_rover2,
+
   };
   const UGVvehicleData3 = {
     name: "UGV3",
@@ -128,6 +139,9 @@ function Telemexp() {
     flymission: goto_command_rover,
     uploadMission_rover: uploadMission_rover,
     auto: auto_command_rover,
+    locations: telemetryData_rover3.locations,
+    uploadMission: write_mission_rover3,
+
   };
   const vehicles = [
     UAVvehicleData,
@@ -156,9 +170,7 @@ function Telemexp() {
         </Row>
         <Row>
           <Col>
-            <h1>Control Panel</h1>
             <DropdownMenu vehicles={vehicles} />
-            <CSVDisplay />
           </Col>
           <Col>
             <h1>PlaceHolder</h1>

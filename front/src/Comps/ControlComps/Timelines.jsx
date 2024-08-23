@@ -15,7 +15,7 @@ const Timelines = () => {
 
   return (
     <div className="app-container">
-      <h1>Timelines Example</h1>
+      <h3 style={{padding: 30}}>Timelines</h3>
       <div className="timelines">
         <Timeline points={points} />
         <Timeline points={points} />

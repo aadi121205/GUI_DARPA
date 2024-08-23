@@ -20,8 +20,8 @@ function App() {
         <Route path="/telem" element={<Telem />} />
         <Route path="/Data" element={<Data />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/testugv" element={<TestUgv />} />
-        <Route path="/testugv2" element={<TestUgv2 />} />
+        <Route path="/test2" element={<TestUgv />} />
+        <Route path="/test3" element={<TestUgv2 />} />
         <Route path="/control" element={<Control />} />
         <Route path="/terminal" element={<GenomeTerminal />} />
       </Routes>

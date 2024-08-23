@@ -3,12 +3,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
   
   .timeline-point {
     position: relative;
-    padding: 20px;
+    padding: 25px;
     border: 4px solid #007bff;
     border-radius: 70%;
     text-align: center;

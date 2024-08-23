@@ -78,21 +78,18 @@ const TelemState = ({ children }) => {
   const flyMission = () => {
     socket.emit("flyMission");
   };
-  const setGimbalPoint = () => {
-    const data = { roll, pitch, yaw };
-    socket.emit("set_gimbal_point", data);
+  const write_mission = (data) => {
+    socket.emit("write_mission", data);
+    console.log(data)
   };
-  const setGimbalPoint_rover = () => {
-    const data = { roll, pitch, yaw };
-    socket.emit("set_gimbal_point_rover", data);
+  const write_mission_rover = (data) => {
+    socket.emit("write_mission_rover", data);
   };
-  const setGimbalPoint_rover2 = () => {
-    const data = { roll, pitch, yaw };
-    socket.emit("set_gimbal_point_rover2", data);
+  const write_mission_rover2 = (data) => {
+    socket.emit("write_mission_rover2", data);
   };
-  const setGimbalPoint_rover3 = () => {
-    const data = { roll, pitch, yaw };
-    socket.emit("set_gimbal_point_rover3", data);
+  const write_mission_rover3 = (data) => {
+    socket.emit("write_mission_rover3", data);
   };
   const downloadMission = () => {
     socket.emit("downloadMission");
@@ -262,7 +259,7 @@ const TelemState = ({ children }) => {
       settimeofflight(timeofflight + 1);
       setTelemetryData_rover((prevData) => {
         return { ...prevData, ...data };
-      });
+      });yaw
     });
     socket.on("telemetryServer_rover2", (data) => {
       settimeofflight(timeofflight + 1);
@@ -315,10 +312,10 @@ const TelemState = ({ children }) => {
         STOP_rover2,
         STOP_rover3,
         button,
-        setGimbalPoint,
-        setGimbalPoint_rover,
-        setGimbalPoint_rover2,
-        setGimbalPoint_rover3,
+        write_mission,
+        write_mission_rover,
+        write_mission_rover2,
+        write_mission_rover3,
         downloadMission,
         downloadMission_rover,
         downloadMission_rover2,

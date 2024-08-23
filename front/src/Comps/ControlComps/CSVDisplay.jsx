@@ -1,35 +1,71 @@
 import React, { useState, useEffect } from "react";
-import Papa from "papaparse";
+import { Button } from "@mui/material";
+import { HiArrowDown } from "react-icons/hi";
+import { HiArrowNarrowUp } from "react-icons/hi";
+import { HiArchiveBoxXMark } from "react-icons/hi2";
 
-const CSVDisplay = () => {
-  const [data, setData] = useState([]);
-  const [fileSelected, setFileSelected] = useState(false);
+const CSVDisplay = ({ vehicle }) => {
+  // Ensure vehicle and vehicle.locations are defined
+  const [data, setData] = useState(vehicle?.locations || []);
   const [editing, setEditing] = useState(null);
-  const [fileName, setFileName] = useState("");
+  const [modified, setModified] = useState(false);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFileName(file.name); // Store the file name
-      setFileSelected(true);
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const text = e.target.result;
-        Papa.parse(text, {
-          header: false, // Set to false because there are no headers
-          complete: (result) => {
-            setData(result.data);
-          },
-        });
-      };
-      reader.readAsText(file);
+  useEffect(() => {
+    if (!modified && vehicle && vehicle.locations) {
+      // Refresh data when the vehicle changes and no modifications are ongoing
+      setData(vehicle.locations || []);
     }
-  };
+  }, [vehicle, modified]);
 
   const handleEdit = (rowIndex, colIndex, value) => {
     const updatedData = [...data];
     updatedData[rowIndex][colIndex] = value;
     setData(updatedData);
+    setModified(true); // Mark as modified
+    if (vehicle && vehicle.uploadMission) {
+      vehicle.uploadMission(updatedData); // Call uploadMission with updated data
+      console.log("success"); // Print success
+    }
+  };
+
+  const handleDeleteRow = (rowIndex) => {
+    const updatedData = data.filter((_, index) => index !== rowIndex);
+    setData(updatedData);
+    setModified(true); // Mark as modified
+    if (vehicle && vehicle.uploadMission) {
+      vehicle.uploadMission(updatedData); // Call uploadMission with updated data
+      console.log("success"); // Print success
+    }
+  };
+
+  const handleMoveRowUp = (rowIndex) => {
+    if (rowIndex > 0) {
+      const updatedData = [...data];
+      const temp = updatedData[rowIndex - 1];
+      updatedData[rowIndex - 1] = updatedData[rowIndex];
+      updatedData[rowIndex] = temp;
+      setData(updatedData);
+      setModified(true); // Mark as modified
+      if (vehicle && vehicle.uploadMission) {
+        vehicle.uploadMission(updatedData); // Call uploadMission with updated data
+        console.log("success"); // Print success
+      }
+    }
+  };
+
+  const handleMoveRowDown = (rowIndex) => {
+    if (rowIndex < data.length - 1) {
+      const updatedData = [...data];
+      const temp = updatedData[rowIndex + 1];
+      updatedData[rowIndex + 1] = updatedData[rowIndex];
+      updatedData[rowIndex] = temp;
+      setData(updatedData);
+      setModified(true); // Mark as modified
+      if (vehicle && vehicle.uploadMission) {
+        vehicle.uploadMission(updatedData); // Call uploadMission with updated data
+        console.log("success"); // Print success
+      }
+    }
   };
 
   const handleDoubleClick = (rowIndex, colIndex) => {
@@ -44,64 +80,25 @@ const CSVDisplay = () => {
     handleEdit(rowIndex, colIndex, e.target.value);
   };
 
-  const handleDeleteRow = (rowIndex) => {
-    const updatedData = data.filter((_, index) => index !== rowIndex);
-    setData(updatedData);
-  };
-
-  const handleMoveRowUp = (rowIndex) => {
-    if (rowIndex > 0) {
-      const updatedData = [...data];
-      const temp = updatedData[rowIndex - 1];
-      updatedData[rowIndex - 1] = updatedData[rowIndex];
-      updatedData[rowIndex] = temp;
-      setData(updatedData);
-    }
-  };
-
-  const handleMoveRowDown = (rowIndex) => {
-    if (rowIndex < data.length - 1) {
-      const updatedData = [...data];
-      const temp = updatedData[rowIndex + 1];
-      updatedData[rowIndex + 1] = updatedData[rowIndex];
-      updatedData[rowIndex] = temp;
-      setData(updatedData);
-    }
-  };
-
-  const saveToFile = (updatedData) => {
-    const csv = Papa.unparse(updatedData, {
-      header: false,
-    });
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.setAttribute("download", fileName); // Use the original file name
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  // Auto-save whenever data changes
-  useEffect(() => {
-    if (data.length > 0) {
-      saveToFile(data);
-    }
-  }, [data]);
+  if (!vehicle || !vehicle.locations) {
+    return <div>No data available</div>;
+  }
 
   return (
     <div
       style={{
-        margin: 35,
+        marginTop: 35,
+        marginRight: "35%",
         backgroundColor: "white",
         color: "black",
         padding: 15,
+        borderRadius: 10,
+        border: "1px solid green",
+        display: "inline-block",
       }}
     >
       <h4>Way Points Display</h4>
-      {!fileSelected && (
-        <input type="file" accept=".txt, .csv" onChange={handleFileChange} />
-      )}
+      <h4>Vehicle: {vehicle.name}</h4>
       {data.length > 0 && (
         <>
           <table
@@ -113,11 +110,13 @@ const CSVDisplay = () => {
                   {row.map((cell, colIndex) => (
                     <td
                       style={{
-                        padding: 5,
+                        padding: 10,
                         border: "1px solid black", // Adding borders to each cell
                       }}
                       key={colIndex}
-                      onDoubleClick={() => handleDoubleClick(rowIndex, colIndex)}
+                      onDoubleClick={() =>
+                        handleDoubleClick(rowIndex, colIndex)
+                      }
                     >
                       {editing &&
                       editing.rowIndex === rowIndex &&
@@ -134,10 +133,30 @@ const CSVDisplay = () => {
                       )}
                     </td>
                   ))}
-                  <td>
-                    <button onClick={() => handleDeleteRow(rowIndex)}>Delete</button>
-                    <button onClick={() => handleMoveRowUp(rowIndex)}>Up</button>
-                    <button onClick={() => handleMoveRowDown(rowIndex)}>Down</button>
+                  <td
+                    style={{
+                      padding: 10,
+                      border: "1px solid black", // Adding borders to each cell
+                    }}
+                  >
+                    <Button
+                      variant="primary"
+                      onClick={() => handleMoveRowUp(rowIndex)}
+                    >
+                      <HiArrowNarrowUp />
+                    </Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => handleMoveRowDown(rowIndex)}
+                    >
+                      <HiArrowDown />
+                    </Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => handleDeleteRow(rowIndex)}
+                    >
+                      <HiArchiveBoxXMark />
+                    </Button>
                   </td>
                 </tr>
               ))}

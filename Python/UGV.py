@@ -217,3 +217,10 @@ class RoverController:
         print("Stopping Rover...")
         self.ugv_connection.mode = VehicleMode("HOLD")
         print("Rover stopped")
+
+    def write_mission(self, waypoints):
+        print("Writing mission")
+        print(waypoints)
+        with open(self.goto_mission, 'w') as file:
+            for wp in waypoints:
+                file.write(f"{wp[0]},{wp[1]},{wp[2]}\n")

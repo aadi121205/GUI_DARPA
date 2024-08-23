@@ -4,6 +4,7 @@ import './Timeline.css';
 
 const Timeline = ({ points }) => {
   return (
+    
     <div className="timeline">
       {points.map((point, index) => (
         <div key={index} className="timeline-point">

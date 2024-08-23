@@ -175,10 +175,10 @@ reactNamespace.on('connection', (socket) => {
     socket.on('disarmingBackend_rover2', () => roverNamespace2.emit('disarm_rover2'));
     socket.on('disarmingBackend_rover3', () => roverNamespace3.emit('disarm_rover3'));
 
-    socket.on('set_gimbal_point', (data) => pythonNamespace.emit('gimbal_point', data));
-    socket.on('set_gimbal_point_rover', (data) => roverNamespace.emit('gimbal_point_rover', data));
-    socket.on('set_gimbal_point_rover2', (data) => roverNamespace2.emit('gimbal_point_rover2', data));
-    socket.on('set_gimbal_point_rover3', (data) => roverNamespace3.emit('gimbal_point_rover3', data));
+    socket.on('write_mission', (data) => pythonNamespace.emit('write_mission', data));
+    socket.on('write_mission_rover', (data) => roverNamespace.emit('write_mission', data));
+    socket.on('write_mission_rover2', (data) => roverNamespace2.emit('write_mission', data));
+    socket.on('write_mission_rover3', (data) => roverNamespace3.emit('write_mission', data));
 
     socket.on('setRTL', () => pythonNamespace.emit('RTL'));
     socket.on('setRTL_rover', () => roverNamespace.emit('RTL_rover'));
