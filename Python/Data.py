@@ -1,6 +1,7 @@
 import time
 import os
 import threading
+import cv2
 
 
 class DataController:
@@ -8,11 +9,23 @@ class DataController:
         self.sio = sio
         threading.Thread(target=self.send_data).start()
 
+    def get_frame(self):
+        cap = cv2.VideoCapture(0)
+        while True:
+            ret, frame = cap.read()
+            if ret:
+                ret, jpeg = cv2.imencode('.jpg', frame)
+                if ret:
+                    return jpeg.tobytes()
+            else:
+                return None
+    
     def send_data(self):
         while True:
             data = {
                 "time": time.time(),
                 "timings": {"start": 0, "end": 0},
+                "frame" : self.get_frame()
             }
             try:
                 self.sio.emit("data", data, namespace="/data")
