@@ -13,7 +13,7 @@ def haversine(lon1, lat1, lon2, lat2):
 
 class DroneController:
     def __init__(self, sio):
-        self.DroneIP = '192.168.1.48:14550'
+        self.DroneIP = '127.0.0.1:14550'
         self.sio = sio
         self.telem_running = False
         self.uav_connected = False
