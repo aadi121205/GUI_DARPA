@@ -40,7 +40,6 @@ function NavigationBar() {
               <NavDropdown.Item href="/test3">Test UGV 2</NavDropdown.Item>
               <NavDropdown.Item href="/test4">Test UGV 3</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/terminal">Terminal</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

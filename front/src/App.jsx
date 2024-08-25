@@ -9,7 +9,6 @@ import Test from './Comps/Test';
 import TestUgv from './Comps/TestUgv';
 import TestUgv2 from './Comps/TestUgv2';
 import Control from './Comps/Control';
-import GenomeTerminal from './Comps/Terminal';
 
 function App() {
   return (
@@ -23,7 +22,6 @@ function App() {
         <Route path="/test2" element={<TestUgv />} />
         <Route path="/test3" element={<TestUgv2 />} />
         <Route path="/control" element={<Control />} />
-        <Route path="/terminal" element={<GenomeTerminal />} />
       </Routes>
       </Router>
   );
