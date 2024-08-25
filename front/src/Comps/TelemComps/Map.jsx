@@ -126,7 +126,7 @@ export default function Map() {
     });
   }, [telemetryData]);
 
-  useEffect(() => {
+/*   useEffect(() => {
     if (roverMarker) {
       roverMarker.remove();
     }
@@ -229,7 +229,7 @@ export default function Map() {
 
     setRoverMarker3(newRoverMarker3);
   }, [telemetryData_rover3]);
-
+ */
   // New useEffect for handling multiple UAV point markers
   useEffect(() => {
     if (uavPointMarkers) {
@@ -270,7 +270,7 @@ export default function Map() {
     }
   }, [telemetryData.locations, uavPointsVisible]);
 
-  useEffect(() => {
+/*   useEffect(() => {
     if (ugvPointMarkers) {
       ugvPointMarkers.forEach((marker) => marker.remove());
     }
@@ -305,7 +305,7 @@ export default function Map() {
 
       setUgvPointMarkers(newugvMarkers);
     }
-  }, [telemetryData_rover.locations, ugvPointsVisible]);
+  }, [telemetryData_rover.locations, ugvPointsVisible]); */
 
   return (
     <div>
