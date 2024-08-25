@@ -87,5 +87,10 @@ class Socketio_client:
         def disconnect():
             print("Socket connection broken connection IP/PORT: "+ str(self.connection_string))
             # self.start()
+        
+        @self.socketio_client.event(namespace="/data")
+        def connect_error(e):
+            print("Socket connect error IP/PORT: " + str(e))
+            
 
     

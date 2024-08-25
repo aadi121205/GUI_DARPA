@@ -38,7 +38,7 @@ class DroneController:
         if not self.uav_connected:
             try:
                 print("Trying to connect UAV...")
-                self.uav_connection = connect(self.DroneIP, wait_ready=False, timeout=5)
+                self.uav_connection = connect(self.DroneIP, wait_ready=False, timeout=5, baud=57600)
                 print("[UAV.py] Connected to UAV at IP/PORT: " + str(self.DroneIP))
                 self.uav_connected = True
             except Exception as e:

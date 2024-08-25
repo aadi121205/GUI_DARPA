@@ -1,20 +1,17 @@
-import * as React from 'react';
-import Length from './DataComps/Charts';
+import { SocketState } from "../context/socketContext";
+import { TelemState } from "../context/home/telemState";
+import VideoBackground from "./HomeComps/Homer";
+import Charts from "./DataComps/Charts";
 
-function Data() {
-    return (
-        <div>
-            <Length />
-            <Length />
-            <Length />
-            <Length />
-            <Length />
-            <Length />
-            <Length />
-            <Length />
+const Data = () => {
 
-        </div>
-    );
-}
+  return (
+    <SocketState>
+      <TelemState>
+        <Charts />
+        </TelemState>
+    </SocketState>
+  );
+};
 
 export default Data;

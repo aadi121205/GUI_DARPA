@@ -10,6 +10,7 @@ from UGV import RoverController
 from UGV2 import RoverController2
 from UGV3 import RoverController3
 from image_capture import Image_Capture
+from Data import DataController
 load_dotenv()
 # from socket_client import Drone
 
@@ -20,6 +21,7 @@ gcs_port=os.getenv('GCS_PORT')
 if __name__=="__main__":
     sio = Socketio_client(gcs_ip,gcs_port).socketio_client
     uav = DroneController(sio)
+    data = DataController(sio)
 """     ugv = RoverController(sio)
     ugv2 = RoverController2(sio)
     ugv3 = RoverController3(sio) """

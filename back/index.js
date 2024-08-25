@@ -34,6 +34,8 @@ const pythonNamespace = io.of('/python');
 const roverNamespace = io.of('/rover');
 const roverNamespace2 = io.of('/rover2');
 const roverNamespace3 = io.of('/rover3');
+const dataNamespace = io.of('/data');
+
 const reactNamespace = io.of('/react');
 
 // Python namespace
@@ -44,7 +46,6 @@ pythonNamespace.on('connection', (socket) => {
         counter = 0;
         if (telemetryActive) {
             reactNamespace.emit('telemetryServer', data);
-            console.log(data);
         }
     });
 
@@ -84,6 +85,19 @@ handleRoverConnection(roverNamespace, 'rover');
 handleRoverConnection(roverNamespace2, 'rover2');
 handleRoverConnection(roverNamespace3, 'rover3');
 
+// Data namespace
+dataNamespace.on('connection', (socket) => {
+    console.log('A Data client connected');
+
+    socket.on('data', (data) => {
+        reactNamespace.emit('data', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('A Data client disconnected');
+    });
+});
+
 // React namespace
 reactNamespace.on('connection', (socket) => {
     console.log('A React client connected_ROVER');
@@ -92,16 +106,6 @@ reactNamespace.on('connection', (socket) => {
         console.log(`${event} event received`);
         namespace.emit(event, payload);
     };
-
-    socket.on('startvideo', () => emitEventToNamespace('start_video', pythonNamespace));
-    socket.on('startvideo_rover', () => emitEventToNamespace('start_video_rover', roverNamespace));
-    socket.on('startvideo_rover2', () => emitEventToNamespace('start_video_rover2', roverNamespace2));
-    socket.on('startvideo_rover3', () => emitEventToNamespace('start_video_rover3', roverNamespace3));
-
-    socket.on('stopvideo', () => emitEventToNamespace('stop_video', pythonNamespace));
-    socket.on('stopvideo_rover', () => emitEventToNamespace('stop_video_rover', roverNamespace));
-    socket.on('stopvideo_rover2', () => emitEventToNamespace('stop_video_rover2', roverNamespace2));
-    socket.on('stopvideo_rover3', () => emitEventToNamespace('stop_video_rover3', roverNamespace3));
 
     socket.on('start_Telem_rover', () => {
         console.log("Telemetry start requested for ROVER");

@@ -8,6 +8,7 @@ const TelemState = ({ children }) => {
   const [telemetryData_rover, setTelemetryData_rover] = useState({});
   const [telemetryData_rover2, setTelemetryData_rover2] = useState({});
   const [telemetryData_rover3, setTelemetryData_rover3] = useState({});
+  const [data, setData] = useState({});
   const [OdlcData, setOdlcData] = useState({});
   const [roll, setroll] = useState("");
   const [pitch, setpitch] = useState("");
@@ -189,9 +190,6 @@ const TelemState = ({ children }) => {
     socket.emit("startvideo");
     console.log("emit video start");
   };
-  const circle = () => {
-    socket.emit("circle");
-  };
 
   const stopvideo = () => {
     socket.emit("stopvideo");
@@ -273,6 +271,11 @@ const TelemState = ({ children }) => {
         return { ...prevData, ...data };
       });
     });
+
+    socket.on("data", (data) => {
+      setData(data);
+    });
+
     socket.on("mode", (flag) => {
       if (flag === true) {
         setMode("success");
@@ -377,8 +380,7 @@ const TelemState = ({ children }) => {
         image,
         set_Guided,
         flyMission,
-        circle,
-      }}
+        data,}}
     >
       {children}
     </telemContext.Provider>
