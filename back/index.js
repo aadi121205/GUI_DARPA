@@ -20,8 +20,8 @@ const server = http.createServer(app);
 const io = socketIo(server, defaultParams);
 
 // Variables
-let telemetryActive = false;
-let telemetryroverActive = false;
+let telemetryActive = true;
+let telemetryroverActive = true;
 let counter = 1;
 let flag = false;
 

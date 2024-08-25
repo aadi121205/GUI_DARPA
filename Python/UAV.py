@@ -165,9 +165,12 @@ class DroneController:
                             time.sleep(1)
 
                         print("Reached target")
+
+                        time.sleep(10)
+
                         if self.uav_connection.mode.name != "GUIDED":
                             break
-                print("Mission completed")    
+                print("Mission completed")
             else:
                 print("Drone not Takeoff")
         else:
