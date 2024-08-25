@@ -19,13 +19,13 @@ class Socketio_client:
             time.sleep(5)
             while not self.connected:
                 try:
-                    self.socketio_client.connect(f'http://{self.connection_string}/socket.io', namespaces=["/python","/rover","/rover2","/rover3"])
+                    self.socketio_client.connect(f'http://{self.connection_string}/socket.io', namespaces=["/python","/rover","/rover2","/rover3","/data"])
                     print("Connected to GUI  IP/PORT: " + str(self.connection_string))
                     self.connected = True
                 except Exception as e:
                     print("Cannot connect to GUI SocketIO. IP/PORT: "+ str(self.connection_string + "  Exception:- " + str(e)))
                     self.connected = False
-                    time.sleep(5)
+                    time.sleep(20)
                 
     def call_backs(self):
         @self.socketio_client.event(namespace="/python")  # decorator for the connect function
@@ -78,5 +78,14 @@ class Socketio_client:
         @self.socketio_client.event(namespace="/rover3")
         def connect_error(e):
             print("Socket connect error IP/PORT: " + str(e))
+
+        @self.socketio_client.event(namespace="/data")  # decorator for the connect function
+        def connect():
+            print("Socket established connection IP/PORT: "+ str(self.connection_string))
+
+        @self.socketio_client.event(namespace="/data")
+        def disconnect():
+            print("Socket connection broken connection IP/PORT: "+ str(self.connection_string))
+            # self.start()
 
     

@@ -38,7 +38,7 @@ class RoverController2:
             try:
                 print("Trying to connect Rover.....")
                 self.ugv_connection = connect(self.RoverIP, wait_ready=True, timeout=5)
-                self.cmds = self.ugv_connection.commands  # Initialize cmds after connection
+                self.cmds = self.ugv_connection.commands
                 print("[UGV.py] Connected to UGV at IP/PORT: " + str(self.RoverIP))
                 self.ugv_connected = True
             except Exception as e:
