@@ -22,10 +22,10 @@ const DropdownMenu = ({ vehicles }) => {
       const functions = [
         { name: "takeoff", label: "Takeoff", className: "btn-primary" },
         { name: "land", label: "Land", className: "btn-secondary" },
-        { name: "arm", label: "Arm", className: "btn-success" },
+        { name: "arm", label: "Arm", className: "btn-danger" },
         { name: "rtl", label: "Return to Launch", className: "btn-warning" },
         { name: "auto", label: "Auto Mode", className: "btn-info" },
-        { name: "flymission", label: "Fly Mission", className: "btn-danger" },
+        { name: "flymission", label: "Fly Mission", className: "btn-success" },
         { name: "uploadMission", label: "Upload Mission", className: "btn-light" },
       ];
 

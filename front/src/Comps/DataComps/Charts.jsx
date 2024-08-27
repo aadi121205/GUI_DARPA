@@ -18,8 +18,8 @@ function Length() {
         <h2>Time</h2>
         <p>Time of the rover</p>
         <p>Time: {new Date(data.time * 1000).toLocaleString()}</p>
-        {renderFrame(data)}
-      </div>
+{/*         {renderFrame(data)}
+ */}      </div>
     </div>
   );
 }

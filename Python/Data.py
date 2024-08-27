@@ -16,16 +16,17 @@ class DataController:
             if ret:
                 ret, jpeg = cv2.imencode('.jpg', frame)
                 if ret:
-                    return jpeg.tobytes()
+                    yield jpeg.tobytes()
             else:
                 return None
     
     def send_data(self):
         while True:
+            fraame = self.get_frame()
             data = {
                 "time": time.time(),
                 "timings": {"start": 0, "end": 0},
-                "frame" : self.get_frame()
+                "frame" : fraame
             }
             try:
                 self.sio.emit("data", data, namespace="/data")
