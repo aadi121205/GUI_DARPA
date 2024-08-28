@@ -19,7 +19,7 @@ const SignalBars = ({ st }) => {
         </div>
         <br></br>
         <br></br>
-        <h5 style = {{ color: "green", alignItems: "center" }}>&nbsp;&nbsp;&nbsp;&nbsp;{st.ip}</h5>
+        <h3 style = {{ color: "green", alignItems: "center" }}>&nbsp;&nbsp;&nbsp;&nbsp;{st.ip}</h3>
         </>
     );
 };

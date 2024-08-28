@@ -42,6 +42,14 @@ const Dts = (delaySec) => {
   return 5 - bars;
 };
 
+function isFullScreen() {
+  return document.fullscreenElement ||
+         document.mozFullScreenElement ||
+         document.webkitFullscreenElement ||
+         document.msFullscreenElement;
+}
+
+
 function Telemexp() {
   const { telemetryData, telemetryData_rover,telemetryData_rover2,telemetryData_rover3 } = React.useContext(telemContext);
   React.useContext(telemContext);
@@ -92,6 +100,9 @@ function Telemexp() {
   const scaledValue_rover = Dts(telemetryData_rover.heartbeat);
   const scaledValue_rover2 = Dts(telemetryData_rover2.heartbeat);
   const scaledValue_rover3 = Dts(telemetryData_rover3.heartbeat);
+
+
+  
 
   const UAVvehicleData = {
     name: "UAV",
@@ -180,7 +191,7 @@ function Telemexp() {
 
   return (
     <div className="tab">
-        <Row style={{ padding: "24px", backgroundColor: "black", height: "90vh"}}>
+        <Row style={{ padding: "24px", backgroundColor: "black", height: "90vh", overflow: "hidden"}}>
             <Col style={{ padding: "5px", backgroundColor: "black"}}>
                 <Container bg="dark" style={{padding: "2px", justifyContent: "flex-start", alignItems: "left", paddingLeft: "0px", backgroundColor: "black", color: "white"}}>
                     <Teleminfo vehicle={UAVvehicleData}/>
