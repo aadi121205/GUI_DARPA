@@ -34,6 +34,16 @@ const TelemState = ({ children }) => {
   const auto_command = () => {
     socket.emit("mission_auto");
   };
+  const auto_command_rover = () => {
+    socket.emit("auto_rover");
+  };
+  const auto_command_rover2 = () => {
+    socket.emit("auto_rover2");
+  };
+  const auto_command_rover3 = () => {
+    socket.emit("auto_rover3");
+  };
+
   const stop_Telem_rover = () => {
     socket.emit("stop_Telem_rover");
   };
@@ -306,6 +316,9 @@ const TelemState = ({ children }) => {
         goto_command_rover2,
         goto_command_rover3,
         auto_command,
+        auto_command_rover,
+        auto_command_rover2,
+        auto_command_rover3,
         landUAV,
         RTL,
         RTL_rover,

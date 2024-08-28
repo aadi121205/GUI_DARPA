@@ -23,7 +23,7 @@ const Modes = ({ vehicle }) => {
   const style = {
     display: "flex",
     border: "solid 1px #ddd",
-    background: "rgb(0 0 0 / 65%)",
+    background: "rgb(0 0 0 / 75%)",
     flexDirection: "column",
     padding: "3px",
     position: "fixed",

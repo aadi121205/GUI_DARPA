@@ -23,7 +23,7 @@ const Modal = ({ vehicle }) => {
   const style = {
     display: "flex",
     border: "solid 1px #ddd",
-    background: "rgb(0 0 0 / 65%)",
+    background: "rgb(0 0 0 / 80%)",
     flexDirection: "column",
     padding: "3px",
     position: "fixed",
@@ -63,32 +63,6 @@ const Modal = ({ vehicle }) => {
               <RiCloseCircleLine style={{ fontSize: 30 }} />
             </Button>
           </Rnd>
-{/*           <Rnd
-            style={style}
-            default={{
-              x: 600,
-              y: -80,
-              width: 330,
-              height: 400,
-            }}
-          >
-            <div style={{ position: "relative", width: "100%", height: "100%" }}>
-              <h3>Altitude: {vehicle.altitude} m</h3>
-              <h3>Velocity: {vehicle.velocity} m/s</h3>
-              <h3>Mode: {vehicle.mode}</h3>
-              <h3>State: {vehicle.state}</h3>
-              <h3>Status: {vehicle.status}</h3>
-              <h3>Throttle: {vehicle.throttle}</h3>
-              <h3>Signal Strength: {vehicle.signalStrength}</h3>
-              <h3>Displacement: {vehicle.displacment} m</h3>
-            </div>
-            <Button
-              onClick={handleOpen}
-              style={{ position: "absolute", top: 0, right: 0, color: "white" }}
-            >
-              <RiCloseCircleLine style={{ fontSize: 30 }} />
-            </Button>
-          </Rnd> */}
         </>
       )}
     </div>

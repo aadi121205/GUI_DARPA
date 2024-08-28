@@ -17,9 +17,9 @@ const renderValue = (value) => {
     return (
       <table
         style={{
-          width: "100%",
+          width: "95%",
           borderCollapse: "collapse",
-          margin: "10px 0",
+          margin: "30px",
           color: "#f8f8f2",
           background: "#2b2b2b",
           fontSize: "20px",
@@ -30,7 +30,7 @@ const renderValue = (value) => {
           {Object.entries(value).map(([subKey, subValue]) => (
             <tr key={subKey}>
               <td style={{ border: "1px solid #555", padding: "6px" }}>
-                {subKey}
+                <b>{subKey}</b>
               </td>
               <td
                 style={{
@@ -47,7 +47,6 @@ const renderValue = (value) => {
       </table>
     );
   }
-  // For primitive values, simply return the value as a string
   return String(value);
 };
 
@@ -59,7 +58,7 @@ function Length() {
       <h2>Data Overview</h2>
       <table
         style={{
-          width: "40%",
+          width: "50%",
           borderCollapse: "collapse",
           background: "#2b2b2b",
           color: "#f8f8f2",
@@ -86,7 +85,7 @@ function Length() {
           {Object.entries(data).map(([key, value]) => (
             <tr key={key}>
               <td style={{ border: "1px solid #444", padding: "8px" }}>
-                {key}
+                <b>{key}</b>
               </td>
               <td
                 style={{

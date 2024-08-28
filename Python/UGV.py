@@ -33,10 +33,6 @@ class RoverController:
         events = {
             'arm_rover': self.on_arm_rover,
             'disarm_rover': self.on_disarm_rover,
-            'upload_mission_rover': self.upload_mission_rover,
-            'readmission_rover': self.readmission_rover,
-            'save_mission_rover': self.save_mission_rover,
-            'download_mission_rover': self.download_mission_rover,
             'RTL_rover': self.set_rtl_rover,
             'goto_rover': self.goto_rover,
             'auto_rover': self.auto_rover,
@@ -75,60 +71,6 @@ class RoverController:
         # Set the rover to return-to-launch mode
         print("Setting Rover to RTL mode...")
         self.ugv_connection.mode = VehicleMode("RTL")
-        self.sio.on('upload_mission', self.send_mission, namespace="/python")
-
-    def upload_mission_rover(self, *args):
-        # Upload mission waypoints to the rover
-        print("Uploading mission to Rover...")
-        coordinates = self.readmission_rover()
-        for lat, lon in coordinates:
-            location = LocationGlobalRelative(lat, lon, 10)  # Altitude set to 10 meters
-            self.ugv_connection.simple_goto(location)
-            print(f"Moving to location: Latitude={lat}, Longitude={lon}")
-            time.sleep(30)  # Wait to reach destination
-
-    def readmission_rover(self, *args):
-        # Read mission waypoints from file
-        coordinates = []
-        try:
-            with open(self.filename, 'r') as file:
-                header = file.readline().strip()
-                if header == "QGC WPL 110":
-                    for line in file:
-                        components = line.strip().split('\t')
-                        if len(components) >= 12:
-                            try:
-                                lat = float(components[8])
-                                lon = float(components[9])
-                                coordinates.append((lat, lon))
-                            except ValueError as e:
-                                print(f"Skipping line due to error: {e}")
-        except FileNotFoundError:
-            print(f"File {self.filename} not found.")
-        return coordinates
-
-    def save_mission_rover(self, *args):
-        # Save the current mission to a file
-        print("Saving mission...")
-        mission_list = self.download_mission_rover()
-        output = "QGC WPL 110\n"
-        for cmd in mission_list:
-            output += "\t".join(map(str, [
-                cmd.seq, cmd.current, cmd.frame, cmd.command, cmd.param1, cmd.param2,
-                cmd.param3, cmd.param4, cmd.x, cmd.y, cmd.z, cmd.autocontinue
-            ])) + "\n"
-        with open(self.filename, 'w') as file:
-            file.write(output)
-        print("Mission saved successfully")
-
-    def download_mission_rover(self, *args):
-        # Download the mission from the rover
-        print("Downloading mission from Rover...")
-        mission_list = []
-        self.cmds.download()
-        self.cmds.wait_ready()
-        mission_list = list(self.cmds)
-        return mission_list
 
     def send_telemetry_data_rover(self):
         # Continuously send telemetry data from the rover

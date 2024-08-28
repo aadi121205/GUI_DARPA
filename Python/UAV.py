@@ -98,12 +98,14 @@ class DroneController:
                         self.sio.emit('telemetry', telemetry_data, namespace="/python")
                     except Exception as e:
                         print("[Telem] Telemetry not sent ERROR by UAV:", str(e))
+                        time.sleep(5)
                 else:
                     self.connect_uav()
-                time.sleep(1)
+                time.sleep(5)
             except Exception as e:
                 print("UAV 1 not connected")
                 self.connect_uav()
+                time.sleep(5)
     
     def send_mission(self, *args):
         waypoints = []
