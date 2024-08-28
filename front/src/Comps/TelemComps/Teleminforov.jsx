@@ -27,12 +27,12 @@ const Teleminforov = ({ vehicle }) => {
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
               <h4>DISPLACEMENT</h4>
-              <h4>
+              <h4 style={{ color: "#0aeafa" }}>
                 <b>{vehicle.displacment.toFixed(3)} m</b>
               </h4>
               <br></br>
               <h4>VELOCITY</h4>
-              <h4>
+              <h4 style={{ color: "#997a1d" }}>
                 <b>{typeof vehicle.velocity === 'number' ? vehicle.velocity.toFixed(2) : 'N/A'} m/s</b>
               </h4>
               <br></br>
