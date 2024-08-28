@@ -102,9 +102,9 @@ const CSVDisplay = ({ vehicle }) => {
       {data.length > 0 && (
         <>
           <table
-            style={{ borderCollapse: "collapse", border: "1px solid black" }}
+            style={{ borderCollapse: "collapse", border: "1px solid black" , backgroundColor: "white"}}
           >
-            <tbody>
+            <tbody style={{ backgroundColor: "white" }}>
               {data.map((row, rowIndex) => (
                 <tr key={rowIndex}>
                   {row.map((cell, colIndex) => (
