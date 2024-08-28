@@ -22,11 +22,9 @@ class DataController:
     
     def send_data(self):
         while True:
-            fraame = self.get_frame()
             data = {
                 "time": time.time(),
                 "timings": {"start": 0, "end": 0},
-                "frame" : fraame
             }
             try:
                 self.sio.emit("data", data, namespace="/data")
