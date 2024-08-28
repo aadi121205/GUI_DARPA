@@ -38,9 +38,9 @@ const Modes = ({ vehicle }) => {
   return (
     <div>
       <Button onClick={handleOpen}>
-        <h3 style={{ color: "white", paddingLeft: 0 }}>
+        <h4 style={{ color: "light blue", paddingLeft: 0 }}>
           <b>{vehicle.mode}</b>
-        </h3>
+        </h4>
       </Button>
       {open && (
         <>

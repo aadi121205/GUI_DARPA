@@ -25,35 +25,35 @@ const Teleminfo = ({ vehicle }) => {
               </h2>
           </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h3>ALTITUDE</h3>
-              <h3>
+              <h4>ALTITUDE</h4>
+              <h4>
                 <b>{vehicle.altitude} m</b>
-              </h3>
+              </h4>
               <br></br>
-              <h3>VELOCITY</h3>
-              <h3>
+              <h4>VELOCITY</h4>
+              <h4>
                 <b>{vehicle.velocity} m/s</b>
-              </h3>
+              </h4>
               <br></br>
-              <h3>MODE</h3>
+              <h4>MODE</h4>
               <Mode vehicle={vehicle} />
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h3>STATE</h3>
-              <h3>
+              <h4>STATE</h4>
+              <h4>
                 <b>{vehicle.state}</b>
-              </h3>
+              </h4>
               <br></br>
-              <h3>STATUS</h3>
-              <h3>
+              <h4>STATUS</h4>
+              <h4>
                 <b>{vehicle.status}</b>
-              </h3>
+              </h4>
               <br></br>
-              <h3>THROTTLE</h3>
+              <h4>THROTTLE</h4>
               <Button variant="primary" onClick={vehicle.arm} style={{ paddingLeft: 0 }}>
-              <h3 style={stylet}>
+              <h4 style={stylet}>
                 <b>{vehicle.throttle}</b>
-              </h3>
+              </h4>
               </Button>
         </Col>
         <Col style={{justifyContent: "center", alignItems: "center", paddingTop: "30px", paddingBottom: "30px"}}>  

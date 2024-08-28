@@ -26,35 +26,35 @@ const Teleminforov = ({ vehicle }) => {
             </h2>
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h3>DISPLACEMENT</h3>
-              <h3>
+              <h4>DISPLACEMENT</h4>
+              <h4>
                 <b>{vehicle.displacment.toFixed(3)} m</b>
-              </h3>
+              </h4>
               <br></br>
-              <h3>VELOCITY</h3>
-              <h3>
+              <h4>VELOCITY</h4>
+              <h4>
                 <b>{typeof vehicle.velocity === 'number' ? vehicle.velocity.toFixed(2) : 'N/A'} m/s</b>
-              </h3>
+              </h4>
               <br></br>
-              <h3>MODE</h3>
+              <h4>MODE</h4>
               <Modes vehicle={vehicle} />
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h3>BATTERY</h3>
-              <h3>
+              <h4>BATTERY</h4>
+              <h4>
                 <b>{vehicle.battery} %</b>
-              </h3>
+              </h4>
               <br></br>
-              <h3>STATUS</h3>
-              <h3>
+              <h4>STATUS</h4>
+              <h4>
                 <b>{vehicle.status}</b>
-              </h3>
+              </h4>
               <br></br>
-              <h3>THROTTLE</h3>
+              <h4>THROTTLE</h4>
               <Button variant="primary" onClick={vehicle.arm} style={{ paddingLeft: 0 }}>
-              <h3 style={stylet}>
+              <h4 style={stylet}>
                 <b>{vehicle.throttle}</b>
-              </h3>
+              </h4>
               </Button>
         </Col>
         <Col style={{justifyContent: "center", alignItems: "center", paddingTop: "30px", paddingBottom: "30px"}}>  
