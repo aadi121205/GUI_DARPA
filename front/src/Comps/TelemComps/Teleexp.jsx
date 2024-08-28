@@ -6,6 +6,7 @@ import Teleminforov from "./Teleminforov";
 import Map from "./Map";
 import MapOF from "./MapOF";
 import { Container, Button, Row, Col, Card } from 'react-bootstrap';
+import { padding } from "@mui/system";
 
 export const haversine_distance = (lat1, lon1, lat2, lon2) => {
   // distance between latitudes
@@ -179,21 +180,20 @@ function Telemexp() {
 
   return (
     <div className="tab">
-        <Row style={{ padding: "24px", backgroundColor: "black"}}>
+        <Row style={{ padding: "24px", backgroundColor: "black", height: "90vh"}}>
             <Col style={{ padding: "5px", backgroundColor: "black"}}>
                 <Container bg="dark" style={{padding: "2px", justifyContent: "flex-start", alignItems: "left", paddingLeft: "0px", backgroundColor: "black", color: "white"}}>
                     <Teleminfo vehicle={UAVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
+                    <Divider style={{ backgroundColor: 'white', height: "5px", marginTop: "15px", marginBottom: "15px"}} />
                     <Teleminforov vehicle={UGVvehicleData}/>
-                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
+                    <Divider style={{ backgroundColor: 'white', height: "5px", marginTop: "15px", marginBottom: "15px"}} />
                     <Teleminforov vehicle={UGVvehicleData2}/>
-                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
+                    <Divider style={{ backgroundColor: 'white', height: "5px", marginTop: "15px", marginBottom: "15px"}} />
                     <Teleminforov vehicle={UGVvehicleData3}/>
-                    <Divider style={{ backgroundColor: 'white', height: "5px"}} />
                 </Container>
             </Col>
             <Col>
-            <Container style={{ padding: "0px", overflow: "hidden",margin: "0px", paddingLeft: "0px", backgroundColor: "black"}}>
+            <Container style={{ padding: "0px", overflow: "hidden",margin: "0px", paddingLeft: "0px", backgroundColor: "black", borderRadius: "12px"}}>
 {              <Map />
 }           </Container>
             </Col>

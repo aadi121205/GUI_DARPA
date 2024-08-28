@@ -8,7 +8,7 @@ import { margin } from "@mui/system";
 import Mode from "./Mode";
 
 const Teleminfo = ({ vehicle }) => {
-  const style = vehicle.con ? { color: "green" } : { color: "red" };
+  const stylee = vehicle.con ? { color: "green", fontSize: "40px" } : { color: "red", fontSize: "30px" };
   let stylet = { color: "White", margin: "0px" };
   if (vehicle.throttle === "DISARMED") {
     stylet.color = "red";
@@ -20,40 +20,40 @@ const Teleminfo = ({ vehicle }) => {
     <div>
       <Container style={{display: "flex", justifyContent: "flex-start", alignItems: "left", paddingLeft: "50px", paddingRight: "40px", paddingBottom: "10px", paddingTop: "10px", margin: "5px"}}>
           <Col style={{display: "flex", justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h3 style={style}>
+              <h2 style={stylee}>
                   {vehicle.name}
-              </h3>
+              </h2>
           </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h6>ALTITUDE</h6>
-              <h5>
+              <h3>ALTITUDE</h3>
+              <h3>
                 <b>{vehicle.altitude} m</b>
-              </h5>
+              </h3>
               <br></br>
-              <h6>VELOCITY</h6>
-              <h5>
+              <h3>VELOCITY</h3>
+              <h3>
                 <b>{vehicle.velocity} m/s</b>
-              </h5>
+              </h3>
               <br></br>
-              <h6>MODE</h6>
+              <h3>MODE</h3>
               <Mode vehicle={vehicle} />
         </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
-              <h6>STATE</h6>
-              <h5>
+              <h3>STATE</h3>
+              <h3>
                 <b>{vehicle.state}</b>
-              </h5>
+              </h3>
               <br></br>
-              <h6>STATUS</h6>
-              <h5>
+              <h3>STATUS</h3>
+              <h3>
                 <b>{vehicle.status}</b>
-              </h5>
+              </h3>
               <br></br>
-              <h6>THROTTLE</h6>
+              <h3>THROTTLE</h3>
               <Button variant="primary" onClick={vehicle.arm} style={{ paddingLeft: 0 }}>
-              <h5 style={stylet}>
+              <h3 style={stylet}>
                 <b>{vehicle.throttle}</b>
-              </h5>
+              </h3>
               </Button>
         </Col>
         <Col style={{justifyContent: "center", alignItems: "center", paddingTop: "30px", paddingBottom: "30px"}}>  

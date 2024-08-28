@@ -32,15 +32,15 @@ const Modes = ({ vehicle }) => {
     color: "white",
     borderRadius: "10px",
     fontSize: "40px",
-    paddingLeft: 0 
+    paddingLeft: 0,
   };
 
   return (
     <div>
       <Button onClick={handleOpen}>
-        <h6 style={{ color: "white", paddingLeft: 0  }}>
+        <h3 style={{ color: "white", paddingLeft: 0 }}>
           <b>{vehicle.mode}</b>
-        </h6>
+        </h3>
       </Button>
       {open && (
         <>
@@ -54,9 +54,15 @@ const Modes = ({ vehicle }) => {
               height: 120,
             }}
           >
-            <Button variant="primary" onClick={vehicle.rtl}>RTL</Button>
-            <Button variant="primary" onClick={vehicle.Hold}>Hold</Button>
-            <Button variant="primary" onClick={vehicle.auto}>Auto</Button>
+            <Button variant="primary" onClick={vehicle.rtl}>
+              RTL
+            </Button>
+            <Button variant="primary" onClick={vehicle.Hold}>
+              Hold
+            </Button>
+            <Button variant="primary" onClick={vehicle.auto}>
+              Auto
+            </Button>
             <Button
               onClick={handleOpen}
               style={{ position: "absolute", top: 0, right: 0, color: "white" }}
@@ -68,5 +74,5 @@ const Modes = ({ vehicle }) => {
       )}
     </div>
   );
-}
+};
 export default Modes;
