@@ -32,7 +32,7 @@ const Teleminforov = ({ vehicle }) => {
               </h4>
               <br></br>
               <h4>VELOCITY</h4>
-              <h4 style={{ color: "#997a1d" }}>
+              <h4>
                 <b>{typeof vehicle.velocity === 'number' ? vehicle.velocity.toFixed(2) : 'N/A'} m/s</b>
               </h4>
               <br></br>

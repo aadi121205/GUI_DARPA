@@ -1,0 +1,14 @@
+table {
+    border-collapse: separate;
+    border-spacing: 0; /* Optional: Adjust spacing between cells if needed */
+}
+
+td, th {
+    padding: 10px;
+    border: 2px solid #3b3b3b; /* Optional: Add a border */
+    text-align: center;
+    width: "100%";
+    margin: "0";
+    background-color:black;
+    font-size: 20px;
+}
