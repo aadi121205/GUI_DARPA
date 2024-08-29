@@ -1,14 +1,20 @@
-from dronekit import connect, VehicleMode, LocationGlobalRelative
+from dronekit import connect, VehicleMode, LocationGlobalRelative, Command
+from pymavlink import mavutil
 import time
 import threading
 from math import radians, cos, sin, asin, sqrt
 
+
 def haversine(lon1, lat1, lon2, lat2):
     # Calculate the great-circle distance between two points on the Earth
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
-    a = sin((lat2 - lat1) / 2) ** 2 + cos(lat1) * cos(lat2) * sin((lon2 - lon1) / 2) ** 2
+    a = (
+        sin((lat2 - lat1) / 2) ** 2
+        + cos(lat1) * cos(lat2) * sin((lon2 - lon1) / 2) ** 2
+    )
     c = 2 * asin(sqrt(a))
     return c * 6371 * 1000  # Return distance in meters
+
 
 class RoverController:
     def __init__(self, sio):
@@ -20,7 +26,7 @@ class RoverController:
         self.cmds = None
         self.filename = "mission_rover.txt"
         self.goto_mission = "waypointsr.txt"
-        
+
         # Register event handlers for the socket
         self.register_socket_events()
 
@@ -31,12 +37,13 @@ class RoverController:
     def register_socket_events(self):
         # Registering all the socket events
         events = {
-            'arm_rover': self.on_arm_rover,
-            'disarm_rover': self.on_disarm_rover,
-            'RTL_rover': self.set_rtl_rover,
-            'goto_rover': self.goto_rover,
-            'auto_rover': self.auto_rover,
-            'STOP_rover': self.set_stop_rover,
+            "arm_rover": self.on_arm_rover,
+            "disarm_rover": self.on_disarm_rover,
+            "RTL_rover": self.set_rtl_rover,
+            "goto_rover": self.goto_rover,
+            "auto_rover": self.auto_rover,
+            "STOP_rover": self.set_stop_rover,
+            "upload_mission_rover": self.upload_mission_rover,
         }
         for event, handler in events.items():
             self.sio.on(event, handler, namespace="/rover")
@@ -75,9 +82,9 @@ class RoverController:
     def send_telemetry_data_rover(self):
         # Continuously send telemetry data from the rover
         locations = []
-        with open(self.goto_mission, 'r') as file:
+        with open(self.goto_mission, "r") as file:
             for line in file:
-                lat, lon = line.strip().split(',')
+                lat, lon = line.strip().split(",")
                 locations.append((float(lat), float(lon)))
         while True:
             try:
@@ -86,7 +93,10 @@ class RoverController:
                         telemetry_data = {
                             "latitude": self.ugv_connection.location.global_relative_frame.lat,
                             "longitude": self.ugv_connection.location.global_relative_frame.lon,
-                            "altitude": round(self.ugv_connection.location.global_relative_frame.alt, 2),
+                            "altitude": round(
+                                self.ugv_connection.location.global_relative_frame.alt,
+                                2,
+                            ),
                             "airspeed": self.ugv_connection.airspeed,
                             "groundspeed": self.ugv_connection.groundspeed,
                             "mode": self.ugv_connection.mode.name,
@@ -95,10 +105,12 @@ class RoverController:
                             "velocity": self.ugv_connection.velocity,
                             "status": self.ugv_connection.system_status.state,
                             "heartbeat": self.ugv_connection.last_heartbeat,
-                            "locations":locations,
+                            "locations": locations,
                             "ip": self.RoverIP,
                         }
-                        self.sio.emit('telemetry_rover', telemetry_data, namespace="/rover")
+                        self.sio.emit(
+                            "telemetry_rover", telemetry_data, namespace="/rover"
+                        )
                     except Exception as e:
                         print(f"[Telem] Error sending telemetry data: {e}")
                         self.ugv_connected = False
@@ -118,51 +130,79 @@ class RoverController:
             print("Waiting for Rover to arm...")
             time.sleep(1)
 
-    def travel_rover(self, lon, lat):
-        # Command the rover to travel to a specific location
-        print(f"Traveling to: Latitude={lat}, Longitude={lon}")
-        distance = haversine(self.ugv_connection.location.global_relative_frame.lon,
-                             self.ugv_connection.location.global_relative_frame.lat, lon, lat)
-        self.ugv_connection.simple_goto(LocationGlobalRelative(lat, lon))
-        while distance > 2:  # Stop when within 2 meters of the target
-            distance = haversine(self.ugv_connection.location.global_relative_frame.lon,
-                                 self.ugv_connection.location.global_relative_frame.lat, lon, lat)
-            time.sleep(1)
+    def upload_mission_rover(self, *args):
+        waypoints = []
+        with open(self.goto_mission, "r") as file:
+            for line in file:
+                lat, lon = line.strip().split(",")
+                waypoints.append((float(lat), float(lon)))
 
-    def goto_rover(self, *args):
-        # Execute the goto mission
-        print("Starting Goto Mission...")
-        self.arm_rover()
-        Lat, Lon = [], []
-        try:
-            with open(self.goto_mission, "r") as file:
-                for line in file:
-                    latitude, longitude = map(float, line.strip().split(", "))
-                    Lat.append(latitude)
-                    Lon.append(longitude)
-        except FileNotFoundError:
-            print(f"File {self.goto_mission} not found.")
-            return
-        for lat, lon in zip(Lat, Lon):
-            self.travel_rover(lon, lat)
-            time.sleep(2)
-        self.ugv_connection.mode = VehicleMode("RTL")
-        print("Goto Mission completed, returning to launch")
+        cmds = self.ugv_connection.commands
+        cmds.clear()
+
+        for wp in waypoints:
+            lat, lon = wp
+            cmd = Command(
+                0,
+                0,
+                0,
+                mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT,
+                mavutil.mavlink.MAV_CMD_NAV_WAYPOINT,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                lat,
+                lon,
+                0,
+            )
+            cmds.add(cmd)
+
+        cmds.upload()  # Upload the mission to the vehicle
+        print("Mission uploaded successfully.")
 
     def auto_rover(self, *args):
-        # Set the rover to AUTO mode
         print("Setting Rover to AUTO mode...")
         self.ugv_connection.mode = VehicleMode("AUTO")
 
     def set_stop_rover(self, *args):
-        # Stop the rover by setting it to HOLD mode
         print("Stopping Rover...")
         self.ugv_connection.mode = VehicleMode("HOLD")
         print("Rover stopped")
 
-    def write_mission(self, waypoints):
-        print("Writing mission")
-        print(waypoints)
-        with open(self.goto_mission, 'w') as file:
-            for wp in waypoints:
-                file.write(f"{wp[0]},{wp[1]},{wp[2]}\n")
+    def goto_rover(self, *args):
+        waypoints = []
+        with open(self.goto_mission, "r") as file:
+            for line in file:
+                lat, lon = line.strip().split(",")
+                waypoints.append((float(lat), float(lon)))
+
+        cmds = self.ugv_connection.commands
+        cmds.clear()
+
+        wp = waypoints[0]
+        print(f"Going to waypoint: {wp}")
+        lat, lon = wp
+        cmd = Command(
+            0,
+            0,
+            0,
+            mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT,
+            mavutil.mavlink.MAV_CMD_NAV_WAYPOINT,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            lat,
+            lon,
+            0,
+        )
+        cmds.add(cmd)
+
+        cmds.upload()
+        self.ugv_connection.mode = VehicleMode("AUTO")
+        print("Rover set to Goto mode.")

@@ -22,8 +22,7 @@ const io = socketIo(server, defaultParams);
 // Variables
 let telemetryActive = true;
 let telemetryroverActive = true;
-let counter = 1;
-let flag = false;
+
 
 const chartData = [
     { name: 1, x: Math.random() * 10, y: Math.random() * 10 },
@@ -141,10 +140,6 @@ reactNamespace.on('connection', (socket) => {
     socket.on('uploadMission_rover', () => emitEventToNamespace('upload_mission_rover', roverNamespace));
     socket.on('uploadMission_rover2', () => emitEventToNamespace('upload_mission_rover2', roverNamespace2));
     socket.on('uploadMission_rover3', () => emitEventToNamespace('upload_mission_rover3', roverNamespace3));
-    socket.on('saveMission', () => emitEventToNamespace('save_mission', pythonNamespace));
-    socket.on('saveMission_rover', () => emitEventToNamespace('save_mission_rover', roverNamespace));
-    socket.on('saveMission_rover2', () => emitEventToNamespace('save_mission_rover2', roverNamespace2));
-    socket.on('saveMission_rover3', () => emitEventToNamespace('save_mission_rover3', roverNamespace3));
     socket.on('flyMission', () => pythonNamespace.emit('fly_mission'));
     socket.on('takeoffBackend', () => pythonNamespace.emit('takeoff'));
     socket.on('armingBackend', () => pythonNamespace.emit('arm_drone'));
@@ -155,10 +150,6 @@ reactNamespace.on('connection', (socket) => {
     socket.on('disarmingBackend_rover', () => roverNamespace.emit('disarm_rover'));
     socket.on('disarmingBackend_rover2', () => roverNamespace2.emit('disarm_rover2'));
     socket.on('disarmingBackend_rover3', () => roverNamespace3.emit('disarm_rover3'));
-    socket.on('write_mission', (data) => pythonNamespace.emit('write_mission', data));
-    socket.on('write_mission_rover', (data) => roverNamespace.emit('write_mission', data));
-    socket.on('write_mission_rover2', (data) => roverNamespace2.emit('write_mission', data));
-    socket.on('write_mission_rover3', (data) => roverNamespace3.emit('write_mission', data));
     socket.on('setRTL', () => pythonNamespace.emit('RTL'));
     socket.on('setRTL_rover', () => roverNamespace.emit('RTL_rover'));
     socket.on('setRTL_rover2', () => roverNamespace2.emit('RTL_rover2'));
@@ -176,33 +167,10 @@ reactNamespace.on('connection', (socket) => {
     socket.on("mission_goto_rover3", () => roverNamespace3.emit("goto_rover3"));
     socket.on("auto_rover3", () => roverNamespace3.emit("auto_rover3"));
 
-    setInterval(() => {
-        socket.emit('chart', chartData);
-    }, 1000);
-
-    setInterval(() => {
-        socket.emit('mode', flag);
-    }, 1000);
-
     socket.on('disconnect', () => {
         console.log('A React client disconnected');
     });
 });
-
-setInterval(() => {
-    if (counter > 5) {
-        flag = false;
-    } else if (counter === 0) {
-        flag = true;
-    }
-    counter++;
-}, 2000);
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {

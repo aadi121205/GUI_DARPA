@@ -108,7 +108,6 @@ function Telemexp() {
     takeoff: flyUav,
     state : telemetryData.state,
     auto: auto_command,
-    displacment: haversine_distance( 28.753681733536023, 77.11523238257983, telemetryData.latitude, telemetryData.longitude),
     flymission: flyMission,
     circle: circle,
     ip: telemetryData.ip,
@@ -125,15 +124,15 @@ function Telemexp() {
     status: telemetryData_rover.status, // status
     throttle: telemetryData_rover.armed ? "ARMED" : "DISARMED", // throttle status
     signalStrength: scaledValue_rover,
+    displacment: haversine_distance( 28.753716379581093, 77.11551231763772, telemetryData_rover.latitude, telemetryData_rover.longitude),
+    ip: telemetryData_rover.ip,
     arm: arm_rover,
     rtl: RTL_rover,
     Hold: STOP_rover,
+    auto: auto_command_rover,
     goto: goto_command_rover,
-    displacment: haversine_distance( 28.753716379581093, 77.11551231763772, telemetryData_rover.latitude, telemetryData_rover.longitude),
     flymission: goto_command_rover,
     uploadMission_rover: uploadMission_rover,
-    auto: auto_command_rover,
-    ip: telemetryData_rover.ip,
   };
   const UGVvehicleData2 = {
     name: "UGV2",

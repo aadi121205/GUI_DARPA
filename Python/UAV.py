@@ -30,7 +30,6 @@ class DroneController:
         self.sio.on('fly_mission', self.flyMission, namespace="/python")
         self.sio.on('upload_mission', self.send_mission, namespace="/python")
         self.sio.on('auto_mission', self.set_auto, namespace="/python")
-        self.sio.on('write_mission', self.write_mission, namespace="/python")
         self.connect_uav()
         threading.Thread(target=self.send_telemetry_data).start()
 
@@ -97,15 +96,15 @@ class DroneController:
                     try:
                         self.sio.emit('telemetry', telemetry_data, namespace="/python")
                     except Exception as e:
-                        print("[Telem] Telemetry not sent ERROR by UAV:", str(e))
-                        time.sleep(5)
+                        print("[Telem] Telemetry not sent ERROR by UAV:")
+                        time.sleep(1)
                 else:
                     self.connect_uav()
-                time.sleep(5)
+                    time.sleep(1)
             except Exception as e:
                 print("UAV 1 not connected")
                 self.connect_uav()
-                time.sleep(5)
+                time.sleep(1)
     
     def send_mission(self, *args):
         waypoints = []
@@ -120,7 +119,7 @@ class DroneController:
             lon = wp[1]
             alt = wp[2]
             cmd = Command(0, 0, 0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT,
-						mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 0, 0, 0, 0, 
+						mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 0, 10, 0, 0, 0, 
 						lat, lon, alt)
             cmds.add(cmd)
         cmds.upload()  # Upload the mission to the vehicle
@@ -177,10 +176,3 @@ class DroneController:
                 print("Drone not Takeoff")
         else:
             print("Drone not armed")
-
-    def write_mission(self, waypoints):
-        print("Writing mission")
-        print(waypoints)
-        with open(self.goto_mission, 'w') as file:
-            for wp in waypoints:
-                file.write(f"{wp[0]},{wp[1]},{wp[2]}\n")

@@ -52,9 +52,9 @@ const Modal = ({ vehicle }) => {
             }}
           >
             <Button variant="primary" onClick={vehicle.arm}>{vehicle.armed ? "Disarm" : "Arm"}</Button>
-            <Button variant="primary" onClick={vehicle.uploadMission_rover}>Execute Mission</Button>
-            <Button variant="primary" onClick={vehicle.takeoff}>Start</Button>
-            <Button variant="primary" onClick={vehicle.rtl}>Emergency Stop</Button>
+            <Button variant="primary" onClick={vehicle.uploadMission_rover}>Upload Mission</Button>
+            <Button variant="primary" onClick={vehicle.goto}>Go to</Button>
+            <Button variant="primary" onClick={vehicle.Hold}>Emergency Stop</Button>
             <Button
               onClick={handleOpen}
               style={{ position: "absolute", top: 0, right: 0, color: "white" }}
