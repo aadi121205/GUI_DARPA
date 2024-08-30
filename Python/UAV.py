@@ -101,6 +101,7 @@ class DroneController:
                 else:
                     self.connect_uav()
                     time.sleep(1)
+                time.sleep(1)
             except Exception as e:
                 print("UAV 1 not connected")
                 self.connect_uav()
