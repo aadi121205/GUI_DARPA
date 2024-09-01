@@ -30,6 +30,7 @@ class DroneController:
         self.sio.on('fly_mission', self.flyMission, namespace="/python")
         self.sio.on('upload_mission', self.send_mission, namespace="/python")
         self.sio.on('auto_mission', self.set_auto, namespace="/python")
+        self.sio.on('write_mission', self.write_mission, namespace="/python")
         self.connect_uav()
         threading.Thread(target=self.send_telemetry_data).start()
 
@@ -177,3 +178,10 @@ class DroneController:
                 print("Drone not Takeoff")
         else:
             print("Drone not armed")
+            
+    def write_mission(self, waypoints):
+        print("Writing mission")
+        print(waypoints)
+        with open(self.goto_mission, 'w') as file:
+            for wp in waypoints:
+                file.write(f"{wp[0]},{wp[1]},{wp[2]}\n")

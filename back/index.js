@@ -138,7 +138,10 @@ reactNamespace.on('connection', (socket) => {
     socket.on('stopTelem', () => {
         telemetryActive = false;
     });
-
+    socket.on('write_mission', (data) => pythonNamespace.emit('write_mission', data));
+    socket.on('write_mission_rover', (data) => roverNamespace.emit('write_mission', data));
+    socket.on('write_mission_rover2', (data) => roverNamespace2.emit('write_mission', data));
+    socket.on('write_mission_rover3', (data) => roverNamespace3.emit('write_mission', data));
     socket.on('uploadMission', () => emitEventToNamespace('upload_mission', pythonNamespace));
     socket.on('uploadMission_rover', () => emitEventToNamespace('upload_mission_rover', roverNamespace));
     socket.on('uploadMission_rover2', () => emitEventToNamespace('upload_mission_rover2', roverNamespace2));
