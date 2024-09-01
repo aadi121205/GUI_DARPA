@@ -6,3 +6,5 @@ node_modules
 /Python/config
 .vs
 /Python/Missions
+yolov8x.pt
+Python/UAV/flight_kush
