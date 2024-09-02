@@ -22,7 +22,7 @@ export default function TimerModal() {
     textAlign: "center",
     color: "white",
     borderRadius: "10px",
-    fontSize: "25px",
+    fontSize: "17px",
   };
 
   return (

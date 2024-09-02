@@ -20,15 +20,24 @@ const CSVDisplay = ({ vehicle }) => {
 
   const handleEdit = (rowIndex, colIndex, value) => {
     const updatedData = [...data];
-    updatedData[rowIndex][colIndex] = value;
+    
+    // Convert the value to a float before updating
+    const floatValue = parseFloat(value);
+    if (!isNaN(floatValue)) {
+      updatedData[rowIndex][colIndex] = floatValue;
+    } else {
+      updatedData[rowIndex][colIndex] = value; // If the value cannot be converted to a float, keep the original value
+    }
+    
     setData(updatedData);
     setModified(true); // Mark as modified
+  
     if (vehicle && vehicle.uploadMission) {
       vehicle.uploadMission(updatedData); // Call uploadMission with updated data
       console.log("success"); // Print success
     }
   };
-
+  
   const handleDeleteRow = (rowIndex) => {
     const updatedData = data.filter((_, index) => index !== rowIndex);
     setData(updatedData);

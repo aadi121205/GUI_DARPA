@@ -69,7 +69,7 @@ class DroneController:
             with open('waypoints.txt', 'r') as file:
                 for line in file:
                     lat, lon, alt = line.strip().split(',')
-                    locations.append((float(lat), float(lon), float(alt)))
+                    locations.append((float(lat), float(lon), int(alt)))
             try:
                 if self.uav_connected:
                     telemetry_data = {

@@ -167,7 +167,12 @@ GUI_DARPA/
 │
 ├── gitpush.sh
 │
+├── SSH.sh
+│
+├── Run.sh
+│
 └── requirements.txt
+
 ```
 ## Configuration
 
