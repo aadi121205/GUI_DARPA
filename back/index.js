@@ -49,9 +49,6 @@ pythonNamespace.on('connection', (socket) => {
         }
     });
 
-    socket.on('image', (payload) => {
-        reactNamespace.emit('video_image', payload);
-    });
 
     socket.on('disconnect', () => {
         console.log('A Python client disconnected');
@@ -63,9 +60,6 @@ const handleRoverConnection = (namespace, roverId) => {
     namespace.on('connection', (socket) => {
         console.log(`A Python client ${roverId} connected`);
 
-        socket.on(`image_${roverId}`, (payload) => {
-            reactNamespace.emit(`video_image_${roverId}`, payload);
-        });
 
         socket.on(`telemetry_${roverId}`, (data) => {
             counter = 0;
@@ -144,38 +138,38 @@ reactNamespace.on('connection', (socket) => {
     socket.on('write_mission_rover3', (data) => roverNamespace3.emit('write_mission', data));
     socket.on('uploadMission', () => emitEventToNamespace('upload_mission', pythonNamespace));
     socket.on('uploadMission_rover', () => emitEventToNamespace('upload_mission_rover', roverNamespace));
-    socket.on('uploadMission_rover2', () => emitEventToNamespace('upload_mission_rover2', roverNamespace2));
-    socket.on('uploadMission_rover3', () => emitEventToNamespace('upload_mission_rover3', roverNamespace3));
+    socket.on('uploadMission_rover2', () => emitEventToNamespace('upload_mission_rover', roverNamespace2));
+    socket.on('uploadMission_rover3', () => emitEventToNamespace('upload_mission_rover', roverNamespace3));
     socket.on('saveMission', () => emitEventToNamespace('save_mission', pythonNamespace));
     socket.on('saveMission_rover', () => emitEventToNamespace('save_mission_rover', roverNamespace));
-    socket.on('saveMission_rover2', () => emitEventToNamespace('save_mission_rover2', roverNamespace2));
-    socket.on('saveMission_rover3', () => emitEventToNamespace('save_mission_rover3', roverNamespace3));
+    socket.on('saveMission_rover2', () => emitEventToNamespace('save_mission_rover', roverNamespace2));
+    socket.on('saveMission_rover3', () => emitEventToNamespace('save_mission_rover', roverNamespace3));
     socket.on('flyMission', () => pythonNamespace.emit('fly_mission'));
     socket.on('takeoffBackend', () => pythonNamespace.emit('takeoff'));
     socket.on('armingBackend', () => pythonNamespace.emit('arm_drone'));
     socket.on('armingBackend_rover', () => roverNamespace.emit('arm_rover'));
-    socket.on('armingBackend_rover2', () => roverNamespace2.emit('arm_rover2'));
-    socket.on('armingBackend_rover3', () => roverNamespace3.emit('arm_rover3'));
+    socket.on('armingBackend_rover2', () => roverNamespace2.emit('arm_rover'));
+    socket.on('armingBackend_rover3', () => roverNamespace3.emit('arm_rover'));
     socket.on('disarmingBackend', () => pythonNamespace.emit('disarm_drone'));
     socket.on('disarmingBackend_rover', () => roverNamespace.emit('disarm_rover'));
-    socket.on('disarmingBackend_rover2', () => roverNamespace2.emit('disarm_rover2'));
-    socket.on('disarmingBackend_rover3', () => roverNamespace3.emit('disarm_rover3'));
+    socket.on('disarmingBackend_rover2', () => roverNamespace2.emit('disarm_rover'));
+    socket.on('disarmingBackend_rover3', () => roverNamespace3.emit('disarm_rover'));
     socket.on('setRTL', () => pythonNamespace.emit('RTL'));
     socket.on('setRTL_rover', () => roverNamespace.emit('RTL_rover'));
-    socket.on('setRTL_rover2', () => roverNamespace2.emit('RTL_rover2'));
-    socket.on('setRTL_rover3', () => roverNamespace3.emit('RTL_rover3'));
+    socket.on('setRTL_rover2', () => roverNamespace2.emit('RTL_rover'));
+    socket.on('setRTL_rover3', () => roverNamespace3.emit('RTL_rover'));
     socket.on('setSTOP_rover', () => roverNamespace.emit('STOP_rover'));
-    socket.on('setSTOP_rover2', () => roverNamespace2.emit('STOP_rover2'));
-    socket.on('setSTOP_rover3', () => roverNamespace3.emit('STOP_rover3'));
+    socket.on('setSTOP_rover2', () => roverNamespace2.emit('STOP_rover'));
+    socket.on('setSTOP_rover3', () => roverNamespace3.emit('STOP_rover'));
     socket.on('landUAV', () => pythonNamespace.emit('landUav'));
     socket.on("mission_goto", () => pythonNamespace.emit("goto_drone"));
     socket.on("mission_auto", () => pythonNamespace.emit("auto_mission"));
     socket.on("mission_goto_rover", () => roverNamespace.emit("goto_rover"));
     socket.on("auto_rover", () => roverNamespace.emit("auto_rover"));
-    socket.on("mission_goto_rover2", () => roverNamespace2.emit("goto_rover2"));
-    socket.on("auto_rover2", () => roverNamespace2.emit("auto_rover2"));
-    socket.on("mission_goto_rover3", () => roverNamespace3.emit("goto_rover3"));
-    socket.on("auto_rover3", () => roverNamespace3.emit("auto_rover3"));
+    socket.on("mission_goto_rover2", () => roverNamespace2.emit("goto_rover"));
+    socket.on("auto_rover2", () => roverNamespace2.emit("auto_rover"));
+    socket.on("mission_goto_rover3", () => roverNamespace3.emit("goto_rover"));
+    socket.on("auto_rover3", () => roverNamespace3.emit("auto_rover"));
 
     setInterval(() => {
         socket.emit('chart', chartData);

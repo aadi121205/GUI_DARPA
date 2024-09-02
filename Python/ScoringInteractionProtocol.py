@@ -2,10 +2,11 @@ import requests
 
 
 class ScoringInteractionProtocol:
-    def __init__(self, base_url, auth_token):
+    def __init__(self, base_url):
         self.base_url = base_url
+        self.auth_token = None
         self.headers = {
-            "Authorization": f"Bearer {auth_token}",
+            "Authorization": f"Bearer {self.auth_token}",
             "Content-Type": "application/json",
         }
 
@@ -65,13 +66,13 @@ if __name__ == "__main__":
 
     # Example: Post a critical report
     critical_report = scoring_api.post_critical(
-        casualty_id=1, team="TeamA", system="System1", type="severe_hemorrhage", value=1
+        casualty_id=1, team="TeamA", system="System1", type="hemorrhage", value=1
     )
     print("Critical Report:", critical_report)
 
     # Example: Post a vitals report
     vitals_report = scoring_api.post_vitals(
-        casualty_id=1, team="TeamA", system="System1", type="hr", value=78, time_ago=34
+        casualty_id=1, team="TeamA", system="System1", type="heart", value=78, time_ago=34
     )
     print("Vitals Report:", vitals_report)
 
@@ -80,3 +81,6 @@ if __name__ == "__main__":
         casualty_id=1, team="TeamA", system="System1", type="trauma_head", value=1
     )
     print("Injury Report:", injury_report)
+
+    status = scoring_api.get_status()
+    print("Status:", status)

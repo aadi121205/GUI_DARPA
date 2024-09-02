@@ -183,10 +183,10 @@ function Telemexp() {
                     <Teleminfo vehicle={UAVvehicleData}/>
                     <Divider style={{ backgroundColor: 'white', height: "3px", marginTop: "10px", marginBottom: "10px"}} />
                     <Teleminforov vehicle={UGVvehicleData}/>
-{/*                     <Divider style={{ backgroundColor: 'white', height: "3px", marginTop: "10px", marginBottom: "10px"}} />
+                    <Divider style={{ backgroundColor: 'white', height: "3px", marginTop: "10px", marginBottom: "10px"}} />
                     <Teleminforov vehicle={UGVvehicleData2}/>
                     <Divider style={{ backgroundColor: 'white', height: "3px", marginTop: "10px", marginBottom: "10px"}} />
-                    <Teleminforov vehicle={UGVvehicleData3}/> */}
+                    <Teleminforov vehicle={UGVvehicleData3}/>
                 </Container>
             </Col>
             <Col>

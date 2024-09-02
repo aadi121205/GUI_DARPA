@@ -8,7 +8,7 @@ import pandas as pd
 point = []
 
 # Initialize the YOLO model
-Model = YOLO("yolov8x.pt")
+Model = YOLO("best_body.pt")
 
 # Capture video from the default camera (index 0)
 vid = cv2.VideoCapture(0)

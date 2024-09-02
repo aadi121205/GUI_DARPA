@@ -23,8 +23,5 @@ if __name__=="__main__":
     uav = DroneController(sio)
     data = DataController(sio)
     ugv = RoverController(sio)
-"""     ugv2 = RoverController2(sio)
-    ugv3 = RoverController3(sio) """
-"""     video= Image_Capture(sio)
- """    
-    
+    ugv2 = RoverController2(sio)
+    ugv3 = RoverController3(sio)
