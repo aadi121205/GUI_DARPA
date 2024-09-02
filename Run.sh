@@ -64,45 +64,87 @@ else
     echo "Running the script in the foreground..."
 fi
 
-echo "Starting the tmux session..."
-echo "Please wait for a few seconds..."
+read -p "Do you want to run the script in Testing mode? (y/n): " testing
 
-# Start a new tmux session named "mySession"
-tmux new-session -d -s mySession
-
-# Pane 1: Run sitl.sh
-tmux send-keys -t mySession "cd && source sitl.sh" C-m
-sleep 2
-
-# Split Pane 1 vertically to create Pane 2: Run sitlr.sh
-tmux split-window -v -t mySession
-tmux send-keys -t mySession "cd && source sitlr.sh" C-m
-sleep 2
-
-# Split Pane 1 horizontally to create Pane 3: Run mock_server.py
-tmux split-window -h -t 0
-tmux send-keys -t mySession "cd Python && python3 mock_server.py" C-m
-sleep 2
-
-# Split Pane 2 horizontally to create Pane 4: Run npm run dev -- --host in front directory
-tmux split-window -h -t 2
-tmux send-keys -t mySession "cd front && npm run dev -- --host" C-m
-sleep 2
-
-# Select Pane 3 and split it vertically to create Pane 5: Run npm run start in back directory
-tmux select-pane -t 1
-tmux split-window -h -t 2
-tmux send-keys -t mySession "cd back && npm run start" C-m
-sleep 2
-
-# Select Pane 4 and split it vertically to create Pane 6: Run main.py in Python directory
-tmux select-pane -t 3
-tmux split-window -h -t 0
-tmux send-keys -t mySession "cd Python && python3 main.py" C-m
-sleep 2
-
-if [[ "$background" == "y" || "$background" == "Y" ]]; then
-    tmux detach -s mySession
+if [[ "$testing" == "y" || "$testing" == "Y" ]]; then
+    echo "Running the script in Testing mode..."
 else
-    tmux attach -t mySession
+    echo "Running the script in Production mode..."
+fi
+
+
+if [[ "$testing" == "y" || "$testing" == "Y" ]]; then
+    # Run the testing script
+    echo "Running the testing script..."
+    echo "Please wait for a few seconds..."
+
+    # Start a new tmux session named "mySession"
+    tmux new-session -d -s mySession
+
+    # Pane 1: Run sitl.sh
+    tmux send-keys -t mySession "cd && source sitl.sh" C-m
+    sleep 2
+
+    # Split Pane 1 vertically to create Pane 2: Run sitlr.sh
+    tmux split-window -v -t mySession
+    tmux send-keys -t mySession "cd && source sitlr.sh" C-m
+    sleep 2
+
+    # Split Pane 1 horizontally to create Pane 3: Run mock_server.py
+    tmux split-window -h -t 0
+    tmux send-keys -t mySession "cd Python && python3 mock_server.py" C-m
+    sleep 2
+
+    # Split Pane 2 horizontally to create Pane 4: Run npm run dev -- --host in front directory
+    tmux split-window -h -t 2
+    tmux send-keys -t mySession "cd front && npm run dev -- --host" C-m
+    sleep 2
+
+    # Select Pane 3 and split it vertically to create Pane 5: Run npm run start in back directory
+    tmux select-pane -t 1
+    tmux split-window -h -t 2
+    tmux send-keys -t mySession "cd back && npm run start" C-m
+    sleep 2
+
+    # Select Pane 4 and split it vertically to create Pane 6: Run main.py in Python directory
+    tmux select-pane -t 3
+    tmux split-window -h -t 0
+    tmux send-keys -t mySession "cd Python && python3 main.py" C-m
+    sleep 2
+
+    if [[ "$background" == "y" || "$background" == "Y" ]]; then
+        tmux detach -s mySession
+    else
+        tmux attach -t mySession
+    fi
+    exit 0
+
+
+else
+    echo "Starting the tmux session..."
+    echo "Please wait for a few seconds..."
+
+    # Start a new tmux session named "mySession"
+    tmux new-session -d -s mySession
+
+    # Pane 1: Run npm run dev -- --host in front directory
+    tmux send-keys -t mySession "cd front && npm run dev -- --host" C-m
+    sleep 2
+
+    # Split Pane 1 vertically to create Pane 2: Run npm run start in back directory
+    tmux split-window -h -t mySession
+    tmux send-keys -t mySession "cd back && npm run start" C-m
+    sleep 2
+
+    # Split Pane 2 vertically to create Pane 3: Run main.py in Python directory
+    tmux split-window -h -t mySession
+    tmux send-keys -t mySession "cd Python && python3 main.py" C-m
+    sleep 2
+
+    if [[ "$background" == "y" || "$background" == "Y" ]]; then
+        tmux detach -s mySession
+    else
+        tmux attach -t mySession
+    fi
+    exit 0
 fi
