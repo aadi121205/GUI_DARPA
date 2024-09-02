@@ -36,7 +36,7 @@ export default function Map() {
     if (map.current) return;
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: "mapbox://styles/mapbox/satellite-streets-v12",
+      style: "mapbox://styles/mapbox/satellite-v9",
       center: [lng, lat],
       zoom: zoom,
     });
@@ -56,14 +56,18 @@ export default function Map() {
             type: "Polygon",
             coordinates: [
               [
-                [77.115826, 28.754964],
-                [77.123077, 28.749402],
-                [77.118353, 28.744705],
-                [77.115991, 28.745345],
-                [77.115111, 28.748807],
-                [77.110113, 28.749459],
-                [77.112112, 28.751436],
-                [77.113197, 28.752666],
+                [77.1150694434753, 28.753440438581094],
+                [77.11506407905762,28.753774349183942],
+                [77.11534705209907,28.753790809538252],
+                [77.11556833433528, 28.754239941061414],
+                [77.11598407671828, 28.754471560491506],
+                [77.11659562035287, 28.754269334420062],
+                [77.11685713572292, 28.75366382959675],
+                [77.11672973079907, 28.75319235641946],
+                [77.11631115139913, 28.75284878272266],
+                [77.11580421391257, 28.75291344895851],
+                [77.11536835496247, 28.753437831864836],
+
               ],
             ],
           },
@@ -180,7 +184,7 @@ export default function Map() {
 
     const roverElement = document.createElement("div");
     roverElement.className = "marker";
-    roverElement.style.backgroundImage = "url(https://iili.io/dBmOJb1.png)";
+    roverElement.style.backgroundImage = "url(https://iili.io/dOmpKNV.png)";
     roverElement.style.width = "30px";
     roverElement.style.height = "30px";
     roverElement.style.backgroundSize = "100%";
@@ -215,7 +219,7 @@ export default function Map() {
 
     const roverElement = document.createElement("div");
     roverElement.className = "marker";
-    roverElement.style.backgroundImage = "url(https://iili.io/dBmOJb1.png)";
+    roverElement.style.backgroundImage = "url(https://iili.io/dOmyQQS.png)";
     roverElement.style.width = "30px";
     roverElement.style.height = "30px";
     roverElement.style.backgroundSize = "100%";
@@ -326,7 +330,7 @@ export default function Map() {
           const ugvElement = document.createElement("div");
           ugvElement.className = "marker";
           ugvElement.style.backgroundImage =
-            "url(https://iili.io/d0YXcEF.md.png)";
+            "url(https://iili.io/dOpxBv2.png)";
           ugvElement.style.width = "20px";
           ugvElement.style.height = "20px";
           ugvElement.style.backgroundSize = "100%";
@@ -346,8 +350,7 @@ export default function Map() {
 
       setUgv2PointMarkers(newugv2Markers);
     }
-  }
-  , [telemetryData_rover2.locations, ugv2PointsVisible]);
+  }, [telemetryData_rover2.locations, ugv2PointsVisible]);
 
   useEffect(() => {
     if (ugv3PointMarkers) {
@@ -364,7 +367,7 @@ export default function Map() {
           const ugvElement = document.createElement("div");
           ugvElement.className = "marker";
           ugvElement.style.backgroundImage =
-            "url(https://iili.io/d0YXcEF.md.png)";
+            "url(https://iili.io/dOpT53G.png)";
           ugvElement.style.width = "20px";
           ugvElement.style.height = "20px";
           ugvElement.style.backgroundSize = "100%";
@@ -384,8 +387,7 @@ export default function Map() {
 
       setUgv3PointMarkers(newugv3Markers);
     }
-  }
-  , [telemetryData_rover3.locations, ugv3PointsVisible]);
+  }, [telemetryData_rover3.locations, ugv3PointsVisible]);
 
   return (
     <div>
@@ -435,9 +437,9 @@ export default function Map() {
             Points
           </label>
           <br />
-          <label>
+          <label style={{ color: "lightblue" }}>
             <input
-              style={{ margin: "10px", transform: "scale(1.2)" }}
+              style={{ margin: "10px", transform: "scale(1.2)"}}
               type="checkbox"
               checked={ugv2PointsVisible}
               onChange={() => setUgv2PointsVisible(!ugv2PointsVisible)}
@@ -451,7 +453,7 @@ export default function Map() {
             Points
           </label>
           <br />
-          <label>
+          <label style={{ color: "lightgreen" }}>
             <input
               style={{ margin: "10px", transform: "scale(1.2)" }}
               type="checkbox"

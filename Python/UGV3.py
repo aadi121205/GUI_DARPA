@@ -15,7 +15,7 @@ class RoverController3:
         self.ugv_connection = None
         self.cmds = None
         self.filename = "mission_rover.txt"
-        self.goto_mission = "waypointsr.txt"
+        self.goto_mission = "waypointsr3.txt"
 
         # Register event handlers for the socket
         self.register_socket_events()
