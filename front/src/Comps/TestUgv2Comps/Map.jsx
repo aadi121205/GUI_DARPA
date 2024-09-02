@@ -13,13 +13,8 @@ export default function Map() {
   const [lng, setLng] = useState(77.11695);
   const [lat, setLat] = useState(28.750449);
   const [zoom, setZoom] = useState(18);
-  const { telemetryData, telemetryData_rover, telemetryData_rover2, telemetryData_rover3 } = useContext(telemContext);
-  const [uavMarker, setUavMarker] = useState(null);
+  const { telemetryData_rover2 } = useContext(telemContext);
   const [roverMarker, setRoverMarker] = useState(null);
-  const [roverMarker2, setRoverMarker2] = useState(null);
-  const [roverMarker3, setRoverMarker3] = useState(null);
-  const [uavPointMarkers, setUavPointMarkers] = useState([]);
-  const [uavPointsVisible, setUavPointsVisible] = useState(false);
   const [ugvPointMarkers, setUgvPointMarkers] = useState([]);
   const [ugvPointsVisible, setUgvPointsVisible] = useState(false);
 
@@ -87,9 +82,9 @@ export default function Map() {
     if (roverMarker) {
       roverMarker.remove();
     }
-    if (!telemetryData_rover || !telemetryData_rover.latitude || !telemetryData_rover.longitude) return;
+    if (!telemetryData_rover2 || !telemetryData_rover2.latitude || !telemetryData_rover2.longitude) return;
 
-    const { latitude, longitude } = telemetryData_rover;
+    const { latitude, longitude } = telemetryData_rover2;
 
     const roverElement = document.createElement('div');
     roverElement.className = 'marker';
@@ -114,15 +109,15 @@ export default function Map() {
       center: [longitude, latitude],
       essential: true,
     });
-  }, [telemetryData_rover]);
+  }, [telemetryData_rover2]);
 
   useEffect(() => {
     if (ugvPointMarkers) {
       ugvPointMarkers.forEach(marker => marker.remove());
     }
 
-    if (ugvPointsVisible && telemetryData_rover.locations && telemetryData_rover.locations.length > 0) {
-      const newugvMarkers = telemetryData_rover.locations.map(([latitude, longitude]) => {
+    if (ugvPointsVisible && telemetryData_rover2.locations && telemetryData_rover2.locations.length > 0) {
+      const newugvMarkers = telemetryData_rover2.locations.map(([latitude, longitude]) => {
         const ugvElement = document.createElement('div');
         ugvElement.className = 'marker';
         ugvElement.style.backgroundImage = 'url(https://iili.io/d0YXcEF.md.png)';
@@ -144,25 +139,25 @@ export default function Map() {
 
       setUgvPointMarkers(newugvMarkers);
     }
-  }, [telemetryData_rover.locations, ugvPointsVisible]);
+  }, [telemetryData_rover2.locations, ugvPointsVisible]);
 
   return (
     <div>
       <div id="map" className="map">
         <div className="sidebar">
-          <strong>Rover:-</strong> Longitude: {telemetryData_rover?.longitude} | Latitude:{" "}
-          {telemetryData_rover?.latitude}
+          <strong>Rover:-</strong> Longitude: {telemetryData_rover2?.longitude} | Latitude:{" "}
+          {telemetryData_rover2?.latitude}
           <br />
           <strong>DTU Campus  | Zoom: {zoom}</strong>
           <br />
-          <strong>{telemetryData_rover.locations && telemetryData_rover.locations.length} UGV Points &nbsp;</strong>
+          <strong>{telemetryData_rover2.locations && telemetryData_rover2.locations.length} UGV Points &nbsp;</strong>
           <label>
             <input
               type="checkbox"
               checked={ugvPointsVisible}
               onChange={() => setUgvPointsVisible(!ugvPointsVisible)}
             />
-            Show UGV Points
+            Show UGV2 Points
           </label>
         </div>
         <div ref={mapContainer} className="map-container" />

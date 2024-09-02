@@ -8,6 +8,7 @@ import Home from './Comps/Home';
 import Test from './Comps/Test';
 import TestUgv from './Comps/TestUgv';
 import TestUgv2 from './Comps/TestUgv2';
+import TestUgv3 from './Comps/TestUgv3';
 import Control from './Comps/Control';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/test" element={<Test />} />
         <Route path="/test2" element={<TestUgv />} />
         <Route path="/test3" element={<TestUgv2 />} />
+        <Route path="/test4" element={<TestUgv3 />} />
         <Route path="/control" element={<Control />} />
       </Routes>
       </Router>

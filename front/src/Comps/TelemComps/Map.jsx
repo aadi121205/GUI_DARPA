@@ -27,6 +27,10 @@ export default function Map() {
   const [uavPointsVisible, setUavPointsVisible] = useState(false);
   const [ugvPointMarkers, setUgvPointMarkers] = useState([]);
   const [ugvPointsVisible, setUgvPointsVisible] = useState(false);
+  const [ugv2PointMarkers, setUgv2PointMarkers] = useState([]);
+  const [ugv2PointsVisible, setUgv2PointsVisible] = useState(false);
+  const [ugv3PointMarkers, setUgv3PointMarkers] = useState([]);
+  const [ugv3PointsVisible, setUgv3PointsVisible] = useState(false);
 
   useEffect(() => {
     if (map.current) return;
@@ -307,6 +311,82 @@ export default function Map() {
     }
   }, [telemetryData_rover.locations, ugvPointsVisible]);
 
+  useEffect(() => {
+    if (ugv2PointMarkers) {
+      ugv2PointMarkers.forEach((marker) => marker.remove());
+    }
+
+    if (
+      ugv2PointsVisible &&
+      telemetryData_rover2.locations &&
+      telemetryData_rover2.locations.length > 0
+    ) {
+      const newugv2Markers = telemetryData_rover2.locations.map(
+        ([latitude, longitude]) => {
+          const ugvElement = document.createElement("div");
+          ugvElement.className = "marker";
+          ugvElement.style.backgroundImage =
+            "url(https://iili.io/d0YXcEF.md.png)";
+          ugvElement.style.width = "20px";
+          ugvElement.style.height = "20px";
+          ugvElement.style.backgroundSize = "100%";
+          ugvElement.style.border = "none";
+          ugvElement.style.borderRadius = "50%";
+          ugvElement.style.cursor = "pointer";
+
+          ugvElement.addEventListener("click", () => {
+            window.alert(`UGV Location: Lat ${latitude}, Lng ${longitude}`);
+          });
+
+          return new mapboxgl.Marker(ugvElement)
+            .setLngLat([longitude, latitude])
+            .addTo(map.current);
+        }
+      );
+
+      setUgv2PointMarkers(newugv2Markers);
+    }
+  }
+  , [telemetryData_rover2.locations, ugv2PointsVisible]);
+
+  useEffect(() => {
+    if (ugv3PointMarkers) {
+      ugv3PointMarkers.forEach((marker) => marker.remove());
+    }
+
+    if (
+      ugv3PointsVisible &&
+      telemetryData_rover3.locations &&
+      telemetryData_rover3.locations.length > 0
+    ) {
+      const newugv3Markers = telemetryData_rover3.locations.map(
+        ([latitude, longitude]) => {
+          const ugvElement = document.createElement("div");
+          ugvElement.className = "marker";
+          ugvElement.style.backgroundImage =
+            "url(https://iili.io/d0YXcEF.md.png)";
+          ugvElement.style.width = "20px";
+          ugvElement.style.height = "20px";
+          ugvElement.style.backgroundSize = "100%";
+          ugvElement.style.border = "none";
+          ugvElement.style.borderRadius = "50%";
+          ugvElement.style.cursor = "pointer";
+
+          ugvElement.addEventListener("click", () => {
+            window.alert(`UGV Location: Lat ${latitude}, Lng ${longitude}`);
+          });
+
+          return new mapboxgl.Marker(ugvElement)
+            .setLngLat([longitude, latitude])
+            .addTo(map.current);
+        }
+      );
+
+      setUgv3PointMarkers(newugv3Markers);
+    }
+  }
+  , [telemetryData_rover3.locations, ugv3PointsVisible]);
+
   return (
     <div>
       <div id="map" className="map">
@@ -350,6 +430,38 @@ export default function Map() {
             <strong style={{ fontSize: "14px", marginLeft: "5px" }}>
               {telemetryData_rover.locations &&
                 telemetryData_rover.locations.length}
+              &nbsp;
+            </strong>
+            Points
+          </label>
+          <br />
+          <label>
+            <input
+              style={{ margin: "10px", transform: "scale(1.2)" }}
+              type="checkbox"
+              checked={ugv2PointsVisible}
+              onChange={() => setUgv2PointsVisible(!ugv2PointsVisible)}
+            />
+            &nbsp;Show UGV2{" "}
+            <strong style={{ fontSize: "14px", marginLeft: "5px" }}>
+              {telemetryData_rover2.locations &&
+                telemetryData_rover2.locations.length}
+              &nbsp;
+            </strong>
+            Points
+          </label>
+          <br />
+          <label>
+            <input
+              style={{ margin: "10px", transform: "scale(1.2)" }}
+              type="checkbox"
+              checked={ugv3PointsVisible}
+              onChange={() => setUgv3PointsVisible(!ugv3PointsVisible)}
+            />
+            &nbsp;Show UGV3{" "}
+            <strong style={{ fontSize: "14px", marginLeft: "5px" }}>
+              {telemetryData_rover3.locations &&
+                telemetryData_rover3.locations.length}
               &nbsp;
             </strong>
             Points

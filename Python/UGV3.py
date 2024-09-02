@@ -81,13 +81,12 @@ class RoverController3:
         self.ugv_connection.mode = VehicleMode("RTL")
 
     def send_telemetry_data_rover3(self):
-        # Continuously send telemetry data from the rover
-        locations = []
-        with open(self.goto_mission, "r") as file:
-            for line in file:
-                lat, lon = line.strip().split(",")
-                locations.append((float(lat), float(lon)))
         while True:
+            locations = []
+            with open(self.goto_mission, "r") as file:
+                for line in file:
+                    lat, lon = line.strip().split(",")
+                    locations.append((float(lat), float(lon)))
             try:
                 if self.ugv_connected and not self.ugv_connection._heartbeat_timeout:
                     try:

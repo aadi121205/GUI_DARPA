@@ -41,16 +41,34 @@ const reactNamespace = io.of('/react');
 pythonNamespace.on('connection', (socket) => {
     console.log('A Python client connected_UAV');
 
+    let telemetryTimeout;
+
+    const resetTimeout = () => {
+        if (telemetryTimeout) {
+            clearTimeout(telemetryTimeout);
+        }
+
+        telemetryTimeout = setTimeout(() => {
+            if (telemetryActive) {
+                reactNamespace.emit('telemetryServer', []);
+                console.log('No data received for 10 seconds, sending empty list.');
+            }
+        }, 10000);
+    };
+
     socket.on('telemetry', (data) => {
         counter = 0;
         if (telemetryActive) {
             reactNamespace.emit('telemetryServer', data);
             console.log(data);
+            resetTimeout(); // Reset the timeout on each data reception
         }
     });
 
-
     socket.on('disconnect', () => {
+        if (telemetryTimeout) {
+            clearTimeout(telemetryTimeout);
+        }
         console.log('A Python client disconnected');
     });
 });
@@ -60,20 +78,39 @@ const handleRoverConnection = (namespace, roverId) => {
     namespace.on('connection', (socket) => {
         console.log(`A Python client ${roverId} connected`);
 
+        let telemetryTimeout;
+
+        const resetTimeout = () => {
+            if (telemetryTimeout) {
+                clearTimeout(telemetryTimeout);
+            }
+
+            telemetryTimeout = setTimeout(() => {
+                if (telemetryroverActive) {
+                    reactNamespace.emit(`telemetryServer_${roverId}`, []);
+                    console.log(`No data received for 10 seconds from ${roverId}, sending empty list.`);
+                }
+            }, 10000);
+        };
 
         socket.on(`telemetry_${roverId}`, (data) => {
             counter = 0;
             if (telemetryroverActive) {
                 reactNamespace.emit(`telemetryServer_${roverId}`, data);
                 console.log(data);
+                resetTimeout(); // Reset the timeout on each data reception
             }
         });
 
         socket.on('disconnect', () => {
+            if (telemetryTimeout) {
+                clearTimeout(telemetryTimeout);
+            }
             console.log(`A Python client ${roverId} disconnected`);
         });
     });
 };
+
 
 // Initialize rover namespaces
 handleRoverConnection(roverNamespace, 'rover');
