@@ -17,8 +17,6 @@ const CSVDisplayr = ({ vehicle }) => {
     }
   }, [vehicle, modified]);
 
-
-
   if (!vehicle || !vehicle.locations) {
     return <div>No data available</div>;
   }
@@ -43,7 +41,12 @@ const CSVDisplayr = ({ vehicle }) => {
       {data.length > 0 && (
         <>
           <table
-            style={{ borderCollapse: "collapse", border: "1px solid black" , backgroundColor: "white"}}
+            style={{
+              borderCollapse: "collapse",
+              border: "1px solid black",
+              backgroundColor: "white",
+              width: "100%",
+            }}
           >
             <tbody style={{ backgroundColor: "white" }}>
               {data.map((row, rowIndex) => (
@@ -69,7 +72,6 @@ const CSVDisplayr = ({ vehicle }) => {
                           onChange={(e) => handleChange(e, rowIndex, colIndex)}
                           onBlur={handleBlur}
                           autoFocus
-                    
                         />
                       ) : (
                         cell
@@ -85,6 +87,5 @@ const CSVDisplayr = ({ vehicle }) => {
     </div>
   );
 };
-
 
 export default CSVDisplayr;

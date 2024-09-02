@@ -94,7 +94,7 @@ const DropdownMenu = ({ vehicles }) => {
             marginTop: "15px",
             overflow: "hidden",
             textAlign: "center",
-            fontSize: "20px",
+            fontSize: "30px",
           }}
         >
           {vehicles.map((vehicle, index) => (
@@ -108,7 +108,7 @@ const DropdownMenu = ({ vehicles }) => {
                 fontWeight:
                   selectedVehicle === vehicle.name ? "bold" : "normal",
                 textAlign: "center",
-                fontSize: "20px",
+                fontSize: "30px",
                 padding: "10px",
               }}
             >
@@ -120,6 +120,7 @@ const DropdownMenu = ({ vehicles }) => {
       <Row style={{ margin: 10 }}>
         <Col>
           {renderButtons()}
+          <br />
           <CSV vehicle={vehicles.find((v) => v.name === selectedVehicle)} />
         </Col>
         <Col>

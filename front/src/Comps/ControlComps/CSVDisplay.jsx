@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { HiArrowDown } from "react-icons/hi";
 import { HiArrowNarrowUp } from "react-icons/hi";
 import { HiArchiveBoxXMark } from "react-icons/hi2";
+import { width } from "@mui/system";
 
 const CSVDisplay = ({ vehicle }) => {
   // Ensure vehicle and vehicle.locations are defined
@@ -104,7 +105,12 @@ const CSVDisplay = ({ vehicle }) => {
       {data.length > 0 && (
         <>
           <table
-            style={{ borderCollapse: "collapse", border: "1px solid black" , backgroundColor: "white"}}
+            style={{
+              borderCollapse: "collapse",
+              border: "1px solid black",
+              backgroundColor: "white",
+              width: "100%",
+            }}
           >
             <tbody style={{ backgroundColor: "white" }}>
               {data.map((row, rowIndex) => (
@@ -130,7 +136,6 @@ const CSVDisplay = ({ vehicle }) => {
                           onChange={(e) => handleChange(e, rowIndex, colIndex)}
                           onBlur={handleBlur}
                           autoFocus
-                    
                         />
                       ) : (
                         cell
