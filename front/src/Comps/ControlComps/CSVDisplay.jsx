@@ -87,18 +87,20 @@ const CSVDisplay = ({ vehicle }) => {
   return (
     <div
       style={{
-        marginTop: 35,
+        marginTop: 10,
         marginRight: "35%",
         backgroundColor: "white",
         color: "black",
-        padding: 15,
+        padding: "15px",
         borderRadius: 10,
         border: "1px solid green",
         display: "inline-block",
+        width: "95%",
+        marginLeft: "2%",
       }}
     >
-      <h4>Way Points Display</h4>
-      <h4>Vehicle: {vehicle.name}</h4>
+      <h3>Way Points Display</h3>
+      <br />
       {data.length > 0 && (
         <>
           <table
@@ -110,8 +112,9 @@ const CSVDisplay = ({ vehicle }) => {
                   {row.map((cell, colIndex) => (
                     <td
                       style={{
-                        padding: 10,
+                        padding: 15,
                         border: "1px solid black", // Adding borders to each cell
+                        fontSize: 25,
                       }}
                       key={colIndex}
                       onDoubleClick={() =>
@@ -127,6 +130,7 @@ const CSVDisplay = ({ vehicle }) => {
                           onChange={(e) => handleChange(e, rowIndex, colIndex)}
                           onBlur={handleBlur}
                           autoFocus
+                    
                         />
                       ) : (
                         cell
@@ -143,19 +147,19 @@ const CSVDisplay = ({ vehicle }) => {
                       variant="primary"
                       onClick={() => handleMoveRowUp(rowIndex)}
                     >
-                      <HiArrowNarrowUp />
+                      <HiArrowNarrowUp fontSize={20} />
                     </Button>
                     <Button
                       variant="primary"
                       onClick={() => handleMoveRowDown(rowIndex)}
                     >
-                      <HiArrowDown />
+                      <HiArrowDown fontSize={20} />
                     </Button>
                     <Button
                       variant="primary"
                       onClick={() => handleDeleteRow(rowIndex)}
                     >
-                      <HiArchiveBoxXMark />
+                      <HiArchiveBoxXMark fontSize={20} />
                     </Button>
                   </td>
                 </tr>

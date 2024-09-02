@@ -38,7 +38,6 @@ function Telemexp() {
     write_mission_rover,
     write_mission_rover2,
     write_mission_rover3,
-    
   } = React.useContext(telemContext);
   const arm_uav = () => {
     if (telemetryData.armed) {
@@ -101,7 +100,6 @@ function Telemexp() {
     auto: auto_command_rover,
     locations: telemetryData_rover.locations,
     uploadMission: write_mission_rover,
-
   };
   const UGVvehicleData2 = {
     name: "UGV2",
@@ -121,7 +119,6 @@ function Telemexp() {
     auto: auto_command_rover,
     locations: telemetryData_rover2.locations,
     uploadMission: write_mission_rover2,
-
   };
   const UGVvehicleData3 = {
     name: "UGV3",
@@ -141,7 +138,6 @@ function Telemexp() {
     auto: auto_command_rover,
     locations: telemetryData_rover3.locations,
     uploadMission: write_mission_rover3,
-
   };
   const vehicles = [
     UAVvehicleData,
@@ -158,23 +154,15 @@ function Telemexp() {
           overflow: "hidden",
           backgroundColor: "black",
           color: "white",
+          alignSelf: "center",
         }}
       >
         <Row>
-          <Col>
-            <Timelines />
-          </Col>
-          <Col>
-            <h1>PlaceHolder</h1>
-          </Col>
+            <DropdownMenu vehicles={vehicles} />
+
         </Row>
         <Row>
-          <Col>
-            <DropdownMenu vehicles={vehicles} />
-          </Col>
-          <Col>
-            <h1>PlaceHolder</h1>
-          </Col>
+            <Timelines />
         </Row>
       </div>
     </>

@@ -1,7 +1,20 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Button, Row, Col, Card } from "react-bootstrap";
 import CSVDisplay from "./CSVDisplay";
+import CSVDisplayr from "./CSVDisplayr";
+import Frame from "./Frame";
 
+const CSV = ({ vehicle }) => {
+  if (!vehicle) {
+    return null;
+  }
+  if (vehicle.name === "UAV") {
+    return <CSVDisplay vehicle={vehicle} />;
+  } else {
+    return <CSVDisplayr vehicle={vehicle} />;
+  }
+};
 const DropdownMenu = ({ vehicles }) => {
   const [selectedVehicle, setSelectedVehicle] = useState(vehicles[0].name);
 
@@ -26,11 +39,15 @@ const DropdownMenu = ({ vehicles }) => {
         { name: "rtl", label: "Return to Launch", className: "btn-warning" },
         { name: "auto", label: "Auto Mode", className: "btn-info" },
         { name: "flymission", label: "Fly Mission", className: "btn-success" },
-        { name: "uploadMission", label: "Upload Mission", className: "btn-light" },
+        {
+          name: "uploadMission",
+          label: "Upload Mission",
+          className: "btn-light",
+        },
       ];
 
       return (
-        <div className="mt-3">
+        <div className="mt-3" style={{ padding: 5 }}>
           {functions.map(
             (func) =>
               vehicle[func.name] && (
@@ -56,9 +73,14 @@ const DropdownMenu = ({ vehicles }) => {
   };
 
   return (
-    <div className="container mt-4">
-      <div>
-        <label htmlFor="vehicleSelect" style={{fontSize: 30, padding: 5, margin: "auto"}}>Vehicle Controls</label>
+    <div style={{ padding: 15 }}>
+      <div style={{ textAlign: "center" }}>
+        <label
+          htmlFor="vehicleSelect"
+          style={{ fontSize: 30, padding: 5, margin: "auto" }}
+        >
+          Vehicle Controls
+        </label>
         <select
           id="vehicleSelect"
           className="form-control"
@@ -95,8 +117,15 @@ const DropdownMenu = ({ vehicles }) => {
           ))}
         </select>
       </div>
-      {renderButtons()}
-      <CSVDisplay vehicle={vehicles.find((v) => v.name === selectedVehicle)} />
+      <Row style={{ margin: 10 }}>
+        <Col>
+          {renderButtons()}
+          <CSV vehicle={vehicles.find((v) => v.name === selectedVehicle)} />
+        </Col>
+        <Col>
+          <Frame vehicle={vehicles.find((v) => v.name === selectedVehicle)} />
+        </Col>
+      </Row>
     </div>
   );
 };
