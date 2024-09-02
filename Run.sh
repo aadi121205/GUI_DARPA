@@ -56,6 +56,14 @@ if [[ "$choice" != "y" && "$choice" != "Y" ]]; then
     exit 0
 fi
 
+read -p "Do you want to run the script in the background? (y/n): " background
+
+if [[ "$background" == "y" || "$background" == "Y" ]]; then
+    echo "Running the script in the background..."
+else
+    echo "Running the script in the foreground..."
+fi
+
 echo "Starting the tmux session..."
 echo "Please wait for a few seconds..."
 
@@ -93,5 +101,8 @@ tmux split-window -h -t 0
 tmux send-keys -t mySession "cd Python && python3 main.py" C-m
 sleep 2
 
-# Attach to the tmux session
-tmux attach-session -t mySession
+if [[ "$background" == "y" || "$background" == "Y" ]]; then
+    tmux detach -s mySession
+else
+    tmux attach -t mySession
+fi
