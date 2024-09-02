@@ -44,6 +44,7 @@ class RoverController:
             "auto_rover": self.auto_rover,
             "STOP_rover": self.set_stop_rover,
             "upload_mission_rover": self.upload_mission_rover,
+            "write_mission": self.write_mission,
         }
         for event, handler in events.items():
             self.sio.on(event, handler, namespace="/rover")
@@ -206,3 +207,10 @@ class RoverController:
         cmds.upload()
         self.ugv_connection.mode = VehicleMode("AUTO")
         print("Rover set to Goto mode.")
+        
+    def write_mission(self, waypoints):
+        print("Writing mission")
+        print(waypoints)
+        with open(self.goto_mission, 'w') as file:
+            for wp in waypoints:
+                file.write(f"{wp[0]},{wp[1]},{wp[2]}\n")
