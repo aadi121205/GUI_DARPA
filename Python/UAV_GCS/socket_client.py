@@ -18,7 +18,7 @@ class Socketio_client:
             time.sleep(5)
             while not self.connected:
                 try:
-                    self.socketio_client.connect(f'http://{self.connection_string}/socket.io', namespaces=["/python","/rover","/rover2","/rover3","/data"])
+                    self.socketio_client.connect(f'http://{self.connection_string}/socket.io', namespaces=["/python","/data"])
                     print("Connected to GUI  IP/PORT: " + str(self.connection_string))
                     self.connected = True
                 except Exception as e:
@@ -37,44 +37,6 @@ class Socketio_client:
             # self.start()
 
         @self.socketio_client.event(namespace="/python")
-        def connect_error(e):
-            print("Socket connect error IP/PORT: " + str(e))
-
-
-        @self.socketio_client.event(namespace="/rover")  # decorator for the connect function
-        def connect():
-            print("Socket established connection IP/PORT: "+ str(self.connection_string))
-
-        @self.socketio_client.event(namespace="/rover")
-        def disconnect():
-            print("Socket connection broken connection IP/PORT: "+ str(self.connection_string))
-            # self.start()
-
-        @self.socketio_client.event(namespace="/rover")
-        def connect_error(e):
-            print("Socket connect error IP/PORT: " + str(e))
-        @self.socketio_client.event(namespace="/rover2")  # decorator for the connect function
-        def connect():
-            print("Socket established connection IP/PORT: "+ str(self.connection_string))
-
-        @self.socketio_client.event(namespace="/rover2")
-        def disconnect():
-            print("Socket connection broken connection IP/PORT: "+ str(self.connection_string))
-            # self.start()
-
-        @self.socketio_client.event(namespace="/rover2")
-        def connect_error(e):
-            print("Socket connect error IP/PORT: " + str(e))
-        @self.socketio_client.event(namespace="/rover3")  # decorator for the connect function
-        def connect():
-            print("Socket established connection IP/PORT: "+ str(self.connection_string))
-
-        @self.socketio_client.event(namespace="/rover3")
-        def disconnect():
-            print("Socket connection broken connection IP/PORT: "+ str(self.connection_string))
-            # self.start()
-
-        @self.socketio_client.event(namespace="/rover3")
         def connect_error(e):
             print("Socket connect error IP/PORT: " + str(e))
 

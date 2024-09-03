@@ -51,7 +51,9 @@ const renderValue = (value) => {
 };
 
 function Length() {
-  const { data } = useContext(telemContext);
+  const { data, data_ugv } = useContext(telemContext);
+  console.log(data);
+  console.log(data_ugv);
 
   return (
     <div style={{ padding: "20px", color: "white" }}>
@@ -83,6 +85,51 @@ function Length() {
           }}
         >
           {Object.entries(data).map(([key, value]) => (
+            <tr key={key}>
+              <td style={{ border: "1px solid #444", padding: "8px" }}>
+                <b>{key}</b>
+              </td>
+              <td
+                style={{
+                  border: "1px solid #444",
+                  padding: "8px",
+                  wordBreak: "break-word",
+                }}
+              >
+                {renderValue(value)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h2>Data Overview UGV</h2>
+      <table
+        style={{
+          width: "50%",
+          borderCollapse: "collapse",
+          background: "#2b2b2b",
+          color: "#f8f8f2",
+          fontSize: "20px",
+          lineHeight: "1.5",
+          textAlign: "center",
+        }}
+      >
+        <thead>
+          <tr>
+            <th style={{ border: "1px solid #444", padding: "8px" }}>Name</th>
+            <th style={{ border: "1px solid #444", padding: "8px" }}>Value</th>
+          </tr>
+        </thead>
+        <tbody
+          style={{
+            borderCollapse: "collapse",
+            background: "#2b2b2b",
+            color: "#f8f8f2",
+            fontSize: "20px",
+            lineHeight: "2",
+          }}
+        >
+          {Object.entries(data_ugv).map(([key, value]) => (
             <tr key={key}>
               <td style={{ border: "1px solid #444", padding: "8px" }}>
                 <b>{key}</b>

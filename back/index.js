@@ -125,6 +125,11 @@ dataNamespace.on('connection', (socket) => {
         reactNamespace.emit('data', data);
     });
 
+    socket.on('data_ugv', (data) => {
+        reactNamespace.emit('data_ugv', data);
+        console.log(data);
+    });
+
     socket.on('disconnect', () => {
         console.log('A Data client disconnected');
     });
