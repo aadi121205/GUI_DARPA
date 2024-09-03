@@ -85,13 +85,11 @@ Before you begin, ensure you have the following installed:
 4. **Start the development server:**
 
    ```bash
-   cd front
-   npm run dev
+   cd front && npm run dev -- --host
    ```
 
    ```bash
-   cd back
-   npm run start
+   cd back && npm run start
    ```
 
    ```bash
