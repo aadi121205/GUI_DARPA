@@ -59,6 +59,8 @@ else
     echo "Running the script in the foreground..."
 fi
 
+echo "This may take a few seconds. Please wait..."
+
 # Name of the tmux session
 SESSION_NAME="mySession"
 

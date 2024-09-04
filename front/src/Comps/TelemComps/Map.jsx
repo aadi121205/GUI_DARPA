@@ -57,8 +57,8 @@ export default function Map() {
             coordinates: [
               [
                 [77.1150694434753, 28.753440438581094],
-                [77.11506407905762,28.753774349183942],
-                [77.11534705209907,28.753790809538252],
+                [77.11506407905762, 28.753774349183942],
+                [77.11534705209907, 28.753790809538252],
                 [77.11556833433528, 28.754239941061414],
                 [77.11598407671828, 28.754471560491506],
                 [77.11659562035287, 28.754269334420062],
@@ -69,7 +69,6 @@ export default function Map() {
                 [77.11577117480505, 28.752899150549144],
                 [77.11549289562922, 28.75321366307741],
                 [77.11536835496247, 28.753437831864836],
-
               ],
             ],
           },
@@ -331,8 +330,7 @@ export default function Map() {
         ([latitude, longitude]) => {
           const ugvElement = document.createElement("div");
           ugvElement.className = "marker";
-          ugvElement.style.backgroundImage =
-            "url(https://iili.io/dOpxBv2.png)";
+          ugvElement.style.backgroundImage = "url(https://iili.io/dOpxBv2.png)";
           ugvElement.style.width = "20px";
           ugvElement.style.height = "20px";
           ugvElement.style.backgroundSize = "100%";
@@ -368,8 +366,7 @@ export default function Map() {
         ([latitude, longitude]) => {
           const ugvElement = document.createElement("div");
           ugvElement.className = "marker";
-          ugvElement.style.backgroundImage =
-            "url(https://iili.io/dOpT53G.png)";
+          ugvElement.style.backgroundImage = "url(https://iili.io/dOpT53G.png)";
           ugvElement.style.width = "20px";
           ugvElement.style.height = "20px";
           ugvElement.style.backgroundSize = "100%";
@@ -441,7 +438,7 @@ export default function Map() {
           <br />
           <label style={{ color: "lightblue" }}>
             <input
-              style={{ margin: "10px", transform: "scale(1.2)"}}
+              style={{ margin: "10px", transform: "scale(1.2)" }}
               type="checkbox"
               checked={ugv2PointsVisible}
               onChange={() => setUgv2PointsVisible(!ugv2PointsVisible)}
