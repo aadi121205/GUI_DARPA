@@ -93,8 +93,10 @@ Before you begin, ensure you have the following installed:
    ```
 
    ```bash
-   cd Python
-   Python main.py
+   cd Python/UAV_GCS && python3 main.py
+   ```
+   ```bash
+   cd Python/UGV_GCS && python3 main.py
    ```
 
    The app will be available at `http://localhost:5173/`.
