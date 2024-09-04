@@ -98,6 +98,11 @@ Before you begin, ensure you have the following installed:
    ```bash
    cd Python/UGV_GCS && python3 main.py
    ```
+   or
+
+   ```bash
+   source Run.sh
+   ```
 
    The app will be available at `http://localhost:5173/`.
 
