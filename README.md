@@ -121,7 +121,9 @@ Before you begin, ensure you have the following installed:
 
 ```plaintext
 GUI_DARPA/
+│
 ├── .gitignore
+│
 ├── back/
 │   ├── .env
 │   ├── data.json
