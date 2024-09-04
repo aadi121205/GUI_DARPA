@@ -59,14 +59,6 @@ else
     echo "Running the script in the foreground..."
 fi
 
-read -p "Do you want to run the script in Testing mode? (y/n): " testing
-
-if [[ "$testing" == "y" || "$testing" == "Y" ]]; then
-    echo "Running the script in Testing mode..."
-else
-    echo "Running the script in Production mode..."
-fi
-
 # Name of the tmux session
 SESSION_NAME="mySession"
 
@@ -87,4 +79,8 @@ tmux send-keys -t mySession "cd Python/UGV_GCS/ && python3 main.py" C-m
 tmux select-pane -t 0
 
 # Attach to the session
-tmux attach-session -t $SESSION_NAME
+if [[ "$background" == "y" || "$background" == "Y" ]]; then
+    tmux detach -s $SESSION_NAME
+else
+    tmux attach-session -t $SESSION_NAME
+fi
