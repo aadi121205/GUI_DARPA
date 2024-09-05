@@ -3,13 +3,12 @@ import os
 import threading
 import cv2
 import random
-
+from Client import Client
 
 class DataController:
     def __init__(self, sio):
         self.sio = sio
         threading.Thread(target=self.send_data).start()
-
 
     def send_data(self):
         starttime = time.time()
