@@ -1,9 +1,6 @@
 import time
-import os
 import threading
 import cv2
-import random
-from finalcodelocal import main
 
 
 class DataController:
@@ -31,7 +28,6 @@ class DataController:
             data = {
                 "time": elapsed_time_formatted,
                 "frame": self.get_frame,
-                "geo_coord": main(),
             }
             try:
                 self.sio.emit("datain", data, namespace="/datain")
