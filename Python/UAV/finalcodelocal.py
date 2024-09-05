@@ -98,11 +98,10 @@ def main():
             continue  # Skip iteration if the frame wasn't captured properly
         
         point, lat, lon, yaw, altitude = getpoint(frame, vehicle)
-        plotpoint(frame, point)
         
         if len(point) >= 2:
             geo_coord = getgps(yaw, lat, lon, altitude, point)
-            print(geo_coord)
+            return geo_coord
             break
 
 main()
