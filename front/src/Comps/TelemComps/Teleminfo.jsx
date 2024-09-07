@@ -26,7 +26,7 @@ const Teleminfo = ({ vehicle }) => {
           </Col>
         <Col style={{paddingLeft: "40px",justifyContent: "center", alignItems: "center", paddingRight: "40px"}}>
               <h4>ALTITUDE</h4>
-              <h4 style={{ color: "#0aeafa" }}>
+              <h4 style={{ color: "#0aeafa"}}>
                 <b>{vehicle.altitude} m</b>
               </h4>
               <br></br>

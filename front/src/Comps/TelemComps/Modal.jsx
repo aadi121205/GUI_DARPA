@@ -37,7 +37,7 @@ const Modal = ({ vehicle }) => {
   return (
     <div>
       <Button onClick={handleOpen}>
-        <RiSettings4Fill style={{ fontSize: 30, color: "white" }} />
+        <RiSettings4Fill style={{ fontSize: 69, color: "white" }} />
       </Button>
       {open && (
         <>
