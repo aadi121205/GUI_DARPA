@@ -3,7 +3,10 @@ import json
 import base64
 from Data import Server  # Assuming you have your Server class defined
 import time
+import os
 
+gcs_ip=os.getenv('GCS_IP')
+gcs_port=os.getenv('GCS_PORT')
 
 def get_frame():
     cap = cv2.VideoCapture(0)
@@ -32,4 +35,4 @@ if __name__ == "__main__":
         # Send the data to the client
         server.send_data(client_socket, json_data)
 
-        time.sleep(5)
+        time.sleep(1)
