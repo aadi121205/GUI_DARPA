@@ -1,4 +1,8 @@
 import socket
+import time
+import cv2
+import json
+import base64
 
 class Client:
     def __init__(self, host, port=12345):
@@ -22,6 +26,10 @@ class Client:
 if __name__ == "__main__":
     client = Client(host='0.0.0.0')  # Replace with server's IP address
     client.connect()
-    client.receive_data()
-    client.close()
+    while True:
+        json_data = client.receive_data()
+        time.sleep(5)
+        
+        
+
 
