@@ -4,26 +4,22 @@ from ultralytics import YOLO
 import time
 from dronekit import connect, VehicleMode, LocationGlobalRelative, LocationGlobal
 import pandas as pd
+from Client import Client
+import socket
+import time
+import json
+import base64
 
 point = []
 
 # Initialize the YOLO model
-Model = YOLO("best_body.pt")
-
-# Capture video from the default camera (index 0)
-vid = cv2.VideoCapture(0)
+Model = YOLO("Python/UAV_GCS/best_body.pt")
 
 # Connect to the vehicle
 vehicle = connect('127.0.0.1:14551', wait_ready=True)
 
 print("Vehicle Connected")
 
-def getframe():
-    ret, frame = vid.read()
-    if not ret:  # Ensure the frame was captured correctly
-        print("Failed to capture frame")
-        return None
-    return frame
 
 def getpoint(image, vehicle):
     results = Model(image)
@@ -93,15 +89,31 @@ def getgps(yaw, lat, lon, altitude, point):
 
 def main():
     while True:
-        frame = getframe()
-        if frame is None:
-            continue  # Skip iteration if the frame wasn't captured properly
-        
-        point, lat, lon, yaw, altitude = getpoint(frame, vehicle)
-        
-        if len(point) >= 2:
-            geo_coord = getgps(yaw, lat, lon, altitude, point)
-            return geo_coord
-            break
+        client = Client(host='192.168.0.131')  # Replace with server's IP address
+        client.connect()
+        try:
+            while True:
+                json_data = client.receive_data()
+                if json_data:
+                    try:
+                        data = json.loads(json_data)
+                        # Display the image if present
+                        frame = client.display_image_from_json(data)
+                        if frame is not None:
+                            point, lat, lon, yaw, altitude = getpoint(frame, vehicle)
+                            # plotpoint(frame, point)
+                            if len(point) >= 2:
+                                geo_coord = getgps(yaw, lat, lon, altitude, point)
+                                print(geo_coord)
+                            cv2.imshow("Frame", frame)
+                            cv2.waitKey(1)
+                    except json.JSONDecodeError as e:
+                        print(f"Error decoding JSON: {e}")
+                time.sleep(1)
+        finally:
+            client.close()
+            cv2.destroyAllWindows()
 
-main()
+
+if __name__ == "__main__":
+    main()

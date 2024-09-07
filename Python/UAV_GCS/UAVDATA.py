@@ -3,7 +3,6 @@ import os
 import threading
 import cv2
 import random
-from Client import Client
 
 class DataController:
     def __init__(self, sio):

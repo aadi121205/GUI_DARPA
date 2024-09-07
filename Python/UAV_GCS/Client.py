@@ -39,16 +39,17 @@ class Client:
             
             # Display the image using OpenCV
             if img is not None:
-                cv2.imshow('Received Image', img)
-                cv2.waitKey(1)  # Refresh the image window
+                return img
             else:
                 print("Error: Couldn't decode image.")
         else:
             print("No frame in JSON data.")
 
+
+
 # Example usage
 if __name__ == "__main__":
-    client = Client(host='0.0.0.0')  # Replace with server's IP address
+    client = Client(host='192.168.0.131')  # Replace with server's IP address
     client.connect()
 
     try:

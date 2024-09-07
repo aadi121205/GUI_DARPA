@@ -4,14 +4,24 @@ import base64
 from Data import Server  # Assuming you have your Server class defined
 import time
 import os
+from picamera2 import Picamera2
 
-gcs_ip=os.getenv('GCS_IP')
-gcs_port=os.getenv('GCS_PORT')
+
+gcs_ip = os.getenv("GCS_IP")
+gcs_port = os.getenv("GCS_PORT")
+
+
+picam2 = Picamera2()
+picam2.configure(picam2.create_video_configuration())
+
 
 def get_frame():
-    cap = cv2.VideoCapture(0)
-    ret, frame = cap.read()
-    cap.release()
+    picam2.start()  # Start the camera without preview
+    # Capture a frame
+    frame = picam2.capture_array()
+
+    # Convert the frame from BGR to RGB (OpenCV uses BGR by default)
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
     # Convert frame to JPEG format to make it easier to send
     _, buffer = cv2.imencode(".jpg", frame)
