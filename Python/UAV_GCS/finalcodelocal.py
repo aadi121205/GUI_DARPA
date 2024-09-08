@@ -9,7 +9,9 @@ import socket
 import time
 import json
 import base64
+import pandas as pd
 
+# Initialize the point list
 point = []
 
 # Initialize the YOLO model
@@ -17,8 +19,11 @@ Model = YOLO("Python/UAV_GCS/best_body.pt")
 
 # Connect to the vehicle
 vehicle = connect('127.0.0.1:14551', wait_ready=True)
-
 print("Vehicle Connected")
+
+# initialize the CSV file
+df = pd.DataFrame(columns=['Latitude', 'Longitude', 'Altitude', 'Yaw', 'X', 'Y', 'Time', 'Frame'])
+df.to_csv('Python/UAV_GCS/Logs/coordinates.csv', index=False)
 
 
 def getpoint(image, vehicle):
@@ -97,14 +102,14 @@ def main():
                 if json_data:
                     try:
                         data = json.loads(json_data)
-                        # Display the image if present
                         frame = client.display_image_from_json(data)
                         if frame is not None:
                             point, lat, lon, yaw, altitude = getpoint(frame, vehicle)
-                            # plotpoint(frame, point)
                             if len(point) >= 2:
                                 geo_coord = getgps(yaw, lat, lon, altitude, point)
                                 print(geo_coord)
+                                df.loc[len(df)] = [geo_coord[0], geo_coord[1], altitude, yaw, point[0], point[1], time.time(), frame]
+                                df.to_csv('Python/UAV_GCS/Logs/coordinates.csv', index=False)
                             cv2.imshow("Frame", frame)
                             cv2.waitKey(1)
                     except json.JSONDecodeError as e:
