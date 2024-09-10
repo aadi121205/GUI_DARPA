@@ -133,7 +133,7 @@ GUI_DARPA/
 │   ├── .env
 │   ├── data.json
 │   ├── index.js
-│   ├── package.json
+│   └── package.json
 │
 ├── front/
 │   ├── .eslintrc.cjs
@@ -151,7 +151,7 @@ GUI_DARPA/
 │       ├── data/
 │       ├── index.css
 │       └── main.jsx           # Entry point
-│   ├── vite.config.js         # Vite configuration
+│   └── vite.config.js         # Vite configuration
 │
 ├── Python/
 │   ├── .env
@@ -168,8 +168,8 @@ GUI_DARPA/
 │   │   ├── main.py
 │   │   └── finalcodelocal.py
 │   │ 
-│   ├── UGV_GCS/
-│   │   └── main.py
+│   └── UGV_GCS/
+│       └── main.py
 │
 ├── README.md
 │
