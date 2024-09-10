@@ -155,20 +155,21 @@ GUI_DARPA/
 │
 ├── Python/
 │   ├── .env
-│   ├── config/
-│   │   ├── coordinates.txt
-│   │   ├── mission.txt
-│   │   ├── waypoints.txt
-│   ├── image_capture.py
-│   ├── main.py
-│   ├── mission_rover.txt
-│   ├── socket_client.py
-│   ├── UAV.py
-│   ├── UGV.py
-│   ├── UGV2.py
-│   ├── UGV3.py
-│   ├── waypoints.txt
-│   └── waypointsr.txt
+│   │ 
+│   ├── UAV/
+│   │   ├── main.py
+│   │   └── Run.sh
+│   │ 
+│   ├── UGV/
+│   │   ├── main.py
+│   │   └── Run.sh
+│   │ 
+│   ├── UAV_GCS/
+│   │   ├── main.py
+│   │   └── finalcodelocal.py
+│   │ 
+│   ├── UGV_GCS/
+│   │   └── main.py
 │
 ├── README.md
 │

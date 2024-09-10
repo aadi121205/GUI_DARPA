@@ -8,3 +8,5 @@ pandas
 Pillow
 requests
 scipy
+python-dotenv
+websocket-client
