@@ -18,17 +18,6 @@ if ! command_exists bash; then
     exit 1
 fi
 
-# Check if the required files or directories exist
-if [ ! -f "$HOME/sitl.sh" ]; then
-    echo "Error: sitl.sh not found in the home directory."
-    exit 1
-fi
-
-if [ ! -f "$HOME/sitlr.sh" ]; then
-    echo "Error: sitlr.sh not found in the home directory."
-    exit 1
-fi
-
 if [ ! -d "$PWD/Python" ]; then
     echo "Error: Python directory not found in the current directory."
     exit 1
