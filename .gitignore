@@ -9,3 +9,5 @@ node_modules
 yolov8x.pt
 Python/UAV/flight_kush
 best_body.pt
+Python/UAV_GCS/Logs
+__pycache__
