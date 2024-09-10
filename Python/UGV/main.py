@@ -10,14 +10,12 @@ gcs_ip = os.getenv("GCS_IP")
 gcs_port = os.getenv("GCS_PORT")
 
 
-
-
 def get_frame():
     # Read the frame from the camera
     video_capture = cv2.VideoCapture(0)
     _, frame = video_capture.read()
     video_capture.release()
-    
+
     # Convert the frame from BGR to RGB (OpenCV uses BGR by default)
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 

@@ -4,10 +4,15 @@ import threading
 import cv2
 import random
 
+
 class DataController:
     def __init__(self, sio):
         self.sio = sio
         threading.Thread(target=self.send_data).start()
+
+    def path(self):
+        lat_long = {i: (random.uniform(-90, 90), random.uniform(-180, 180)) for i in range(10)}
+        return lat_long
 
     def send_data(self):
         starttime = time.time()
@@ -17,7 +22,15 @@ class DataController:
             elapsed_time_formatted = time.strftime("%H:%M:%S", time.gmtime(timeelapsed))
             data = {
                 "time": elapsed_time_formatted,
-                "score": random.randint(0, 100),
+                "uav_frame": random.randint(0, 100),
+                "criticlal": {
+                    "casualty_id": random.randint(0, 100),
+                    "team": random.randint(0, 100),
+                    "system": random.randint(0, 100),
+                    "type": random.randint(0, 100),
+                    "value": random.randint(0, 100),
+                },
+                "path": self.path()
             }
             try:
                 self.sio.emit("data", data, namespace="/data")

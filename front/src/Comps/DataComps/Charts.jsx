@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import telemContext from "../../context/home/telemContext";
+import { Container, Button, Row, Col, Card } from "react-bootstrap";
 
 const renderFrame = (data) => {
   if (data.frame) {
@@ -57,96 +58,112 @@ function Length() {
 
   return (
     <div style={{ padding: "20px", color: "white" }}>
-      <h2>Data Overview</h2>
-      <table
-        style={{
-          width: "50%",
-          borderCollapse: "collapse",
-          background: "#2b2b2b",
-          color: "#f8f8f2",
-          fontSize: "20px",
-          lineHeight: "1.5",
-          textAlign: "center",
-        }}
-      >
-        <thead>
-          <tr>
-            <th style={{ border: "1px solid #444", padding: "8px" }}>Name</th>
-            <th style={{ border: "1px solid #444", padding: "8px" }}>Value</th>
-          </tr>
-        </thead>
-        <tbody
-          style={{
-            borderCollapse: "collapse",
-            background: "#2b2b2b",
-            color: "#f8f8f2",
-            fontSize: "20px",
-            lineHeight: "2",
-          }}
-        >
-          {Object.entries(data).map(([key, value]) => (
-            <tr key={key}>
-              <td style={{ border: "1px solid #444", padding: "8px" }}>
-                <b>{key}</b>
-              </td>
-              <td
-                style={{
-                  border: "1px solid #444",
-                  padding: "8px",
-                  wordBreak: "break-word",
-                }}
-              >
-                {renderValue(value)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <h2>Data Overview UGV</h2>
-      <table
-        style={{
-          width: "50%",
-          borderCollapse: "collapse",
-          background: "#2b2b2b",
-          color: "#f8f8f2",
-          fontSize: "20px",
-          lineHeight: "1.5",
-          textAlign: "center",
-        }}
-      >
-        <thead>
-          <tr>
-            <th style={{ border: "1px solid #444", padding: "8px" }}>Name</th>
-            <th style={{ border: "1px solid #444", padding: "8px" }}>Value</th>
-          </tr>
-        </thead>
-        <tbody
-          style={{
-            borderCollapse: "collapse",
-            background: "#2b2b2b",
-            color: "#f8f8f2",
-            fontSize: "20px",
-            lineHeight: "2",
-          }}
-        >
-          {Object.entries(data_ugv).map(([key, value]) => (
-            <tr key={key}>
-              <td style={{ border: "1px solid #444", padding: "8px" }}>
-                <b>{key}</b>
-              </td>
-              <td
-                style={{
-                  border: "1px solid #444",
-                  padding: "8px",
-                  wordBreak: "break-word",
-                }}
-              >
-                {renderValue(value)}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Row>
+        <Col>
+          <h2>Data Overview</h2>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              background: "#2b2b2b",
+              color: "#f8f8f2",
+              fontSize: "20px",
+              lineHeight: "1.5",
+              textAlign: "center",
+              padding: "20px",
+            }}
+          >
+            <thead>
+              <tr>
+                <th style={{ border: "1px solid #444", padding: "8px" }}>
+                  Name
+                </th>
+                <th style={{ border: "1px solid #444", padding: "8px" }}>
+                  Value
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              style={{
+                borderCollapse: "collapse",
+                background: "#2b2b2b",
+                color: "#f8f8f2",
+                fontSize: "20px",
+                lineHeight: "2",
+              }}
+            >
+              {Object.entries(data).map(([key, value]) => (
+                <tr key={key}>
+                  <td style={{ border: "1px solid #444", padding: "8px" }}>
+                    <b>{key}</b>
+                  </td>
+                  <td
+                    style={{
+                      border: "1px solid #444",
+                      padding: "8px",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    {renderValue(value)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Col>
+        <Col>
+          <h2>Data Overview UGV</h2>
+          <table
+            style={{
+              width: "100%",
+              borderCollapse: "collapse",
+              background: "#2b2b2b",
+              color: "#f8f8f2",
+              fontSize: "20px",
+              lineHeight: "1.5",
+              textAlign: "center",
+              padding: "20px",
+            }}
+          >
+            <thead>
+              <tr>
+                <th style={{ border: "1px solid #444", padding: "8px" }}>
+                  Name
+                </th>
+                <th style={{ border: "1px solid #444", padding: "8px" }}>
+                  Value
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              style={{
+                borderCollapse: "collapse",
+                background: "#2b2b2b",
+                color: "#f8f8f2",
+                fontSize: "20px",
+                lineHeight: "2",
+              }}
+            >
+              {Object.entries(data_ugv).map(([key, value]) => (
+                <tr key={key}>
+                  <td style={{ border: "1px solid #444", padding: "8px" }}>
+                    <b>{key}</b>
+                  </td>
+                  <td
+                    style={{
+                      border: "1px solid #444",
+                      padding: "8px",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    {renderValue(value)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </Col>
+      </Row>
     </div>
   );
 }
