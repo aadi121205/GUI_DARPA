@@ -44,7 +44,7 @@ class RoverController:
         while not self.ugv_connected:
             try:
                 print("Attempting to connect to Rover...")
-                self.ugv_connection = connect(self.RoverIP, wait_ready=True, timeout=5)
+                self.ugv_connection = connect(self.RoverIP, wait_ready=False, timeout=5)
                 self.cmds = self.ugv_connection.commands
                 print(f"[UGV.py] Connected to UGV at IP/PORT: {self.RoverIP}")
                 self.ugv_connected = True
@@ -107,6 +107,7 @@ class RoverController:
                     time.sleep(1)
                 else:
                     self.connect_ugv()
+                    time.sleep(20)
             except Exception as e:
                 print("Rover connection lost, attempting to reconnect...")
                 self.connect_ugv()
