@@ -250,6 +250,8 @@ app.get('/', (req, res) => {
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-    console.log(`Server is running on https://localhost:${PORT}`);
+const HOST = '0.0.0.0';  // Allow access from any IP address
+
+server.listen(PORT, HOST, () => {
+    console.log(`Server is running on https://${HOST}:${PORT}`);
 });

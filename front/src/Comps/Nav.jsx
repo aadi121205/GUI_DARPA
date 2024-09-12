@@ -34,6 +34,7 @@ function NavigationBar() {
             <Nav.Link href="/telem">Telem</Nav.Link>
             <Nav.Link href="/control">Controls</Nav.Link>
             <Nav.Link href="/data">Data</Nav.Link>
+            <Nav.Link href="/fd">FD</Nav.Link>
             <NavDropdown title="Test" id="basic-nav-dropdown">
               <NavDropdown.Item href="/test">Test UAV</NavDropdown.Item>
               <NavDropdown.Item href="/test2">Test UGV</NavDropdown.Item>
