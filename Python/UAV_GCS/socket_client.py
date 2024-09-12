@@ -6,7 +6,7 @@ load_dotenv()
 
 class Socketio_client:
     def __init__(self,IP,port):
-        self.socketio_client=socketio.Client()
+        self.socketio_client=socketio.Client(ssl_verify=False)
         # self.call_backs()
         self.connected = False
         self.connection_string=IP+":"+str(port)
@@ -18,7 +18,7 @@ class Socketio_client:
             time.sleep(5)
             while not self.connected:
                 try:
-                    self.socketio_client.connect(f'http://{self.connection_string}/socket.io', namespaces=["/python","/data"])
+                    self.socketio_client.connect(f'https://{self.connection_string}/socket.io', namespaces=["/python","/data"])
                     print("Connected to GUI  IP/PORT: " + str(self.connection_string))
                     self.connected = True
                 except Exception as e:

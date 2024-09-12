@@ -2,6 +2,8 @@ import React from "react";
 import "./Home.css";
 import { Button } from "@mui/material";
 import telemContext from "../../context/home/telemContext";
+import { Container, Row, Col, Card } from "react-bootstrap";
+import { width } from "@mui/system";
 
 const VideoBackground = () => {
   const {
@@ -42,25 +44,65 @@ const VideoBackground = () => {
         <source src={`/src/assets/swarm.mp4`} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <div className="content">
+      <div className="content" style={{ alignItems: "center" }}>
         <h1>Welcome to UAS's GUI</h1>
+        <br />
         <h3>
           Here you can find all the information about the UAS's telemetry and
           data <br /> pls switch to full screen
         </h3>
-
         <br />
-        <a href="/telem">
-          <Button
-            onClick={() => {
-              start_Telem();
-              start_Telem_rover();
-            }}
-            variant="contained"
-          >
-            Go to Telemetry
-          </Button>
-        </a>
+        <Row
+          style={{
+            width: "50%",
+            alignItems: "center",
+            justifyContent: "center",
+            margin: "auto",
+          }}
+        >
+          <Col>
+            <br />
+            <a href="/telem">
+              <Button
+                onClick={() => {
+                  start_Telem();
+                  start_Telem_rover();
+                }}
+                variant="contained"
+              >
+                Go to Telemetry (UAV)
+              </Button>
+            </a>
+          </Col>
+          <Col>
+            <br />
+            <a href="/telem">
+              <Button
+                onClick={() => {
+                  start_Telem();
+                  start_Telem_rover();
+                }}
+                variant="contained"
+              >
+                Go to Telemetry (Both)
+              </Button>
+            </a>
+          </Col>
+          <Col>
+            <br />
+            <a href="/telem">
+              <Button
+                onClick={() => {
+                  start_Telem();
+                  start_Telem_rover();
+                }}
+                variant="contained"
+              >
+                Go to Telemetry (Rover)
+              </Button>
+            </a>
+          </Col>
+        </Row>
       </div>
     </div>
   );

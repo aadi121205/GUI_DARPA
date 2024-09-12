@@ -6,8 +6,11 @@ import { SOCKET_URL } from "../config";
 const SocketContext = createContext();
 
 // Initialize the socket connection
-const socket = io(`${SOCKET_URL}/react`);
-
+const socket = io(`${SOCKET_URL}/react`, {
+    secure: true,
+    rejectUnauthorized: false, // Allow self-signed/unauthorized certificates
+  });
+  
 const SocketState = ({ children }) => {
     const [receivedData, setReceivedData] = useState([]);
 

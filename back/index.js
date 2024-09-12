@@ -1,5 +1,5 @@
 const express = require('express');
-const http = require('http');
+const https = require('https');  // Use https instead of http
 const socketIo = require('socket.io');
 const fs = require('fs');
 const path = require('path');
@@ -16,7 +16,16 @@ const defaultParams = {
 };
 
 const app = express();
-const server = http.createServer(app);
+
+// SSL certificate options
+const sslOptions = {
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+};
+
+// Create an HTTPS server
+const server = https.createServer(sslOptions, app);
+
 const io = socketIo(server, defaultParams);
 
 // Variables
@@ -242,5 +251,5 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on https://localhost:${PORT}`);
 });
