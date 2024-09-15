@@ -12,7 +12,7 @@ const CSV = ({ vehicle }) => {
   if (vehicle.name === "UAV") {
     return <CSVDisplay vehicle={vehicle} />;
   } else {
-    return <CSVDisplayr vehicle={vehicle} />;
+    return <CSVDisplay vehicle={vehicle} />;
   }
 };
 const DropdownMenu = ({ vehicles }) => {

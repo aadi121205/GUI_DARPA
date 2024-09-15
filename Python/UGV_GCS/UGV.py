@@ -104,7 +104,7 @@ class RoverController:
                     except Exception as e:
                         print(f"[Telem] Error sending telemetry data: {e}")
                         self.ugv_connected = False
-                    time.sleep(1)
+                    time.sleep(0.5)
                 else:
                     self.connect_ugv()
                     time.sleep(20)

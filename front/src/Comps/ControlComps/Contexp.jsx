@@ -158,11 +158,10 @@ function Telemexp() {
         }}
       >
         <Row>
-            <DropdownMenu vehicles={vehicles} />
-
+          <DropdownMenu vehicles={vehicles} />
         </Row>
         <Row>
-            <Timelines />
+          <Timelines />
         </Row>
       </div>
     </>

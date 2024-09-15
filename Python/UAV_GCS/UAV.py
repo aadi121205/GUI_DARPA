@@ -93,7 +93,7 @@ class DroneController:
                         self.sio.emit('telemetry', telemetry_data, namespace="/python")
                     except Exception as e:
                         print("[Telem] Telemetry not sent ERROR by UAV:")
-                        time.sleep(1)
+                        time.sleep(0.5)
                 else:
                     self.connect_uav()
                     time.sleep(1)

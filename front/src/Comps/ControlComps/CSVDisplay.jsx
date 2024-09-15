@@ -20,7 +20,7 @@ const CSVDisplay = ({ vehicle }) => {
 
   const handleEdit = (rowIndex, colIndex, value) => {
     const updatedData = [...data];
-    
+
     // Convert the value to a float before updating
     const floatValue = parseFloat(value);
     if (!isNaN(floatValue)) {
@@ -28,16 +28,16 @@ const CSVDisplay = ({ vehicle }) => {
     } else {
       updatedData[rowIndex][colIndex] = value; // If the value cannot be converted to a float, keep the original value
     }
-    
+
     setData(updatedData);
     setModified(true); // Mark as modified
-  
+
     if (vehicle && vehicle.uploadMission) {
       vehicle.uploadMission(updatedData); // Call uploadMission with updated data
       console.log("success"); // Print success
     }
   };
-  
+
   const handleDeleteRow = (rowIndex) => {
     const updatedData = data.filter((_, index) => index !== rowIndex);
     setData(updatedData);
@@ -97,8 +97,6 @@ const CSVDisplay = ({ vehicle }) => {
   return (
     <div
       style={{
-        marginTop: 10,
-        marginRight: "35%",
         backgroundColor: "white",
         color: "black",
         padding: "15px",
@@ -106,7 +104,8 @@ const CSVDisplay = ({ vehicle }) => {
         border: "1px solid green",
         display: "inline-block",
         width: "95%",
-        marginLeft: "2%",
+        overflow: "auto",
+        margin: "auto",
       }}
     >
       <h3>Way Points Display</h3>
@@ -153,27 +152,41 @@ const CSVDisplay = ({ vehicle }) => {
                   ))}
                   <td
                     style={{
-                      padding: 10,
                       border: "1px solid black", // Adding borders to each cell
                     }}
                   >
                     <Button
                       variant="primary"
                       onClick={() => handleMoveRowUp(rowIndex)}
+                      style={{ margin: "auto" }}
                     >
-                      <HiArrowNarrowUp fontSize={20} />
+                      <HiArrowNarrowUp fontSize={30} />
                     </Button>
+                  </td>
+                  <td
+                    style={{
+                      border: "1px solid black", // Adding borders to each cell
+                    }}
+                  >
                     <Button
                       variant="primary"
                       onClick={() => handleMoveRowDown(rowIndex)}
+                      style={{ margin: "auto" }}
                     >
-                      <HiArrowDown fontSize={20} />
+                      <HiArrowDown fontSize={30} />
                     </Button>
+                  </td>
+                  <td
+                    style={{
+                      border: "1px solid black", // Adding borders to each cell
+                    }}
+                  >
                     <Button
                       variant="primary"
                       onClick={() => handleDeleteRow(rowIndex)}
+                      style={{ margin: "auto" }}
                     >
-                      <HiArchiveBoxXMark fontSize={20} />
+                      <HiArchiveBoxXMark fontSize={30} />
                     </Button>
                   </td>
                 </tr>
