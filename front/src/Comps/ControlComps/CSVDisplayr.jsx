@@ -1,9 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "@mui/material";
-import { HiArrowDown } from "react-icons/hi";
-import { HiArrowNarrowUp } from "react-icons/hi";
-import { HiArchiveBoxXMark } from "react-icons/hi2";
-
 const CSVDisplayr = ({ vehicle }) => {
   // Ensure vehicle and vehicle.locations are defined
   const [data, setData] = useState(vehicle?.locations || []);
@@ -46,6 +41,7 @@ const CSVDisplayr = ({ vehicle }) => {
               border: "1px solid black",
               backgroundColor: "white",
               width: "100%",
+              height: "100%",
             }}
           >
             <tbody style={{ backgroundColor: "white" }}>

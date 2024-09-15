@@ -1,134 +1,105 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Button, Row, Col, Card } from "react-bootstrap";
-import CSVDisplay from "./CSVDisplay";
+import { Row, Col } from "react-bootstrap";
+import CSVDisplay from "./CSVDisplayCon";
 import CSVDisplayr from "./CSVDisplayr";
-import Frame from "./Frame";
 
-const CSV = ({ vehicle }) => {
-  if (!vehicle) {
-    return null;
-  }
-  if (vehicle.name === "UAV") {
-    return <CSVDisplay vehicle={vehicle} />;
-  } else {
-    return <CSVDisplay vehicle={vehicle} />;
-  }
-};
-const DropdownMenu = ({ vehicles }) => {
-  const [selectedVehicle, setSelectedVehicle] = useState(vehicles[0].name);
-
-  const handleSelectChange = (event) => {
-    setSelectedVehicle(event.target.value);
+const MainComponent = ({ vehicles }) => {
+  const handleFunctionClick = (vehicle, functionName) => {
+    console.log(`Function ${functionName} clicked for vehicle`, vehicle);
+    // Add your function handling logic here
   };
-
-  const handleFunctionClick = (functionName) => {
-    const vehicle = vehicles.find((v) => v.name === selectedVehicle);
-    if (vehicle && vehicle[functionName]) {
-      vehicle[functionName](); // Call the specific function
+  const CSV = ({ vehicle }) => {
+    if (!vehicle) {
+      return null;
     }
-  };
 
-  const renderButtons = () => {
-    const vehicle = vehicles.find((v) => v.name === selectedVehicle);
-    if (vehicle) {
-      const functions = [
-        { name: "takeoff", label: "Takeoff", className: "btn-primary" },
-        { name: "land", label: "Land", className: "btn-secondary" },
-        { name: "arm", label: "Arm", className: "btn-danger" },
-        { name: "rtl", label: "Return to Launch", className: "btn-warning" },
-        { name: "auto", label: "Auto Mode", className: "btn-info" },
-        { name: "flymission", label: "Fly Mission", className: "btn-success" },
-        {
-          name: "uploadMission",
-          label: "Upload Mission",
-          className: "btn-light",
-        },
-      ];
-
+    if (vehicle.name === "UAV") {
       return (
-        <div className="mt-3" style={{ padding: 5 }}>
-          {functions.map(
-            (func) =>
-              vehicle[func.name] && (
-                <button
-                  style={{
-                    margin: "15px",
-                    overflow: "hidden",
-                    backgroundColor: "black",
-                    color: "white",
-                  }}
-                  key={func.name}
-                  className={`btn btn-lg ${func.className} mr-2 mb-2`}
-                  onClick={() => handleFunctionClick(func.name)}
-                >
-                  {func.label}
-                </button>
-              )
-          )}
+        <div>
+          <br />
+          <br />
+          <br />
+          <br />
+          <CSVDisplayr vehicle={vehicle} />
         </div>
       );
     }
-    return null;
+    return (
+      <div>
+        {renderButtons(vehicle)}
+        <CSVDisplay vehicle={vehicle} />
+      </div>
+    );
+  };
+  const renderButtons = (vehicle) => {
+    if (!vehicle) {
+      return null;
+    }
+
+    const functions = [
+      { name: "takeoff", label: "Takeoff", className: "btn-primary" },
+      { name: "land", label: "Land", className: "btn-secondary" },
+      { name: "arm", label: "Arm", className: "btn-danger" },
+      { name: "rtl", label: "Return to Launch", className: "btn-warning" },
+      { name: "auto", label: "Auto Mode", className: "btn-info" },
+      { name: "flymission", label: "Fly Mission", className: "btn-success" },
+      {
+        name: "uploadMission",
+        label: "Upload Mission",
+        className: "btn-light",
+      },
+    ];
+
+    return (
+      <div className="mt-3" style={{ padding: 15 }}>
+        {functions.map(
+          (func) =>
+            vehicle[func.name] && (
+              <button
+                style={{
+                  margin: "15px",
+                  overflow: "hidden",
+                  backgroundColor: "black",
+                  color: "white",
+                }}
+                key={func.name}
+                className={`btn btn-lg ${func.className} mr-2 mb-2`}
+                onClick={() => handleFunctionClick(vehicle, func.name)}
+              >
+                {func.label}
+              </button>
+            )
+        )}
+      </div>
+    );
   };
 
   return (
-    <div style={{ padding: 15 }}>
-      <div style={{ textAlign: "center" }}>
-        <label
-          htmlFor="vehicleSelect"
-          style={{ fontSize: 30, padding: 5, margin: "auto" }}
-        >
-          Vehicle Controls
-        </label>
-        <select
-          id="vehicleSelect"
-          className="form-control"
-          value={selectedVehicle}
-          onChange={handleSelectChange}
-          style={{
-            width: "97%",
-            margin: "auto",
-            display: "block",
-            padding: "15px",
-            marginTop: "15px",
-            overflow: "hidden",
-            textAlign: "center",
-            fontSize: "30px",
-          }}
-        >
-          {vehicles.map((vehicle, index) => (
-            <option
-              key={index}
-              value={vehicle.name}
-              style={{
-                backgroundColor:
-                  selectedVehicle === vehicle.name ? "#007bff" : "#fff",
-                color: selectedVehicle === vehicle.name ? "#fff" : "#000",
-                fontWeight:
-                  selectedVehicle === vehicle.name ? "bold" : "normal",
-                textAlign: "center",
-                fontSize: "30px",
-                padding: "10px",
-              }}
-            >
+    <div>
+      <h1 style={{ textAlign: "center", fontSize: "80px" }}>Vehicle Control</h1>
+      <Row>
+        {vehicles.slice(0, 2).map((vehicle, index) => (
+          <Col key={index} style={{ padding: "15px" }}>
+            <h2 style={{ textAlign: "center", fontSize: "40px" }}>
               {vehicle.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <Row style={{ margin: 10 }}>
-        <Col>
-          {renderButtons()}
-          <br />
-          <CSV vehicle={vehicles.find((v) => v.name === selectedVehicle)} />
-        </Col>
-        <Col>
-          <Frame vehicle={vehicles.find((v) => v.name === selectedVehicle)} />
-        </Col>
+            </h2>
+            <CSV vehicle={vehicle} />
+          </Col>
+        ))}
+      </Row>
+      <Row>
+        {vehicles.slice(2, 4).map((vehicle, index) => (
+          <Col key={index} style={{ padding: "15px" }}>
+            <h2 style={{ textAlign: "center", fontSize: "40px" }}>
+              {vehicle.name}
+            </h2>
+            <CSV vehicle={vehicle} />
+          </Col>
+        ))}
       </Row>
     </div>
   );
 };
 
-export default DropdownMenu;
+export default MainComponent;

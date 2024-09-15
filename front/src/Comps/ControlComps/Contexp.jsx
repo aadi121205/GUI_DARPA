@@ -1,10 +1,8 @@
 import * as React from "react";
-import Divider from "@mui/material/Divider";
 import telemContext from "../../context/home/telemContext";
 import { Container, Button, Row, Col, Card } from "react-bootstrap";
 import DropdownMenu from "./ConDrop";
-import Timelines from "./Timelines";
-import CSVDisplay from "./CSVDisplay";
+
 
 function Telemexp() {
   const {
@@ -159,9 +157,6 @@ function Telemexp() {
       >
         <Row>
           <DropdownMenu vehicles={vehicles} />
-        </Row>
-        <Row>
-          <Timelines />
         </Row>
       </div>
     </>

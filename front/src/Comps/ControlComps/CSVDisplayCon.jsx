@@ -3,7 +3,6 @@ import { Button } from "@mui/material";
 import { HiArrowDown } from "react-icons/hi";
 import { HiArrowNarrowUp } from "react-icons/hi";
 import { HiArchiveBoxXMark } from "react-icons/hi2";
-import { width } from "@mui/system";
 
 const CSVDisplay = ({ vehicle }) => {
   // Ensure vehicle and vehicle.locations are defined
