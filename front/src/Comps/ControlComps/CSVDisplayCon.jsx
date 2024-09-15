@@ -5,45 +5,39 @@ import { HiArrowNarrowUp } from "react-icons/hi";
 import { HiArchiveBoxXMark } from "react-icons/hi2";
 
 const CSVDisplay = ({ vehicle }) => {
-  // Ensure vehicle and vehicle.locations are defined
   const [data, setData] = useState(vehicle?.locations || []);
   const [editing, setEditing] = useState(null);
   const [modified, setModified] = useState(false);
 
   useEffect(() => {
     if (!modified && vehicle && vehicle.locations) {
-      // Refresh data when the vehicle changes and no modifications are ongoing
       setData(vehicle.locations || []);
     }
   }, [vehicle, modified]);
 
   const handleEdit = (rowIndex, colIndex, value) => {
     const updatedData = [...data];
-
-    // Convert the value to a float before updating
     const floatValue = parseFloat(value);
     if (!isNaN(floatValue)) {
       updatedData[rowIndex][colIndex] = floatValue;
     } else {
-      updatedData[rowIndex][colIndex] = value; // If the value cannot be converted to a float, keep the original value
+      updatedData[rowIndex][colIndex] = value;
     }
-
     setData(updatedData);
-    setModified(true); // Mark as modified
-
+    setModified(true);
     if (vehicle && vehicle.uploadMission) {
-      vehicle.uploadMission(updatedData); // Call uploadMission with updated data
-      console.log("success"); // Print success
+      vehicle.uploadMission(updatedData);
+      console.log("success");
     }
   };
 
   const handleDeleteRow = (rowIndex) => {
     const updatedData = data.filter((_, index) => index !== rowIndex);
     setData(updatedData);
-    setModified(true); // Mark as modified
+    setModified(true);
     if (vehicle && vehicle.uploadMission) {
-      vehicle.uploadMission(updatedData); // Call uploadMission with updated data
-      console.log("success"); // Print success
+      vehicle.uploadMission(updatedData);
+      console.log("success");
     }
   };
 
@@ -54,10 +48,10 @@ const CSVDisplay = ({ vehicle }) => {
       updatedData[rowIndex - 1] = updatedData[rowIndex];
       updatedData[rowIndex] = temp;
       setData(updatedData);
-      setModified(true); // Mark as modified
+      setModified(true);
       if (vehicle && vehicle.uploadMission) {
-        vehicle.uploadMission(updatedData); // Call uploadMission with updated data
-        console.log("success"); // Print success
+        vehicle.uploadMission(updatedData);
+        console.log("success");
       }
     }
   };
@@ -69,10 +63,10 @@ const CSVDisplay = ({ vehicle }) => {
       updatedData[rowIndex + 1] = updatedData[rowIndex];
       updatedData[rowIndex] = temp;
       setData(updatedData);
-      setModified(true); // Mark as modified
+      setModified(true);
       if (vehicle && vehicle.uploadMission) {
-        vehicle.uploadMission(updatedData); // Call uploadMission with updated data
-        console.log("success"); // Print success
+        vehicle.uploadMission(updatedData);
+        console.log("success");
       }
     }
   };
@@ -89,6 +83,17 @@ const CSVDisplay = ({ vehicle }) => {
     handleEdit(rowIndex, colIndex, e.target.value);
   };
 
+  const handleAddNewLine = () => {
+    const newRow = ["", ""]; // Add as many empty elements as there are columns in your table
+    const updatedData = [...data, newRow];
+    setData(updatedData);
+    setModified(true);
+    if (vehicle && vehicle.uploadMission) {
+      vehicle.uploadMission(updatedData);
+      console.log("New row added");
+    }
+  };
+
   if (!vehicle || !vehicle.locations) {
     return <div>No data available</div>;
   }
@@ -96,19 +101,25 @@ const CSVDisplay = ({ vehicle }) => {
   return (
     <div
       style={{
-        backgroundColor: "white",
         color: "black",
         padding: "15px",
         borderRadius: 10,
         border: "1px solid green",
         display: "inline-block",
-        width: "95%",
-        overflow: "auto",
-        margin: "auto",
+        width: "100%",
+        backgroundColor: "white",
       }}
     >
       <h3>Way Points Display</h3>
       <br />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleAddNewLine}
+        style={{ marginBottom: "10px" }}
+      >
+        Add New Line
+      </Button>
       {data.length > 0 && (
         <>
           <table
@@ -126,7 +137,7 @@ const CSVDisplay = ({ vehicle }) => {
                     <td
                       style={{
                         padding: 15,
-                        border: "1px solid black", // Adding borders to each cell
+                        border: "1px solid black",
                         fontSize: 25,
                       }}
                       key={colIndex}
@@ -137,23 +148,27 @@ const CSVDisplay = ({ vehicle }) => {
                       {editing &&
                       editing.rowIndex === rowIndex &&
                       editing.colIndex === colIndex ? (
-                        <input
-                          type="text"
+                        <textarea
                           value={cell}
-                          onChange={(e) => handleChange(e, rowIndex, colIndex)}
+                          onChange={(e) =>
+                            handleChange(e, rowIndex, colIndex)
+                          }
                           onBlur={handleBlur}
                           autoFocus
+                          style={{
+                            width: "100%",
+                            fontSize: "inherit",
+                            padding: "5px",
+                            boxSizing: "border-box",
+                          }}
+                          rows={2}
                         />
                       ) : (
                         cell
                       )}
                     </td>
                   ))}
-                  <td
-                    style={{
-                      border: "1px solid black", // Adding borders to each cell
-                    }}
-                  >
+                  <td style={{ border: "1px solid black" }}>
                     <Button
                       variant="primary"
                       onClick={() => handleMoveRowUp(rowIndex)}
@@ -162,11 +177,7 @@ const CSVDisplay = ({ vehicle }) => {
                       <HiArrowNarrowUp fontSize={30} />
                     </Button>
                   </td>
-                  <td
-                    style={{
-                      border: "1px solid black", // Adding borders to each cell
-                    }}
-                  >
+                  <td style={{ border: "1px solid black" }}>
                     <Button
                       variant="primary"
                       onClick={() => handleMoveRowDown(rowIndex)}
@@ -175,11 +186,7 @@ const CSVDisplay = ({ vehicle }) => {
                       <HiArrowDown fontSize={30} />
                     </Button>
                   </td>
-                  <td
-                    style={{
-                      border: "1px solid black", // Adding borders to each cell
-                    }}
-                  >
+                  <td style={{ border: "1px solid black" }}>
                     <Button
                       variant="primary"
                       onClick={() => handleDeleteRow(rowIndex)}
