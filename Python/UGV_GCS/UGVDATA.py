@@ -10,6 +10,13 @@ class DataController:
         self.sio = sio
         threading.Thread(target=self.send_data).start()
 
+    def imgtojson(self):
+        path = os.path.join(os.path.dirname(__file__), "img.jpg")
+        img = cv2.imread(path)
+        img = cv2.resize(img, (500, 500))
+        _, img_encoded = cv2.imencode('.jpg', img)
+        img_encoded = img_encoded.tostring()
+        return img_encoded
 
     def send_data(self):
         starttime = time.time()
@@ -20,6 +27,9 @@ class DataController:
             data = {
                 "time": elapsed_time_formatted,
                 "score": random.randint(0, 100),
+                "ugv1_frame": self.imgtojson(),
+                "ugv2_frame": self.imgtojson(),
+                "ugv3_frame": self.imgtojson(),
                 "UGV1": {
                     "latitude": 37.7749,
                     "longitude": -122.4194,

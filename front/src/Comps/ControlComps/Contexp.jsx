@@ -1,10 +1,9 @@
 import * as React from "react";
 import telemContext from "../../context/home/telemContext";
 import { Container, Button, Row, Col, Card } from "react-bootstrap";
-import DropdownMenu from "./ConDrop";
+import MainComponent from "./ConDrop";
 
-
-function Telemexp() {
+function Contexp() {
   const {
     telemetryData,
     telemetryData_rover,
@@ -156,11 +155,11 @@ function Telemexp() {
         }}
       >
         <Row>
-          <DropdownMenu vehicles={vehicles} />
+          <MainComponent vehicles={vehicles} />
         </Row>
       </div>
     </>
   );
 }
 
-export default Telemexp;
+export default Contexp;

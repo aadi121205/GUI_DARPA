@@ -1,16 +1,15 @@
 import { SocketState } from "../context/socketContext";
 import { TelemState } from "../context/home/telemState";
-import VideoBackground from "./HomeComps/Homer";
-import Charts from "./DataComps/Charts";
+import Cameraexp from "./CameraComps/Cameraexp";
 
-const Data = () => {
+const Camera = () => {
   return (
     <SocketState>
       <TelemState>
-        <Charts />
+        <Cameraexp />
       </TelemState>
     </SocketState>
   );
 };
 
-export default Data;
+export default Camera;

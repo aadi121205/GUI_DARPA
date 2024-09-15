@@ -11,6 +11,7 @@ import TestUgv2 from './Comps/TestUgv2';
 import TestUgv3 from './Comps/TestUgv3';
 import Control from './Comps/Control';
 import FD from './Comps/FlightDirector';
+import Camera from './Comps/Camera';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/test3" element={<TestUgv2 />} />
         <Route path="/test4" element={<TestUgv3 />} />
         <Route path="/control" element={<Control />} />
+        <Route path="/camera" element={<Camera />} />
         <Route path="/fd" element={<FD />} />
       </Routes>
       </Router>
