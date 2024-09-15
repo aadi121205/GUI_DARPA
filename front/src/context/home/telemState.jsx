@@ -103,6 +103,9 @@ const TelemState = ({ children }) => {
   const write_mission_rover3 = (data) => {
     socket.emit("write_mission_rover3", data);
   };
+  const write_map = (data) => {
+    socket.emit("write_map", data);
+  };
   const downloadMission = () => {
     socket.emit("downloadMission");
   };
@@ -401,6 +404,7 @@ const TelemState = ({ children }) => {
         flyMission,
         data,
         data_ugv,
+        write_map,
       }}
     >
       {children}
