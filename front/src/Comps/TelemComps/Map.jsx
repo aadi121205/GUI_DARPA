@@ -10,9 +10,9 @@ mapboxgl.accessToken =
 export default function Map() {
   const mapContainer = useRef();
   const map = useRef();
-  const [lng, setLng] = useState(77.11695);
-  const [lat, setLat] = useState(28.750449);
-  const [zoom, setZoom] = useState(18);
+  const [lng, setLng] = useState(77.1154947489928);
+  const [lat, setLat] = useState(28.75368228115169);
+  const [zoom, setZoom] = useState(19.5);
   const {
     telemetryData,
     telemetryData_rover,

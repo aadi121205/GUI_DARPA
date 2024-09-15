@@ -37,8 +37,8 @@ const Modes = ({ vehicle }) => {
   return (
     <div>
       <Button onClick={handleOpen}>
-      <h4 style={{ color: "light blue", paddingLeft: 0 }}>
-      <b>{vehicle.mode}</b>
+        <h4 style={{ color: "light blue", paddingLeft: 0 }}>
+          <b>{vehicle.mode}</b>
         </h4>
       </Button>
       {open && (
@@ -53,7 +53,11 @@ const Modes = ({ vehicle }) => {
               height: 120,
             }}
           >
-            <Button variant="primary" onClick={vehicle.rtl}>
+            <h3 style={{ textAlign: "center", margin: "auto" }}>
+              Access Denied
+            </h3>
+
+            {/*             <Button variant="primary" onClick={vehicle.rtl}>
               RTL
             </Button>
             <Button variant="primary" onClick={vehicle.land}>
@@ -61,7 +65,7 @@ const Modes = ({ vehicle }) => {
             </Button>
             <Button variant="primary" onClick={vehicle.auto}>
               Auto
-            </Button>
+            </Button> */}
             <Button
               onClick={handleOpen}
               style={{ position: "absolute", top: 0, right: 0, color: "white" }}
