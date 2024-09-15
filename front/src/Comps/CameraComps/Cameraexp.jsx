@@ -5,16 +5,10 @@ import telemContext from "../../context/home/telemContext";
 const renderFrame = (data, frame) => {
   if (frame) {
     return (
-      <div>
+      <div style={{ width: "100%", height: "100%" , alignContent: "center", justifyContent: "center", display: "flex", padding: 35}}>
         <img
           src={frame}
           alt="UAV Frame"
-          style={{
-            width: "auto",
-            height: "auto",
-            maxWidth: "100%",
-            maxHeight: "100%",
-          }}
         />
       </div>
     );
@@ -28,7 +22,6 @@ function Cameraexp() {
   const [frame_ugv, setFrameUgv] = useState(null);
   const [frame_ugv2, setFrameUgv2] = useState(null);
   const [frame_ugv3, setFrameUgv3] = useState(null);
-  const [uploadedImage, setUploadedImage] = useState(null); // For uploaded image
   // Handle UAV frame data
   useEffect(() => {
     if (data.uav_frame) {
@@ -79,21 +72,31 @@ function Cameraexp() {
       <div
         style={{
           padding: "15px",
-          overflow: "hidden",
           backgroundColor: "black",
           color: "white",
           alignSelf: "center",
         }}
       >
-        <h1>Image Display</h1>
 
-        <Row>
-          <Col><h3>UAV</h3>{renderFrame(data, frame_uav)}</Col>
-          <Col><h3>UGV1</h3>{renderFrame(data_ugv, frame_ugv)}</Col>
+        <Row style={{ paddingTop: "15px" }}>
+          <Col>
+            <h2 style={{ textAlign: "center" }}>UAV</h2>
+            {renderFrame(data, frame_uav)}
+          </Col>
+          <Col>
+            <h2 style={{ textAlign: "center" }}>UGV1</h2>
+            {renderFrame(data_ugv, frame_ugv)}
+          </Col>
         </Row>
-        <Row>
-          <Col><h3>UGV2</h3>{renderFrame(data_ugv, frame_ugv2)}</Col>
-          <Col><h3>UGV3</h3>{renderFrame(data_ugv, frame_ugv3)}</Col>
+        <Row style={{ paddingTop: "35px" }}>
+          <Col>
+            <h2 style={{ textAlign: "center" }}>UGV2</h2>
+            {renderFrame(data_ugv, frame_ugv2)}
+          </Col>
+          <Col>
+            <h2 style={{ textAlign: "center" }}>UGV3</h2>
+            {renderFrame(data_ugv, frame_ugv3)}
+          </Col>
         </Row>
       </div>
     </>

@@ -2,7 +2,7 @@ import requests
 
 
 class ScoringInteractionProtocol:
-    def __init__(self, base_url):
+    def __init__(self, base_url, auth_token):
         self.base_url = base_url
         self.auth_token = None
         self.headers = {
