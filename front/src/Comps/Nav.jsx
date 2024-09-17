@@ -36,9 +36,9 @@ function NavigationBar() {
             <Nav.Link href="/data">Data</Nav.Link>
             <Nav.Link href="/camera">Camera</Nav.Link>
             <Nav.Link href="/path">Path</Nav.Link>
-            <Nav.Link href="/fd">FD</Nav.Link>
+            <Nav.Link href="/fd">Flight Director</Nav.Link>
+            <Nav.Link href="/test">Test</Nav.Link>
             <NavDropdown title="Test" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/test">Test UAV</NavDropdown.Item>
               <NavDropdown.Item href="/test2">Test UGV</NavDropdown.Item>
               <NavDropdown.Item href="/test3">Test UGV 2</NavDropdown.Item>
               <NavDropdown.Item href="/test4">Test UGV 3</NavDropdown.Item>
