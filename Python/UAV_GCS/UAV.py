@@ -38,7 +38,7 @@ class DroneController:
                 self.uav_connected = True
             except Exception as e:
                 print("[UAV.py] An error occurred: " + str(e))
-                time.sleep(5)
+                time.sleep(1)
 
     def takeoff(self, altitude=15):
         self.arm_and_takeoff(altitude)
@@ -93,15 +93,19 @@ class DroneController:
                         self.sio.emit('telemetry', telemetry_data, namespace="/python")
                     except Exception as e:
                         print("[Telem] Telemetry not sent ERROR by UAV:")
-                        time.sleep(0.5)
+                        self.uav_connected=False
+                        self.connect_uav()
+                        # time.sleep(0.5)
                 else:
+                    self.uav_connected=False
                     self.connect_uav()
-                    time.sleep(1)
+                    # time.sleep(1)
                 time.sleep(1)
             except Exception as e:
                 print("UAV 1 not connected")
+                self.uav_connected=False
                 self.connect_uav()
-                time.sleep(1)
+                # time.sleep(1)
     
     def send_mission(self, *args):
         waypoints = []
