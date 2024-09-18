@@ -37,6 +37,7 @@ class DroneController:
                 print("[UAV.py] Connected to UAV at IP/PORT: " + str(self.DroneIP))
                 self.uav_connected = True
             except Exception as e:
+                self.uav_connected = False
                 print("[UAV.py] An error occurred: " + str(e))
                 time.sleep(1)
 
@@ -96,7 +97,6 @@ class DroneController:
                         self.connect_uav()
                         time.sleep(1)
                 else:
-                    self.uav_connected=False
                     self.connect_uav()
                     time.sleep(5)
                 time.sleep(1)
@@ -104,7 +104,7 @@ class DroneController:
                 print("UAV 1 not connected")
                 self.uav_connected=False
                 self.connect_uav()
-                # time.sleep(1)
+                time.sleep(10)
     
     def send_mission(self, *args):
         waypoints = []
