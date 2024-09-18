@@ -95,11 +95,11 @@ class DroneController:
                         print("[Telem] Telemetry not sent ERROR by UAV:")
                         self.uav_connected=False
                         self.connect_uav()
-                        # time.sleep(0.5)
+                        time.sleep(5)
                 else:
                     self.uav_connected=False
                     self.connect_uav()
-                    # time.sleep(1)
+                    time.sleep(1)
                 time.sleep(1)
             except Exception as e:
                 print("UAV 1 not connected")
