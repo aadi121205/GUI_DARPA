@@ -61,3 +61,6 @@ class DataController:
         with open(self.goto_mission, "w") as file:
             for wp in waypoints:
                 file.write(f"{wp[0]},{wp[1]}\n")
+    
+    def pathplan(self):
+        time.sleep(0)
