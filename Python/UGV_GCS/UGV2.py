@@ -39,18 +39,21 @@ class RoverController2:
         for event, handler in events.items():
             self.sio.on(event, handler, namespace="/rover2")
 
+
     def connect_ugv(self):
         # Attempt to connect to the UGV, retrying on failure
         while not self.ugv_connected:
             try:
                 print("Attempting to connect to Rover...")
-                self.ugv_connection = connect(self.RoverIP, wait_ready=True, timeout=5)
+                self.ugv_connection = connect(self.RoverIP, wait_ready=False, timeout=5)
                 self.cmds = self.ugv_connection.commands
                 print(f"[UGV.py] Connected to UGV at IP/PORT: {self.RoverIP}")
                 self.ugv_connected = True
             except Exception as e:
+                self.ugv_connected = False
                 print(f"[UGV.py] Connection error: {e}")
                 time.sleep(5)
+
 
     def on_arm_rover(self, *args):
         # Arm the rover in MANUAL mode

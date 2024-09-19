@@ -49,6 +49,7 @@ class RoverController:
                 print(f"[UGV.py] Connected to UGV at IP/PORT: {self.RoverIP}")
                 self.ugv_connected = True
             except Exception as e:
+                self.ugv_connected = False
                 print(f"[UGV.py] Connection error: {e}")
                 time.sleep(5)
 

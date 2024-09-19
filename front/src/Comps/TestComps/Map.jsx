@@ -154,7 +154,7 @@ export default function Map() {
   return (
     <div>
       <div id="map" className="map">
-        <div className="sidebar">
+        <div className="sidebars">
           <strong>UAV1:-</strong> Longitude: {telemetryData?.longitude} | Latitude:{" "}
           {telemetryData?.latitude}
           <br />
