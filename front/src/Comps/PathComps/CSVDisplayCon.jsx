@@ -84,7 +84,7 @@ const CSVDisplay = ({ vehicle }) => {
   };
 
   const handleAddNewLine = () => {
-    const newRow = ["", ""]; // Add as many empty elements as there are columns in your table
+    const newRow = ["0", "0"]; // Add as many empty elements as there are columns in your table
     const updatedData = [...data, newRow];
     setData(updatedData);
     setModified(true);
