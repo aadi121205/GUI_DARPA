@@ -145,12 +145,12 @@ export default function Map() {
     <div>
       <div id="map" className="map">
         <div className="sidebars">
-          <strong>Rover:-</strong> Longitude: {telemetryData_rover2?.longitude} | Latitude:{" "}
-          {telemetryData_rover2?.latitude}
+          {/* <strong>Rover:-</strong> Longitude: {telemetryData_rover2?.longitude} | Latitude:{" "} */}
+          {/* {telemetryData_rover2?.latitude} */}
           <br />
           <strong>DTU Campus  | Zoom: {zoom}</strong>
           <br />
-          <strong>{telemetryData_rover2.locations && telemetryData_rover2.locations.length} UGV Points &nbsp;</strong>
+          {/* <strong>{telemetryData_rover2.locations && telemetryData_rover2.locations.length} UGV Points &nbsp;</strong> */}
           <label>
             <input
               type="checkbox"

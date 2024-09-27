@@ -21,15 +21,15 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/telem" element={<Telem />} />
-        <Route path="/Data" element={<Data />} />
-        <Route path="/test" element={<Test />} />
+        {/* <Route path="/Data" element={<Data />} /> */}
+        {/* <Route path="/test" element={<Test />} /> */}
         <Route path="/test2" element={<TestUgv />} />
         <Route path="/test3" element={<TestUgv2 />} />
         <Route path="/test4" element={<TestUgv3 />} />
         <Route path="/control" element={<Control />} />
         <Route path="/camera" element={<Camera />} />
-        <Route path="/fd" element={<FD />} />
-        <Route path="/path" element={<Path />} />
+        {/* <Route path="/fd" element={<FD />} /> */}
+        {/* <Route path="/path" element={<Path />} /> */}
       </Routes>
     </Router>
   );

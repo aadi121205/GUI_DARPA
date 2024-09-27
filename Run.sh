@@ -52,7 +52,6 @@ echo "This may take a few seconds. Please wait..."
 
 # Name of the tmux session
 SESSION_NAME="mySession"
-
 # Create a new tmux session
 tmux new-session -d -s $SESSION_NAME
 
@@ -64,7 +63,7 @@ tmux split-window -v    # Split the left pane vertically
 tmux send-keys -t mySession "cd front && npm run dev -- --host" C-m
 sleep 1
 tmux select-pane -t 0   # Select the top-right pane
-tmux send-keys -t mySession "cd Python/UAV_GCS/ && python3 main.py" C-m
+tmux send-keys -t mySession "cd Python/UAV_GCS/ && python3  main.py" C-m
 sleep 1
 tmux split-window -v    # Split the top-right pane vertically
 tmux send-keys -t mySession "cd Python/UGV_GCS/ && python3 main.py" C-m
