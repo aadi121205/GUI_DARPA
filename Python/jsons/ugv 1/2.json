@@ -1,0 +1,11 @@
+{
+  "timestamp": "2024-09-28T14:30:00",
+  "severe_hemorrhage": 1,
+  "respiratory_distress": 0,
+  "hr": 90,
+  "rr": 12,
+  "head_injury": 2,
+  "chest_injury": 1,
+  "abdominal_injury": 3,
+  "extremity_injury": 2
+}
