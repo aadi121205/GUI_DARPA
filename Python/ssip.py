@@ -17,6 +17,7 @@ VITALS_ENDPOINT = f"{BASE_URL}/api/vitals"
 INJURY_ENDPOINT = f"{BASE_URL}/api/injury"
 
 headers = {
+    "Accept": "application/json",
     "Authorization": f"Bearer {AUTH_TOKEN}",
     "Content-Type": "application/json"
 }
