@@ -10,9 +10,9 @@ mapboxgl.accessToken =
 export default function Map() {
   const mapContainer = useRef();
   const map = useRef();
-  const [lng, setLng] = useState(77.11695);
-  const [lat, setLat] = useState(28.750449);
-  const [zoom, setZoom] = useState(18);
+  const [lng, setLng] = useState(-83.750673);
+  const [lat, setLat] = useState(32.504375);
+  const [zoom, setZoom] = useState(20);
   const { telemetryData, telemetryData_rover, telemetryData_rover2, telemetryData_rover3 } = useContext(telemContext);
   const [roverMarker, setRoverMarker] = useState(null);
   const [ugvPointMarkers, setUgvPointMarkers] = useState([]);
@@ -34,7 +34,7 @@ export default function Map() {
     });
 
     map.current.on("load", () => {
-      map.current.addSource("dtuCampus", {
+      map.current.addSource("darpa", {
         type: "geojson",
         data: {
           type: "Feature",
@@ -42,23 +42,20 @@ export default function Map() {
             type: "Polygon",
             coordinates: [
               [
-                [77.115826, 28.754964],
-                [77.123077, 28.749402],
-                [77.118353, 28.744705],
-                [77.115991, 28.745345],
-                [77.115111, 28.748807],
-                [77.110113, 28.749459],
-                [77.112112, 28.751436],
-                [77.113197, 28.752666],
+                [-83.750673, 32.504375],
+  [-83.750725, 32.504581],
+  [-83.75097, 32.504552],
+  [-83.750919, 32.504354],
+  {/*[-83.750673, 32.504375]*/}
               ],
             ],
           },
         },
       });
       map.current.addLayer({
-        id: "dtuCampus",
+        id: "darpa",
         type: "fill",
-        source: "dtuCampus",
+        source: "darpa",
         layout: {},
         paint: {
           "fill-color": "#798b90",
@@ -68,7 +65,7 @@ export default function Map() {
       map.current.addLayer({
         id: "outline",
         type: "line",
-        source: "dtuCampus",
+        source: "darpa",
         layout: {},
         paint: {
           "line-color": "#000",
