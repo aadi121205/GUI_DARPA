@@ -6,7 +6,7 @@ from time import sleep
 import hashlib
 
 # Configuration
-BASE_URL = "http://localhost:5000"  # Using the mock server URL
+BASE_URL = "http://10.200.1.100"  # Using the mock server URL
 TEAM_NAME = "UAS-DTU"  # Replace with your team name
 AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDEyOGNmZS05YzJiLTRhZDAtYjFmMC00ZDY4NzkwZjM3NWEiLCJpIjowfQ.fc8-8Plswp0nW1-o8p1XtW-sg4fj7T4Y18TJw64duR8"  # Replace with your actual token
 
