@@ -40,14 +40,17 @@ def submit_report(endpoint, data):
         print(f"Error submitting report: {response.status_code}, {response.text}")
 
 def calculate_time_ago(timestamp):
-    report_time = datetime.strptime(timestamp,"%H:%M:%S")
+    report_time = timestamp.split(":")
+    report_time = 3600*int(report_time[0])+60*int(report_time[1])+int(report_time[2])
     current_time = datetime.now()
-    retport_time=report_time.replace(year=current_time.year,month=current_time.month,day=current_time.day)
+    current_time = 3600*current_time.hour+60*current_time.minute+current_time.second
     time_difference = current_time - report_time
-    return int(time_difference.total_seconds())
+    # print(time_difference)
+    return int(time_difference)
 
 def process_json_file(system, casualty_id, data, old_data):
     timestamp = data.get('timestamp')
+    print(data)
     time_ago = calculate_time_ago(timestamp)
 
     for report_type, value in data.items():
@@ -111,7 +114,7 @@ def save_processed_files(processed_files):
         json.dump(processed_files, f)
 
 def main():
-    jsons_folder = "/home/suhani/Report"
+    jsons_folder = "../../Report"
     processed_files = load_processed_files()
 
     while True:
@@ -121,6 +124,7 @@ def main():
                 for json_file in os.listdir(system_path):
                     if json_file.endswith('.json'):
                         file_path = os.path.join(system_path, json_file)
+                        # print(file_path)
                         file_hash = get_file_hash(file_path)
                         
                         # Debug print
