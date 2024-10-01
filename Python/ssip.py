@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from datetime import datetime
+from datetime import datetime, timedelta
 from time import sleep
 import hashlib
 
@@ -40,8 +40,9 @@ def submit_report(endpoint, data):
         print(f"Error submitting report: {response.status_code}, {response.text}")
 
 def calculate_time_ago(timestamp):
-    report_time = datetime.fromisoformat(timestamp)
+    report_time = datetime.strptime(timestamp,"%H:%M:%S")
     current_time = datetime.now()
+    retport_time=report_time.replace(year=current_time.year,month=current_time.month,day=current_time.day)
     time_difference = current_time - report_time
     return int(time_difference.total_seconds())
 
@@ -110,7 +111,7 @@ def save_processed_files(processed_files):
         json.dump(processed_files, f)
 
 def main():
-    jsons_folder = "jsons"
+    jsons_folder = "/home/suhani/Report"
     processed_files = load_processed_files()
 
     while True:

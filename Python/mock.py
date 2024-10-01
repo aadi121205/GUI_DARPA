@@ -16,7 +16,7 @@ remaining_reports = {
 }
 
 # Mock authentication token
-VALID_TOKEN = "hello_melo_melo"
+VALID_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDEyOGNmZS05YzJiLTRhZDAtYjFmMC00ZDY4NzkwZjM3NWEiLCJpIjowfQ.fc8-8Plswp0nW1-o8p1XtW-sg4fj7T4Y18TJw64duR8"
 
 def check_auth(request):
     auth_header = request.headers.get('Authorization')
