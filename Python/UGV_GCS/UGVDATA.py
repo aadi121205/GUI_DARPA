@@ -46,6 +46,7 @@ class DataController:
                 "ugv1_frame": self.imgtojson(),
                 "ugv2_frame": self.imgtojson(),
                 "ugv3_frame": self.imgtojson(),
+                "ugvp_frame": self.imgtojson(),
                 "locations": locations,
             }
             try:
