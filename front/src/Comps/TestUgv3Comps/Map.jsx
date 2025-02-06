@@ -10,9 +10,9 @@ mapboxgl.accessToken =
 export default function Map() {
   const mapContainer = useRef();
   const map = useRef();
-  const [lng, setLng] = useState(77.11695);
-  const [lat, setLat] = useState(28.750449);
-  const [zoom, setZoom] = useState(18);
+  const [lng, setLng] = useState(-83.750673);
+  const [lat, setLat] = useState(32.504375);
+  const [zoom, setZoom] = useState(20);
   const { telemetryData_rover3 } = useContext(telemContext);
   const [roverMarker, setRoverMarker] = useState(null);
   const [ugvPointMarkers, setUgvPointMarkers] = useState([]);
@@ -42,14 +42,11 @@ export default function Map() {
             type: "Polygon",
             coordinates: [
               [
-                [77.115826, 28.754964],
-                [77.123077, 28.749402],
-                [77.118353, 28.744705],
-                [77.115991, 28.745345],
-                [77.115111, 28.748807],
-                [77.110113, 28.749459],
-                [77.112112, 28.751436],
-                [77.113197, 28.752666],
+                [-83.750673, 32.504375],
+  [-83.750725, 32.504581],
+  [-83.75097, 32.504552],
+  [-83.750919, 32.504354],
+  [-83.750673, 32.504375],
               ],
             ],
           },
@@ -145,12 +142,12 @@ export default function Map() {
     <div>
       <div id="map" className="map">
         <div className="sidebars">
-          <strong>Rover:-</strong> Longitude: {telemetryData_rover3?.longitude} | Latitude:{" "}
-          {telemetryData_rover3?.latitude}
+          {/* <strong>Rover:-</strong> Longitude: {telemetryData_rover3?.longitude} | Latitude:{" "} */}
+          {/* {telemetryData_rover3?.latitude} */}
           <br />
           <strong>DTU Campus  | Zoom: {zoom}</strong>
           <br />
-          <strong>{telemetryData_rover3.locations && telemetryData_rover3.locations.length} UGV Points &nbsp;</strong>
+          {/* <strong>{telemetryData_rover3.locations && telemetryData_rover3.locations.length} UGV Points &nbsp;</strong> */}
           <label>
             <input
               type="checkbox"

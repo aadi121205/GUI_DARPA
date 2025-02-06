@@ -7,7 +7,7 @@ from UGV3 import RoverController3
 from UGVDATA import DataController
 load_dotenv()
 # from socket_client import Drone
-
+ 
 gcs_ip=os.getenv('GCS_IP')
 gcs_port=os.getenv('GCS_PORT')
 

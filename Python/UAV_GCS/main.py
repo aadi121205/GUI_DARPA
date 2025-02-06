@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from socket_client import Socketio_client
 from UAV import DroneController
+from UAV import DroneController_flask
 from UAVDATA import DataController
 load_dotenv()
 
@@ -10,5 +11,5 @@ gcs_port=os.getenv('GCS_PORT')
 
 if __name__=="__main__":
     sio = Socketio_client(gcs_ip,gcs_port).socketio_client
-    uav = DroneController(sio)
+    uav = DroneController_flask(sio)
     data = DataController(sio)
