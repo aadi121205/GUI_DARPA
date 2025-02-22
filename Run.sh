@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Function to check if a command exists
 command_exists() {
     command -v "$1" >/dev/null 2>&1
@@ -18,20 +17,6 @@ if ! command_exists bash; then
     exit 1
 fi
 
-if [ ! -d "$PWD/Python" ]; then
-    echo "Error: Python directory not found in the current directory."
-    exit 1
-fi
-
-if [ ! -d "$PWD/front" ]; then
-    echo "Error: front directory not found in the current directory."
-    exit 1
-fi
-
-if [ ! -d "$PWD/back" ]; then
-    echo "Error: back directory not found in the current directory."
-    exit 1
-fi
 
 # Prompt the user to continue or not
 read -p "All prerequisites are met. Do you want to continue? (y/n): " choice
@@ -57,15 +42,12 @@ tmux new-session -d -s $SESSION_NAME
 
 # Split the window into a 2x2 grid
 tmux split-window -h    # Split the first pane horizontally
-tmux send-keys -t mySession "cd back && npm run start" C-m
-sleep 1
-tmux split-window -v    # Split the left pane vertically
-tmux send-keys -t mySession "cd front && npm run dev -- --host" C-m
+tmux send-keys -t mySession "cd Back && npm run start" C-m
 sleep 1
 tmux select-pane -t 0   # Select the top-right pane
-tmux send-keys -t mySession "cd Python/UAV_GCS/ && python3  main.py" C-m
+tmux send-keys -t mySession "cd Python/UAVs/ && python3  Main.py" C-m
 sleep 1
-tmux split-window -v    # Split the top-right pane vertically
+tmux split-window -h    # Split the top-right pane vertically
 tmux send-keys -t mySession "cd Python/UGV_GCS/ && python3 main.py" C-m
 
 # Select the first pane (top-left)
