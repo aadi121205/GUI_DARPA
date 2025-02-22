@@ -92,10 +92,9 @@ class Telem:
                         "armed": self.uav_connection.messages['HEARTBEAT'].base_mode & 0b10000000 != 0,
                         "mode": self.uav_connection.flightmode,
                         "heading": self.uav_connection.messages['VFR_HUD'].heading,
-                 
-
                     }
                     self.sio.emit('Telem', telemetry_data, namespace="/UAV")
+                    print(telemetry_data)
                 else:
                     self.connect_uav()
                     time.sleep(5)
