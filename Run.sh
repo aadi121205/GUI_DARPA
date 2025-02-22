@@ -48,7 +48,7 @@ tmux select-pane -t 0   # Select the top-right pane
 tmux send-keys -t mySession "cd Python/UAVs/ && python3  Main.py" C-m
 sleep 1
 tmux split-window -h    # Split the top-right pane vertically
-tmux send-keys -t mySession "cd Python/UGV_GCS/ && python3 main.py" C-m
+tmux send-keys -t mySession "cd Front/ && npm run dev" C-m
 
 # Select the first pane (top-left)
 tmux select-pane -t 0
