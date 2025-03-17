@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 import MapTelemetry from './Comps/map';
+import { Row, Col, Card } from 'react-bootstrap';
 
 // Update the URL to match your server's address and port.
 // If you're using a self-signed certificate in development,
@@ -40,13 +41,21 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Telemetry Data</h1>
-      <pre>
-        {telemetry ? JSON.stringify(telemetry, null, 2) : 'Waiting for telemetry data...'}
-      </pre>
-      <MapTelemetry />
-    </div>
+      <Row style={{ padding: '20px', width: '2400px'}} >
+        <Col>
+          <Card >
+            <Card.Header>
+              <Card.Title>Telemetry Data</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <pre>{JSON.stringify(telemetry, null, 2)}</pre>
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col>
+          <MapTelemetry />
+        </Col>
+      </Row>
   );
 };
 

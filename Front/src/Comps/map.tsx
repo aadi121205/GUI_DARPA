@@ -30,7 +30,7 @@ const MapTelemetry: React.FC = () => {
         container: mapContainerRef.current,
         style: "mapbox://styles/mapbox/satellite-v9",
         center: [0, 0], // default center before receiving telemetry
-        zoom: 17,
+        zoom: 19,
       });
       // Add navigation controls (zoom and rotation)
       mapRef.current.addControl(new mapboxgl.NavigationControl());
@@ -81,7 +81,7 @@ const MapTelemetry: React.FC = () => {
         mapRef.current.flyTo({
           center: [longitude, latitude],
           essential: true, // This animation is considered essential.
-          zoom: 10, // Adjust zoom level as needed.
+          zoom: 17.5, // Adjust zoom level as needed.
         });
       }
     }
