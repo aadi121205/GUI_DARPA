@@ -68,28 +68,34 @@ const MapTelemetry: React.FC = () => {
     if (telemetry && mapRef.current) {
       const { latitude, longitude } = telemetry;
       if (typeof latitude === 'number' && typeof longitude === 'number') {
-        // If the marker doesn't exist, create it.
         if (!markerRef.current) {
-          markerRef.current = new mapboxgl.Marker({ color: 'red' })
+          // Create a custom image marker
+          const el = document.createElement('div');
+          el.style.backgroundImage = "url(https://iili.io/dBbAcPf.md.png)";
+          el.style.width = '35px'; // Adjust size as needed
+          el.style.height = '35px';
+          el.style.backgroundSize = 'contain';
+          el.style.backgroundRepeat = 'no-repeat';
+
+          markerRef.current = new mapboxgl.Marker(el)
             .setLngLat([longitude, latitude])
             .addTo(mapRef.current);
         } else {
-          // Otherwise, update the marker's position.
           markerRef.current.setLngLat([longitude, latitude]);
         }
-        // Smoothly animate the map to center on the new location.
+
         mapRef.current.flyTo({
           center: [longitude, latitude],
-          essential: true, // This animation is considered essential.
-          zoom: 17.5, // Adjust zoom level as needed.
+          essential: true,
+          zoom: 17.5,
         });
       }
     }
   }, [telemetry]);
 
   return (
-    <div style={{ height: '100vh', width: '100%' }}>
-      <div ref={mapContainerRef} style={{ height: '100%', width: '100%' }} />
+    <div id="map" className="map">
+      <div ref={mapContainerRef} className='map-container'/>
     </div>
   );
 };

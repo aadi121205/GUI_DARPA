@@ -1,19 +1,9 @@
 import React from "react";
-import { SocketProvider } from "./Comps/SocketProvider";
-import TelemetryDisplay from "./Comps/TelemetryDisplay";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavigationBar from "./Comps/Nav";
+import Telem from "./Comps/Telem";
 
-const Home = () => (
-  <>
-    <SocketProvider>
-      <div>
-        <h1>UAV Telemetry Dashboard</h1>
-        <TelemetryDisplay />
-      </div>
-    </SocketProvider>
-  </>
-);
+const Home = () => <h1>Home</h1>
 const About = () => <h1>About Page</h1>;
 const NotFound = () => <h1>404 - Not Found</h1>;
 
@@ -23,6 +13,7 @@ const App: React.FC = () => {
       <NavigationBar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/telem" element={<Telem />} />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
