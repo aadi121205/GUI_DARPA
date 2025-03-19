@@ -38,6 +38,7 @@ const io = socketIo(server, defaultParams);
 let counter = 1;
 
 const UAVNamespace = io.of("/UAV");
+const DataNamespace = io.of("/Data");
 const ReactNamespace = io.of("/react");
 
 // Python namespace
@@ -53,6 +54,22 @@ UAVNamespace.on("connection", (socket) => {
   socket.on("disconnect", () => {
 
     console.log("A Python client disconnected from UAV Namespace");
+  });
+});
+
+
+DataNamespace.on("connection", (socket) => {
+  console.log("A Python client connected to Data Namespace");
+
+  socket.on("Data", (data) => {
+    counter = 1; // Reset counter (if needed)
+    ReactNamespace.emit("DataFowarding", data);
+    console.log("Received data:", data);
+  });
+
+  socket.on("disconnect", () => {
+
+    console.log("A Python client disconnected from Data Namespace");
   });
 });
 

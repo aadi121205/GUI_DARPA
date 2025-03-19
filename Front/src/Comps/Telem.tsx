@@ -4,6 +4,7 @@ import TelemetryDisplay from "./TelemetryDisplay";
 import { Row, Col } from "react-bootstrap";
 import MapTelemetry from "./map";
 import { Container } from "react-bootstrap";
+import LogsDisplay from "./Logs";
 
 const Telem: React.FC = () => {
   return (
@@ -26,10 +27,10 @@ const Telem: React.FC = () => {
           </Row>
           <Row>
             <Col style={{ height: "20vh", width: "100%" }}>
-              <TelemetryDisplay />
+              <LogsDisplay />
             </Col>
             <Col style={{ height: "20vh", width: "100%" }}>
-              <TelemetryDisplay />
+            <LogsDisplay />
             </Col>
 
           </Row>
