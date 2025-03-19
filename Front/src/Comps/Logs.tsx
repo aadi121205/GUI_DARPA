@@ -20,6 +20,10 @@ const LogsDisplay: React.FC = () => {
     >
       <h2>Data</h2>
       <pre>{JSON.stringify(Data, null, 2)}</pre>
+      {Data.msg}
+      <br />
+      {Data.error}
+      <br />
     </div>
   );
 };

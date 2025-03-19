@@ -15,7 +15,9 @@ class Data:
         while True:
             try:
                     data = {
-                        "msg": "plskillme",          
+                        "msg": "plskillme",
+                        "error": "no error",
+                        "last update": time.time(),
                     }
                     self.sio.emit("Data", data, namespace="/Data")
                     time.sleep(0.5)
