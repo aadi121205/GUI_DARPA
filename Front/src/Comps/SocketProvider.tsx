@@ -17,6 +17,8 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   useEffect(() => {
     const newSocket = io("https://localhost:7000/react", {
       transports: ["websocket"],
+      reconnectionAttempts: 5,   // Retry connection 5 times
+      timeout: 5000,             // Set timeout for connection
     });
     setSocket(newSocket);
 
