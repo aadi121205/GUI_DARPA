@@ -53,3 +53,15 @@ class Socket:
         def connect_error(e):
             print("Socket connect error IP/PORT: " + str(e))
     
+        @self.socketio_client.event(namespace="/DataUav")  # decorator for the connect function
+        def connect():
+            print("Socket established connection IP/PORT: "+ str(self.connection_string))
+
+        @self.socketio_client.event(namespace="/DataUav")
+        def disconnect():
+            print("Socket connection broken connection IP/PORT: "+ str(self.connection_string))
+            # self.start()
+
+        @self.socketio_client.event(namespace="/DataUav")
+        def connect_error(e):
+            print("Socket connect error IP/PORT: " + str(e))
