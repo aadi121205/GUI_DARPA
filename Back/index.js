@@ -52,11 +52,9 @@ UAVNamespace.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-
     console.log("A Python client disconnected from UAV Namespace");
   });
 });
-
 
 DataNamespace.on("connection", (socket) => {
   console.log("A Python client connected to Data Namespace");
@@ -68,7 +66,6 @@ DataNamespace.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-
     console.log("A Python client disconnected from Data Namespace");
   });
 });
@@ -76,7 +73,6 @@ DataNamespace.on("connection", (socket) => {
 // React namespace
 ReactNamespace.on("connection", (socket) => {
   console.log("A React client connected to React Namespace");
-
   socket.on("disconnect", () => {
     console.log("A React client disconnected from React Namespace");
   });

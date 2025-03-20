@@ -19,7 +19,7 @@ class Data:
                 lines = f.readlines()
                 f.close()
                 data = {
-                        "msg": lines[-1:-10:-1],
+                        "msg": lines[-1:-30:-1],
                         "error": "no error",
                         "last update": time.time(),
                     }

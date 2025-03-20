@@ -15,6 +15,17 @@ def haversine(lon1, lat1, lon2, lat2):
     c = 2 * asin(sqrt(a))
     return c * 6371 * 1000
 
+MAV_STATE_MAPPING = {
+    0: "UNINIT",
+    1: "BOOT",
+    2: "CALIBRATING",
+    3: "STANDBY",
+    4: "ACTIVE",
+    5: "CRITICAL",
+    6: "EMERGENCY",
+    7: "POWEROFF",
+    8: "FLIGHT_TERMINATION"
+}
 
 class Telem:
     def __init__(self, sio):
@@ -30,9 +41,7 @@ class Telem:
         self.sio.on("RTL", self.set_rtl, namespace="/UAV")
         self.sio.on("landUav", self.land_Uav, namespace="/UAV")
         self.sio.on("fly_mission", self.flyMission, namespace="/UAV")
-        self.sio.on("upload_mission", self.send_mission, namespace="/UAV")
         self.sio.on("auto_mission", self.set_auto, namespace="/UAV")
-        self.sio.on("write_mission", self.write_mission, namespace="/UAV")
 
         self.connect_uav()
         threading.Thread(target=self.send_telemetry_data).start()
@@ -114,6 +123,7 @@ class Telem:
                         != 0,
                         "mode": self.uav_connection.flightmode,
                         "heading": self.uav_connection.messages["VFR_HUD"].heading,
+                        "Status": MAV_STATE_MAPPING[self.uav_connection.messages["HEARTBEAT"].system_status],
                     }
                     self.sio.emit("Telem", telemetry_data, namespace="/UAV")
                     msg = self.uav_connection.recv_match(blocking=True
@@ -129,18 +139,6 @@ class Telem:
                 self.connect_uav()
                 time.sleep(10)
 
-    def send_mission(self, *args):
-        waypoints = []
-        with open("waypoints.txt", "r") as file:
-            for line in file:
-                lat, lon, alt = line.strip().split(",")
-                waypoints.append((float(lat), float(lon), float(alt)))
-        for wp in waypoints:
-            self.send_mavlink_command(
-                mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, [0, 0, 0, 0, wp[0], wp[1], wp[2]]
-            )
-        print("Mission uploaded successfully")
-
     def flyMission(self):
         if self.uav_connection.messages["HEARTBEAT"].base_mode & 0b10000000:
             with open("waypoints.txt", "r") as file:
@@ -154,9 +152,3 @@ class Telem:
             print("Mission completed")
         else:
             print("Drone not armed")
-
-    def write_mission(self, waypoints):
-        with open(self.goto_mission, "w") as file:
-            for wp in waypoints:
-                file.write(f"{wp[0]},{wp[1]},{wp[2]}\n")
-        print("Mission saved")

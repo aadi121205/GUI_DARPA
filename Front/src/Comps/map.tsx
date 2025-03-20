@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
-import mapboxgl from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import React, { useEffect, useRef, useState } from "react";
+import { io, Socket } from "socket.io-client";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
-const SOCKET_URL = 'https://localhost:7000/react';
-const MAPBOX_TOKEN = 'pk.eyJ1IjoiYXl1c2gxMDIiLCJhIjoiY2xycTRtZW4xMDE0cTJtbno5dnU0dG12eCJ9.L9xmYztXX2yOahZoKDBr6g';
+const SOCKET_URL = "https://localhost:7000/react";
+const MAPBOX_TOKEN =
+  "pk.eyJ1IjoiYXl1c2gxMDIiLCJhIjoiY2xycTRtZW4xMDE0cTJtbno5dnU0dG12eCJ9.L9xmYztXX2yOahZoKDBr6g";
 
 // Set your Mapbox token
 mapboxgl.accessToken = MAPBOX_TOKEN;
@@ -28,7 +29,7 @@ const MapTelemetry: React.FC = () => {
     if (mapContainerRef.current && !mapRef.current) {
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
-        style: "mapbox://styles/mapbox/satellite-v9",
+        style: "mapbox://styles/mapbox/satellite-streets-v12",
         center: [0, 0], // default center before receiving telemetry
         zoom: 19,
       });
@@ -40,22 +41,22 @@ const MapTelemetry: React.FC = () => {
   // Connect to the Socket.IO server and listen for telemetry data.
   useEffect(() => {
     const socket: Socket = io(SOCKET_URL, {
-      transports: ['websocket'],
+      transports: ["websocket"],
       secure: true,
       rejectUnauthorized: false, // Use only in development with self-signed certs
     });
 
-    socket.on('connect', () => {
-      console.log('Connected to React namespace');
+    socket.on("connect", () => {
+      console.log("Connected to React namespace");
     });
 
-    socket.on('TelemFowarding', (data: TelemetryData) => {
-      console.log('Received telemetry data:', data);
+    socket.on("TelemFowarding", (data: TelemetryData) => {
+      console.log("Received telemetry data:", data);
       setTelemetry(data);
     });
 
-    socket.on('disconnect', () => {
-      console.log('Disconnected from server');
+    socket.on("disconnect", () => {
+      console.log("Disconnected from server");
     });
 
     return () => {
@@ -67,15 +68,16 @@ const MapTelemetry: React.FC = () => {
   useEffect(() => {
     if (telemetry && mapRef.current) {
       const { latitude, longitude } = telemetry;
-      if (typeof latitude === 'number' && typeof longitude === 'number') {
+      if (typeof latitude === "number" && typeof longitude === "number") {
         if (!markerRef.current) {
           // Create a custom image marker
-          const el = document.createElement('div');
+          const el = document.createElement("div");
+
           el.style.backgroundImage = "url(https://iili.io/dBbAcPf.md.png)";
-          el.style.width = '35px'; // Adjust size as needed
-          el.style.height = '35px';
-          el.style.backgroundSize = 'contain';
-          el.style.backgroundRepeat = 'no-repeat';
+          el.style.width = "35px";
+          el.style.height = "35px";
+          el.style.backgroundSize = "contain";
+          el.style.backgroundRepeat = "no-repeat";
 
           markerRef.current = new mapboxgl.Marker(el)
             .setLngLat([longitude, latitude])
@@ -95,7 +97,7 @@ const MapTelemetry: React.FC = () => {
 
   return (
     <div id="map" className="map">
-      <div ref={mapContainerRef} className='map-container'/>
+      <div ref={mapContainerRef} className="map-container" />
     </div>
   );
 };

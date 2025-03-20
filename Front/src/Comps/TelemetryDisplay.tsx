@@ -1,11 +1,40 @@
 import React from "react";
 import { useSocket } from "./SocketProvider";
 import { Col, Container } from "react-bootstrap";
-import { Button } from "@mui/material";
 
 const TelemetryDisplay: React.FC = () => {
   const { telemetryData } = useSocket();
-  let stylet = { color: "White", margin: "0px" };
+
+  const colorlist = {
+    GUIDED: "Yellow",
+    AUTO: "Green",
+    RTL: "Red",
+    LOITER: "Blue",
+    STABILIZE: "Purple",
+    BRAKE: "Orange",
+    LAND: "Pink",
+    POSHOLD: "Cyan",
+  };
+  const stylet = {
+    color: colorlist[telemetryData?.mode as keyof typeof colorlist],
+  };
+  const batstyle = {
+    color: (telemetryData?.battery as number) > 30 ? "Green" : "Red",
+  };
+  const Statuscololist = {
+    UNINIT: "Yellow",
+    BOOT: "Yellow",
+    CALIBRATING: "Yellow",
+    STANDBY: "Yellow",
+    ACTIVE: "Green",
+    CRITICAL: "Red",
+    EMERGENCY: "Red",
+    POWEROFF: "Green",
+    FLIGHT_TERMINATION: "Red",
+  };
+  const Statusstyle = {
+    color: Statuscololist[telemetryData?.Status as keyof typeof Statuscololist],
+  };
 
   return (
     <div
@@ -20,7 +49,9 @@ const TelemetryDisplay: React.FC = () => {
         height: "68vh",
       }}
     >
-      <h2 style={{ textAlign: "center", padding: "9px", marginBottom: "30px" }}>Telemetry Data</h2>
+      <h2 style={{ textAlign: "center", padding: "9px", marginBottom: "30px" }}>
+        Telemetry Data
+      </h2>
       {telemetryData ? (
         <Container
           style={{
@@ -48,13 +79,9 @@ const TelemetryDisplay: React.FC = () => {
             </h4>
             <br></br>
             <h4>MODE</h4>
-            <Button
-              /* onClick={telemetryData.arm} */ style={{ paddingLeft: 0 }}
-            >
-              <h4 style={stylet}>
-                <b>{telemetryData.mode}</b>
-              </h4>
-            </Button>
+            <h4 style={stylet}>
+              <b>{telemetryData.mode}</b>
+            </h4>
           </Col>
           <Col
             style={{
@@ -64,33 +91,28 @@ const TelemetryDisplay: React.FC = () => {
               paddingRight: "40px",
             }}
           >
-            <h4>STATE</h4>
-            <h4>
-              <b>{telemetryData.state}</b>
+            <h4>STATUS</h4>
+            <h4 style={Statusstyle}>
+              <b>{telemetryData.Status}</b>
             </h4>
             <br></br>
-            <h4>STATUS</h4>
-            <h4>
-              <b>{telemetryData.armed ? "ARMED" : "DISARMED"}</b>
-            </h4>
+            <h4>STATE</h4>
+            {telemetryData.armed ? (
+              <h4 style={{ color: "Red" }}>
+                <b>ARMED</b>
+              </h4>
+            ) : (
+              <h4 style={{ color: "Lime" }}>
+                <b>DISARMED</b>
+              </h4>
+            )}
             <br></br>
             <h4>Battery</h4>
-            <h4>
+            <h4 style={batstyle}>
               <b>{telemetryData.battery}</b>
             </h4>
             <br></br>
-            <h4>THROTTLE</h4>
-            <Button
-              /* onClick={telemetryData.arm} */ style={{ paddingLeft: 0 }}
-            >
-              <h4 style={stylet}>
-                <b>{telemetryData.mode}</b>
-              </h4>
-            </Button>
           </Col>
-{/*             <pre style={{ color: "white" }}>
-              {JSON.stringify(telemetryData, null, 2)}
-            </pre> */}
         </Container>
       ) : (
         <p style={{ color: "#f0f0f0" }}>No telemetry data received yet.</p>

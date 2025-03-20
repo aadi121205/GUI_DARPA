@@ -9,9 +9,8 @@ const LogsDisplay: React.FC = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsVisible(true);
-    }, 1000); // 2-second delay
-
-    return () => clearTimeout(timer); // Cleanup timeout on unmount
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
   return (
     <div
@@ -35,13 +34,17 @@ const LogsDisplay: React.FC = () => {
           fontSize: "1.5rem",
           marginLeft: "1.7rem",
           overflowY: "auto",
-          maxHeight: "30vh", // Ensure it takes up only part of the div
-          whiteSpace: "pre-wrap", // Prevents horizontal scrolling
-          wordWrap: "break-word", // Ensures words wrap correctly
+          maxHeight: "30vh",
+          whiteSpace: "pre-wrap",
+          wordWrap: "break-word",
           backgroundColor: "#1a1f1f",
         }}
       >
-        {isVisible ? <pre>{Data?.msg ?? "No data available"}</pre> : <div>Loading...</div>}
+        {isVisible ? (
+          <pre>{Data?.msg ?? "No data available"}</pre>
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
     </div>
   );
