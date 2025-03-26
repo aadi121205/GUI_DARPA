@@ -1,30 +1,14 @@
-import socketio
-import ssl
+from flask import Flask, request, jsonify
+import json
 
-class SecureSocketClient:
-    def __init__(self, server_url='https://localhost:3000'):
-        self.sio = socketio.Client(ssl_verify=False)
-        self.server_url = server_url
+app = Flask(__name__)
 
-        # Register events
-        self.sio.on('connect', self.on_connect)
-        self.sio.on('disconnect', self.on_disconnect)
-        self.sio.on('reply', self.on_reply)
-
-    def on_connect(self):
-        print("[Client] Connected to secure server")
-        self.sio.send("Hello from secure Python client!")
-
-    def on_disconnect(self):
-        print("[Client] Disconnected from server")
-
-    def on_reply(self, data):
-        print(f"[Client] Received from server: {data}")
-
-    def run(self):
-        self.sio.connect(self.server_url)
-        self.sio.wait()
+@app.route('/upload', methods=['POST'])
+def upload_json():
+    data = request.get_json()
+    with open('received_data.json', 'w') as f:
+        json.dump(data, f, indent=2)
+    return jsonify({'status': 'success'}), 200
 
 if __name__ == '__main__':
-    client = SecureSocketClient()
-    client.run()
+    app.run(host='0.0.0.0', port=5000, ssl_context=('cert.pem', 'key.pem'))

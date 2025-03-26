@@ -49,9 +49,13 @@ tmux send-keys -t mySession "cd Python/UAVs/ && python3  Main.py" C-m
 sleep 1
 tmux split-window -h    # Split the top-right pane vertically
 tmux send-keys -t mySession "cd Front/ && npm run dev" C-m
-
+tmux select-pane -t 0
+tmux split-window -h    # Split the top-right pane vertically
+sleep 1
+tmux send-keys -t mySession "cd Python/UAV/ && python3  Main.py" C-m
 # Select the first pane (top-left)
 tmux select-pane -t 0
+
 
 # Attach to the session
 if [[ "$background" == "y" || "$background" == "Y" ]]; then
