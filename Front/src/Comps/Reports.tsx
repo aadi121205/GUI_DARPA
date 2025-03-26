@@ -2,7 +2,7 @@ import React from "react";
 import { useSocket } from "./SocketProvider";
 import { useState, useEffect } from "react";
 
-const LogsDisplay: React.FC = () => {
+const ReportsDisplay: React.FC = () => {
   const { Data } = useSocket();
   const [isVisible, setIsVisible] = useState(false);
 
@@ -38,7 +38,8 @@ const LogsDisplay: React.FC = () => {
         }}
       >
         {isVisible ? (
-          <pre>{Data?.msg ?? "No data available"}</pre>
+          <pre>{JSON.stringify(Data.lastreport, null, 2)}</pre>
+
         ) : (
           <div>Loading...</div>
         )}
@@ -47,4 +48,4 @@ const LogsDisplay: React.FC = () => {
   );
 };
 
-export default LogsDisplay;
+export default ReportsDisplay;

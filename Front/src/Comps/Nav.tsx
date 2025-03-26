@@ -2,7 +2,7 @@ import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 
 function NavigationBar() {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" sticky="top">
       <Container
         style={{
           padding: "3px",

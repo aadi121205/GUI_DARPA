@@ -29,6 +29,8 @@ if __name__=="__main__":
     socket=Socket(gcs_ip,gcs_port)
     telem=Telem(socket.socketio_client)
     data=Data(socket.socketio_client)
+    uav=UAV()
+    uav.run()
     sys.stdout = Logger()
     while True:
         sys.stderr = sys.stdout

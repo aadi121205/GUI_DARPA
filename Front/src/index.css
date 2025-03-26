@@ -1,8 +1,8 @@
 .map-container {
-  height: 69vh;
+height: 69vh;
   position: relative;
   border-radius: 20px;
-  width: 75vw;
+  margin-top: 90px;
 }
 
 .tab {
@@ -16,7 +16,6 @@
 .sidebar {
   color: #fff;
   font-family: monospace;
-  z-index: 1;
   position: absolute;
   overflow: hidden;
 }
@@ -37,4 +36,30 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+}
+
+/* App.css or similar */
+.SplitPane .Resizer {
+  background: #000;
+  opacity: 0.2;
+  z-index: 1;
+  box-sizing: border-box;
+  background-clip: padding-box;
+}
+
+.SplitPane .Resizer:hover {
+  transition: all 0.2s ease;
+  opacity: 0.5;
+}
+
+.SplitPane .Resizer.vertical {
+  width: 5px;
+  margin: 0 -2px;
+  cursor: col-resize;
+}
+
+.SplitPane .Resizer.horizontal {
+  height: 5px;
+  margin: -2px 0;
+  cursor: row-resize;
 }

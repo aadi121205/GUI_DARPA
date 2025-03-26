@@ -1,8 +1,7 @@
 import time
 import threading
-from pymavlink import mavutil
 import time
-import socketio
+import json
 from math import radians, cos, sin, asin, sqrt
 
 
@@ -18,8 +17,11 @@ class Data:
                 f = open("Logs.txt", "r")
                 lines = f.readlines()
                 f.close()
+                with open("received_data.json", "r") as f:
+                    data = json.load(f)
                 data = {
                         "msg": lines[-1:-30:-1],
+                        "lastreport": data,
                         "error": "no error",
                         "last update": time.time(),
                     }

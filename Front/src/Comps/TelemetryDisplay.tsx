@@ -43,11 +43,10 @@ const TelemetryDisplay: React.FC = () => {
         border: "1px solid #444",
         borderRadius: "7px",
         margin: "1rem",
-        width: "21vw",
         backgroundColor: "#1a1a1a",
         color: "#f0f0f0",
-        height: "68vh",
-      }}
+        marginTop: "100px",
+}}
     >
       <h2 style={{ textAlign: "center", padding: "9px", marginBottom: "30px" }}>
         Telemetry Data
