@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from Socket import Socket
 from Telem import Telem
 from Data import Data
+from UAV import UAV
 import sys
 
 load_dotenv()
@@ -24,11 +25,11 @@ class Logger:
         self.terminal.flush()
         self.log.flush()
 
-
 if __name__=="__main__":
     socket=Socket(gcs_ip,gcs_port)
     telem=Telem(socket.socketio_client)
     data=Data(socket.socketio_client)
+    uav=UAV(socket.socketio_client)
     sys.stdout = Logger()
     while True:
         sys.stderr = sys.stdout
