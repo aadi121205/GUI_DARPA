@@ -30,8 +30,8 @@ const MapTelemetry: React.FC = () => {
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
         style: "mapbox://styles/mapbox/satellite-streets-v12",
-        center: [28.753602756944723, 77.11549462480183], 
-        zoom: 19,
+        center: [77.11549462480183, 28.753602756944723], 
+        zoom: 17.5,
       });
       // Add navigation controls (zoom and rotation)
       mapRef.current.addControl(new mapboxgl.NavigationControl());
@@ -90,7 +90,6 @@ const MapTelemetry: React.FC = () => {
           mapRef.current.flyTo({
             center: [longitude, latitude],
             essential: true,
-            zoom: 19,
           });
         }
       }

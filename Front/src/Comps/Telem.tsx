@@ -5,7 +5,6 @@ import MapTelemetry from "./map";
 import LogsDisplay from "./Logs";
 import ReportsDisplay from "./Reports";
 import SplitPane from "react-split-pane";
-import { Row, Col } from "react-bootstrap";
 
 const Telem: React.FC = () => {
   return (
