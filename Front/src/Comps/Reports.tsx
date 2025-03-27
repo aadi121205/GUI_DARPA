@@ -21,8 +21,7 @@ const ReportsDisplay: React.FC = () => {
         margin: "1rem",
         backgroundColor: "#1a1a1a",
         color: "#f0f0f0",
-        display: "flex",
-        flexDirection: "column",
+
       }}
     >
       <h4>Last Submitted Report</h4>
@@ -31,9 +30,6 @@ const ReportsDisplay: React.FC = () => {
           padding: "1rem",
           fontSize: "1.5rem",
           marginLeft: "1.7rem",
-          overflowY: "auto",
-          whiteSpace: "pre-wrap",
-          wordWrap: "break-word",
           backgroundColor: "#1a1f1f",
         }}
       >
