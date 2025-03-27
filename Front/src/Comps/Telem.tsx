@@ -15,8 +15,8 @@ const Telem: React.FC = () => {
         defaultSize="70%"
         style={{ height: "90vh", backgroundColor: "#1a1a1a" }} // Fixed "90 vh"
       >
-        <SplitPane split="vertical" minSize={200} defaultSize="20%">
-          <div style={{ height: "100%", overflow: "wrap" }}>
+        <SplitPane split="vertical" minSize={300} defaultSize="20%">
+          <div style={{ height: "100%", overflow: "auto" }}>
             <TelemetryDisplay />
           </div>
 

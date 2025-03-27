@@ -46,8 +46,9 @@ const TelemetryDisplay: React.FC = () => {
         backgroundColor: "#1a1a1a",
         color: "#f0f0f0",
         marginTop: "100px",
-        overflow: "wrap"
-}}
+        overflow: "wrap",
+        
+      }}
     >
       <h2 style={{ textAlign: "center", padding: "9px", marginBottom: "30px" }}>
         Telemetry Data
@@ -56,9 +57,9 @@ const TelemetryDisplay: React.FC = () => {
         <Container
           style={{
             display: "flex",
-            justifyContent: "flex-start",
-            alignItems: "left",
-          }}
+            flexWrap: "wrap", // allow columns to wrap
+            justifyContent: "center", // optional: center content
+            alignItems: "flex-start",          }}
         >
           <Col
             style={{
@@ -82,6 +83,7 @@ const TelemetryDisplay: React.FC = () => {
             <h4 style={stylet}>
               <b>{telemetryData.mode}</b>
             </h4>
+            <br></br>
           </Col>
           <Col
             style={{

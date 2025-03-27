@@ -21,7 +21,6 @@ const ReportsDisplay: React.FC = () => {
         margin: "1rem",
         backgroundColor: "#1a1a1a",
         color: "#f0f0f0",
-
       }}
     >
       <h4>Last Submitted Report</h4>
@@ -33,9 +32,8 @@ const ReportsDisplay: React.FC = () => {
           backgroundColor: "#1a1f1f",
         }}
       >
-        {isVisible ? (
+        {isVisible && Data && Data.lastreport ? (
           <pre>{JSON.stringify(Data.lastreport, null, 2)}</pre>
-
         ) : (
           <div>Loading...</div>
         )}
