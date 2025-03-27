@@ -25,7 +25,7 @@ const ReportsDisplay: React.FC = () => {
         flexDirection: "column",
       }}
     >
-      <h4>Logs</h4>
+      <h4>Last Submitted Report</h4>
       <div
         style={{
           padding: "1rem",
