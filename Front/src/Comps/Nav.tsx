@@ -31,17 +31,7 @@ function NavigationBar() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/telem">Telem</Nav.Link>
-            <Nav.Link href="/control">Controls</Nav.Link>
-            {/* <Nav.Link href="/data">Data</Nav.Link> */}
-            <Nav.Link href="/camera">Camera</Nav.Link>
-            {/* <Nav.Link href="/path">Path</Nav.Link> */}
-            {/* <Nav.Link href="/fd">Flight Director</Nav.Link> */}
-            {/* <Nav.Link href="/test">Test</Nav.Link> */}
-            <NavDropdown title="Mission" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/test2">UGV 1</NavDropdown.Item>
-              <NavDropdown.Item href="/test3">UGV 2</NavDropdown.Item>
-              <NavDropdown.Item href="/test4">UGV 3</NavDropdown.Item>
-            </NavDropdown>
+
           </Nav>
         </Navbar.Collapse>
       </Container>

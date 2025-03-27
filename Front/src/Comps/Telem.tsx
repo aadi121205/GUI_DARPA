@@ -16,22 +16,28 @@ const Telem: React.FC = () => {
         style={{ height: "90vh", backgroundColor: "#1a1a1a" }} // Fixed "90 vh"
       >
         <SplitPane split="vertical" minSize={200} defaultSize="20%">
-          <div style={{ height: "100%", overflow: "auto" }}>
+          <div style={{ height: "100%", overflow: "wrap" }}>
             <TelemetryDisplay />
           </div>
 
-          <div style={{ height: "100%", overflow: "auto" }}>
+          <div style={{ height: "100%", overflow: "hide" }}>
             <MapTelemetry />
           </div>
         </SplitPane>
 
-        <SplitPane split="vertical" minSize={100} defaultSize="70%">
+        <SplitPane split="vertical" minSize={100} defaultSize="66%">
+        <SplitPane split="vertical" minSize={100} defaultSize="50%">
+
           <div style={{ height: "100%", overflow: "wrap" }}>
             <LogsDisplay />
           </div>
-          <div style={{ height: "100%", overflow: "auto" }}>
+          <div style={{ height: "100%", overflow: "wrap" }}>
             <ReportsDisplay />
           </div>
+          </SplitPane>
+          <div style={{ height: "100%", overflow: "auto" }}>
+            <ReportsDisplay />
+          </div>{" "}
         </SplitPane>
       </SplitPane>
     </SocketProvider>

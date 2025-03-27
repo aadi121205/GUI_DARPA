@@ -46,6 +46,7 @@ const TelemetryDisplay: React.FC = () => {
         backgroundColor: "#1a1a1a",
         color: "#f0f0f0",
         marginTop: "100px",
+        overflow: "wrap"
 }}
     >
       <h2 style={{ textAlign: "center", padding: "9px", marginBottom: "30px" }}>
