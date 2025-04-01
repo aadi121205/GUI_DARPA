@@ -2,7 +2,7 @@
 Please refer to the **DTC-Phase-1** branch for the working code.  
 
 Thanks,  
-**Aadi**  
+**Aadi**
 
 # Multi-UAV/UGV Control GUI
 
@@ -28,7 +28,7 @@ This project is a graphical user interface (GUI) built with React and Vite. It i
 - **Socket.io integration**: Seamless communication between the frontend and backend.
 - **Responsive UI**: Accessible from various devices.
 
-[![Screenshot-from-2024-08-09-23-50-07.png](https://i.postimg.cc/MHSQjK8R/Screenshot-from-2024-08-09-23-50-07.png)](https://postimg.cc/9RLM620F)
+[![Screenshot-from-2024-08-09-23-50-07.png](https://i.postimg.cc/hvjrn7VD/Screenshot-from-2025-03-19-11-13-02.png)](https://postimg.cc/r0BWCsh3)
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
