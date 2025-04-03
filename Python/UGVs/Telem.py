@@ -24,123 +24,116 @@ MAV_STATE_MAPPING = {
     5: "CRITICAL",
     6: "EMERGENCY",
     7: "POWEROFF",
-    8: "FLIGHT_TERMINATION"
+    8: "FLIGHT_TERMINATION",
+    9: "UNKNOWN",
 }
 
 class Telem:
-    def __init__(self, sio, Master):
+    def __init__(self, sio, Master, ID):
+        self.ID = ID
         self.RoverIP = Master
         self.sio = sio
-        self.uav_connected = False
-        self.uav_connection = None
+        self.UGV_connected = False
+        self.UGV_connection = None
         self.goto_mission = "waypoints.txt"
+        self.namespace = "/UGV" + str(ID)
+        print(self.namespace)
 
         # Register event handlers
-        self.sio.on("ToggelArm", self.ToggelArm, namespace="/UAV")
-        self.sio.on("takeoff", self.takeoff, namespace="/UAV")
-        self.sio.on("RTL", self.set_rtl, namespace="/UAV")
-        self.sio.on("landUav", self.land_Uav, namespace="/UAV")
-        self.sio.on("fly_mission", self.flyMission, namespace="/UAV")
-        self.sio.on("auto_mission", self.set_auto, namespace="/UAV")
+        self.sio.on("ToggelArm", self.ToggelArm, self.namespace)
+        self.sio.on("RTL", self.set_rtl, self.namespace)
+        self.sio.on("STOP", self.land_UGV, self.namespace)
+        self.sio.on("Start_mission", self.flyMission, self.namespace)
+        self.sio.on("Auto", self.set_auto, self.namespace)
 
-        self.connect_uav()
+        self.connect_UGV()
         threading.Thread(target=self.send_telemetry_data).start()
 
-    def connect_uav(self):
-        if not self.uav_connected:
+    def connect_UGV(self):
+        if not self.UGV_connected:
             try:
-                print("Trying to connect UAV...")
-                self.uav_connection = mavutil.mavlink_connection(self.RoverIP)
-                self.uav_connection.wait_heartbeat()
-                print("[UAV] Connected to UAV")
-                self.uav_connected = True
+                print("Trying to connect UGV...")
+                self.UGV_connection = mavutil.mavlink_connection(self.RoverIP)
+                self.UGV_connection.wait_heartbeat()
+                print("[UGV] Connected to UGV")
+                self.UGV_connected = True
             except Exception as e:
-                self.uav_connected = False
-                print("[UAV] Connection error: ", str(e))
+                self.UGV_connected = False
+                print("[UGV] Connection error: ", str(e))
                 time.sleep(1)
 
     def send_mavlink_command(self, command, params=[]):
-        self.uav_connection.mav.command_long_send(
-            self.uav_connection.target_system,
-            self.uav_connection.target_component,
+        self.UGV_connection.mav.command_long_send(
+            self.UGV_connection.target_system,
+            self.UGV_connection.target_component,
             command,
             0,
             *params,
         )
 
     def ToggelArm(self):
-        if self.uav_connection.messages["HEARTBEAT"].base_mode & 0b10000000:
+        if self.UGV_connection.messages["HEARTBEAT"].base_mode & 0b10000000:
             self.send_mavlink_command(mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, [0])
-            print("Drone disarmed")
+            print("Rover disarmed")
         else:
             self.send_mavlink_command(mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, [1])
-            print("Drone armed")
-
-    def takeoff(self, altitude=15):
-        self.send_mavlink_command(
-            mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, [0, 0, 0, 0, 0, 0, altitude]
-        )
-        print("Takeoff initiated")
+            print("Rover armed")
 
     def set_rtl(self):
         self.send_mavlink_command(mavutil.mavlink.MAV_CMD_NAV_RETURN_TO_LAUNCH)
         print("Returning to launch")
 
-    def land_Uav(self):
+    def land_UGV(self):
         self.send_mavlink_command(mavutil.mavlink.MAV_CMD_NAV_LAND)
         print("Landing initiated")
 
     def set_auto(self):
-        self.uav_connection.set_mode_auto()
+        self.UGV_connection.set_mode_auto()
         print("Switched to AUTO mode")
 
     def send_telemetry_data(self):
         while True:
             try:
-                if self.uav_connected:
-                    self.uav_connection.wait_heartbeat()
+                if self.UGV_connected:
+                    self.UGV_connection.wait_heartbeat()
                     telemetry_data = {
-                        "latitude": self.uav_connection.messages[
+                        "latitude": self.UGV_connection.messages[
                             "GLOBAL_POSITION_INT"
                         ].lat
                         / 1e7,
-                        "longitude": self.uav_connection.messages[
+                        "longitude": self.UGV_connection.messages[
                             "GLOBAL_POSITION_INT"
                         ].lon
                         / 1e7,
-                        "altitude": self.uav_connection.messages[
-                            "GLOBAL_POSITION_INT"
-                        ].alt
-                        / 1000,
-                        "groundspeed": self.uav_connection.messages[
+                        "groundspeed": self.UGV_connection.messages[
                             "VFR_HUD"
                         ].groundspeed,
-                        "battery": self.uav_connection.messages[
+                        "battery": self.UGV_connection.messages[
                             "SYS_STATUS"
                         ].battery_remaining,
-                        "armed": self.uav_connection.messages["HEARTBEAT"].base_mode
+                        "armed": self.UGV_connection.messages["HEARTBEAT"].base_mode
                         & 0b10000000
                         != 0,
-                        "mode": self.uav_connection.flightmode,
-                        "heading": self.uav_connection.messages["VFR_HUD"].heading,
-                        "Status": MAV_STATE_MAPPING[self.uav_connection.messages["HEARTBEAT"].system_status],
+                        "mode": self.UGV_connection.flightmode,
+                        "heading": self.UGV_connection.messages["VFR_HUD"].heading,
+                        "Status": MAV_STATE_MAPPING[self.UGV_connection.messages["HEARTBEAT"].system_status],
                     }
-                    self.sio.emit("Telem", telemetry_data, namespace="/UAV")
-                    msg = self.uav_connection.recv_match(blocking=True
+                    self.sio.emit("Telem", telemetry_data, namespace="/UGV")
+                    msg = self.UGV_connection.recv_match(blocking=True
                     )
 
                 else:
-                    self.connect_uav()
+                    self.connect_UGV()
                     time.sleep(5)
                 time.sleep(0.5)
             except Exception as e:
                 print("Telemetry error: ", str(e))
-                self.uav_connected = False
-                self.connect_uav()
+                self.UGV_connected = False
+                self.connect_UGV()
                 time.sleep(10)
 
     def flyMission(self):
-        if self.uav_connection.messages["HEARTBEAT"].base_mode & 0b10000000:
+        if self.UGV_connection.messages["HEARTBEAT"].base_mode & 0b10000000:
             with open("waypoints.txt", "r") as file:
                 for line in file:
                     lat, lon, alt = line.strip().split(",")
@@ -151,4 +144,5 @@ class Telem:
                     time.sleep(10)
             print("Mission completed")
         else:
-            print("Drone not armed")
+            print("Rover not armed")
+
