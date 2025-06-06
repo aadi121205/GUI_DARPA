@@ -21,7 +21,7 @@
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.3.0",
+    "react-router-dom": "^7.6.2",
     "react-split-pane": "^0.1.92",
     "socket.io-client": "^4.8.1"
   },
