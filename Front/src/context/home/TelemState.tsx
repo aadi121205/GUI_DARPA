@@ -15,6 +15,7 @@ const TelemState = ({ children }: TelemStateProps) => {
   const { socket } = socketContext;
 
   const [telemetryData, setTelemetryData] = useState({});
+
   const [telemetryData_rover, setTelemetryData_rover] = useState({});
   const [telemetryData_rover2, setTelemetryData_rover2] = useState({});
   const [telemetryData_rover3, setTelemetryData_rover3] = useState({});

@@ -1,24 +1,30 @@
-import viteLogo from '/drone.svg'
-import './App.css'
-import { SocketState } from './context/SocketContext'
-import { TelemState } from './context/home/TelemState'
+import viteLogo from "/drone.svg";
+import "./App.css";
+import { SocketState } from "./context/SocketContext";
+import { TelemState } from "./context/home/TelemState";
+import Home from "./Comps/Home";
 
 function App() {
-
   return (
     <>
-        <SocketState>
-      <TelemState>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-
-      </div>
-      </TelemState>
+      <SocketState>
+        <TelemState>
+          <div>
+            <a href="https://vite.dev" target="_blank">
+              <img src={viteLogo} className="logo" alt="Vite logo" />
+            </a>
+            <h1>Drone Telemetry</h1>
+            <div className="card">
+              <p>
+                Edit <code>src/App.tsx</code> and save to test HMR
+              </p>  
+              </div>
+              <Home />
+          </div>
+        </TelemState>
       </SocketState>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
