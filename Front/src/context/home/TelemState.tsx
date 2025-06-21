@@ -125,7 +125,7 @@ const TelemState = ({ children }: TelemStateProps) => {
     });
 
     // Telemetry
-    socket.on("telemetryServer", (data: any) => {
+    socket.on("TelemFowarding", (data: any) => {
       if ((data as any).altitude > 0.1) settimeofflight((prev) => prev + 1);
       setTelemetryData((prevData) => ({ ...prevData, ...data }));
     });

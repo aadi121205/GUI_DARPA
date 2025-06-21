@@ -1,7 +1,8 @@
-import viteLogo from "/drone.svg";
 import "./App.css";
 import { SocketState } from "./context/SocketContext";
 import { TelemState } from "./context/home/TelemState";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 import Home from "./Comps/Home";
 
 function App() {
@@ -9,18 +10,12 @@ function App() {
     <>
       <SocketState>
         <TelemState>
-          <div>
-            <a href="https://vite.dev" target="_blank">
-              <img src={viteLogo} className="logo" alt="Vite logo" />
-            </a>
-            <h1>Drone Telemetry</h1>
-            <div className="card">
-              <p>
-                Edit <code>src/App.tsx</code> and save to test HMR
-              </p>  
-              </div>
-              <Home />
-          </div>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </Router>
+
         </TelemState>
       </SocketState>
     </>

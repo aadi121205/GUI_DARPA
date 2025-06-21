@@ -3,7 +3,6 @@ import React from "react";
 
 function Home() {
     const { telemetryData } = React.useContext(telemContext);
-    console.log("Telemetry Data:", telemetryData);
     return (
         <div>
             <h1>Drone Telemetry</h1>
