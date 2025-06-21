@@ -21,14 +21,8 @@ const TelemState = ({ children }: TelemStateProps) => {
   const [telemetryData_rover3, setTelemetryData_rover3] = useState({});
   const [data, setData] = useState({});
   const [data_ugv, setData_ugv] = useState({});
-  const [OdlcData, setOdlcData] = useState({});
-  const [roll, setroll] = useState("");
-  const [pitch, setpitch] = useState("");
-  const [yaw, setyaw] = useState("");
-  const [mode, setMode] = useState("danger");
   const [timeofflight, settimeofflight] = useState(0);
   const [pointsdata, setchartData] = useState<any[]>([]);
-  const [button, setButton] = useState(false);
   const [image, setImage] = useState<any>(null);
 
   // Command methods
@@ -58,15 +52,6 @@ const TelemState = ({ children }: TelemStateProps) => {
   const disarmUgv2 = () => socket.emit("disarmingBackend_rover2");
   const disarmUgv3 = () => socket.emit("disarmingBackend_rover3");
 
-  const write_mission = (data: any) => {
-    socket.emit("write_mission", data);
-    console.log(data);
-  };
-  const write_mission_rover = (data: any) => socket.emit("write_mission_rover", data);
-  const write_mission_rover2 = (data: any) => socket.emit("write_mission_rover2", data);
-  const write_mission_rover3 = (data: any) => socket.emit("write_mission_rover3", data);
-  const write_map = (data: any) => socket.emit("write_map", data);
-
   const downloadMission = () => socket.emit("downloadMission");
   const downloadMission_rover = () => socket.emit("downloadMission_rover");
   const downloadMission_rover2 = () => socket.emit("downloadMission_rover2");
@@ -84,9 +69,6 @@ const TelemState = ({ children }: TelemStateProps) => {
   const saveMission_rover2 = () => socket.emit("saveMission_rover2");
   const saveMission_rover3 = () => socket.emit("saveMission_rover3");
 
-  const stopRover = () => { setButton(true); socket.emit("stopRover"); };
-  const stopRover2 = () => { setButton(true); socket.emit("stopRover2"); };
-  const stopRover3 = () => { setButton(true); socket.emit("stopRover3"); };
   const RTL = () => socket.emit("setRTL");
   const RTL_rover = () => socket.emit("setRTL_rover");
   const RTL_rover2 = () => socket.emit("setRTL_rover2");
@@ -117,12 +99,6 @@ const TelemState = ({ children }: TelemStateProps) => {
     socket.on("video_image_rover2", (payload: any) => setImage(payload));
     socket.on("video_image_rover3", (payload: any) => setImage(payload));
 
-    // ODLC
-    socket.on("updateOdlc", (data: any) => {
-      if (Object.keys(data).length > 0) {
-        setOdlcData((prev_data) => ({ ...prev_data, ...data }));
-      }
-    });
 
     // Telemetry
     socket.on("TelemFowarding", (data: any) => {
@@ -145,9 +121,6 @@ const TelemState = ({ children }: TelemStateProps) => {
     // Misc data
     socket.on("DataFowarding", (data: any) => setData(data));
     socket.on("data_ugv", (data: any) => setData_ugv(data));
-
-    // Mode
-    socket.on("mode", (flag: any) => setMode(flag === true ? "success" : "danger"));
 
     // Chart
     socket.on("chart", (chartdata: any[]) => {
@@ -200,11 +173,6 @@ const TelemState = ({ children }: TelemStateProps) => {
         STOP_rover,
         STOP_rover2,
         STOP_rover3,
-        button,
-        write_mission,
-        write_mission_rover,
-        write_mission_rover2,
-        write_mission_rover3,
         downloadMission,
         downloadMission_rover,
         downloadMission_rover2,
@@ -238,21 +206,10 @@ const TelemState = ({ children }: TelemStateProps) => {
         disarmUgv,
         disarmUgv2,
         disarmUgv3,
-        stopRover,
-        stopRover2,
-        stopRover3,
         telemetryData,
         telemetryData_rover,
         telemetryData_rover2,
         telemetryData_rover3,
-        OdlcData,
-        roll,
-        pitch,
-        yaw,
-        setroll,
-        setpitch,
-        setyaw,
-        mode,
         timeofflight,
         pointsdata,
         startvideo,
@@ -268,7 +225,6 @@ const TelemState = ({ children }: TelemStateProps) => {
         flyMission,
         data,
         data_ugv,
-        write_map,
       }}
     >
       {children}

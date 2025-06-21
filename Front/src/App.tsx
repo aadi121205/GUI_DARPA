@@ -13,12 +13,12 @@ function App() {
         <TelemState>
           <Router>
             <Routes>
+              {/* Nested routes can be added here if needed */}
               <Route path="/" element={<Home />} />
               <Route path="/telem" element={<Telem />} />
               {/* Add more routes as needed */}
             </Routes>
           </Router>
-
         </TelemState>
       </SocketState>
     </>

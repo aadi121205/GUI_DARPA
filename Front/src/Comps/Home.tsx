@@ -1,6 +1,5 @@
 import viteLogo from '/drone.svg'
 import { Link } from 'react-router-dom'
-import './Home.css'
 
 function Home() {
   return (
