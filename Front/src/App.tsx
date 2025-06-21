@@ -4,6 +4,7 @@ import { TelemState } from "./context/home/TelemState";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./Comps/Home";
+import Telem from "./Comps/Telem";
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
           <Router>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/telem" element={<Telem />} />
+              {/* Add more routes as needed */}
             </Routes>
           </Router>
 

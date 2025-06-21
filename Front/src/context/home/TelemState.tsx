@@ -143,7 +143,7 @@ const TelemState = ({ children }: TelemStateProps) => {
     });
 
     // Misc data
-    socket.on("data", (data: any) => setData(data));
+    socket.on("DataFowarding", (data: any) => setData(data));
     socket.on("data_ugv", (data: any) => setData_ugv(data));
 
     // Mode

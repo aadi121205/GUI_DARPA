@@ -1,17 +1,13 @@
-import telemContext from "../context/home/TelemContext";
-import React from "react";
+import viteLogo from '/drone.svg'
+import { Link } from 'react-router-dom'
 
 function Home() {
-    const { telemetryData } = React.useContext(telemContext);
-    return (
-        <div>
-            <h1>Drone Telemetry</h1>
-            <div className="card">
-                <p>Drone Telemetry Data:</p>
-                <pre>{JSON.stringify(telemetryData, null, 2)}</pre>
-            </div>
-
-        </div>
-    );
+  return (
+    <div>
+        <Link to="/telem" className="card">
+      <img src={viteLogo} className="logo" alt="Vite logo" />
+        </Link>
+    </div>
+  )
 }
-export default Home;
+export default Home

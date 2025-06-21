@@ -62,9 +62,7 @@ DataNamespace.on("connection", (socket) => {
   socket.on("Data", (data) => {
     counter = 1; // Reset counter (if needed)
     ReactNamespace.emit("DataFowarding", data);
-
-    /* console.log("Received data:", data); */
-
+    console.log("Received data:", data);
   });
 
   socket.on("disconnect", () => {
