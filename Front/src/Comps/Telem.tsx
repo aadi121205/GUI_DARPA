@@ -13,11 +13,16 @@ type TelemContextType = {
 function Telem() {
     const Data = React.useContext(telemContext) as TelemContextType;
     const { arm } = Data;
+    const { telemetryData } = Data;
     return (
         <div>
             <div className="card">
                 <p>Drone Telemetry Data:</p>
                 <pre>{JSON.stringify(Data, null, 2)}</pre>
+                <p>{JSON.stringify(telemetryData, null, 2)}</p>
+                <p>{telemetryData.altitude}</p>
+                <p>{telemetryData.battery}</p>
+                
             </div>
             <div className="card">
                 <p>Toggle Arm Command:</p>

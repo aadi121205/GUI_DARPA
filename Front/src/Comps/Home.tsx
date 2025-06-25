@@ -1,36 +1,29 @@
 import React from "react";
 import { Box } from "@mui/material";
-import Telemicon from "/drone.svg";
-import { Star, Favorite, Person, Settings } from "@mui/icons-material";
+
+import { Settings } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { TbDrone } from "react-icons/tb";
+import { CiMedicalClipboard } from "react-icons/ci";
+import { IoLogoGameControllerA } from "react-icons/io";
+
 
 const iconLinks = [
   {
-    icon: (
-      <img
-        src={Telemicon}
-        alt="Telemicon"
-        style={{
-          width: "40%",
-          height: "40%",
-          objectFit: "contain",
-          display: "block",
-        }}
-      />
-    ),
-    to: "/telem",
+    icon: <TbDrone fontSize="inherit" />,
+    to: "/drone",
   },
   {
-    icon: <Star fontSize="inherit" />,
-    to: "/star",
+    icon: (<img src="Rover.svg" alt="Antenna Icon" style={{ width: "30%", height: "10%" }} />),
+    to: "/rover",
   },
   {
-    icon: <Favorite fontSize="inherit" />,
-    to: "/favorite",
+    icon: <CiMedicalClipboard fontSize="inherit" />,
+    to: "/triage",
   },
   {
-    icon: <Person fontSize="inherit" />,
-    to: "/person",
+    icon: <IoLogoGameControllerA fontSize="inherit" />,
+    to: "/piliot",
   },
   {
     icon: <Settings fontSize="inherit" />,
@@ -56,7 +49,7 @@ export default function App() {
         display: "flex",
         height: "100vh",
         width: "100vw",
-        bgcolor: "#282a36",
+        bgcolor: "#000000",
         overflow: "hidden",
       }}
     >
@@ -80,7 +73,7 @@ export default function App() {
             sx={{
               width: "100%",
               height: "100%",
-              bgcolor: "#232946",
+              bgcolor: "#2b4d5c",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -92,8 +85,7 @@ export default function App() {
               p: 0,
               transition: "background 0.2s, box-shadow 0.2s, color 0.2s",
               "&:hover": {
-                bgcolor: "#eebbc3",
-                color: "#232946",
+                bgcolor: "#000000",
                 boxShadow: "0 4px 24px 0 rgba(50,50,50,0.15)",
               },
               overflow: "hidden",
