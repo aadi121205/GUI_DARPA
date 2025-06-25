@@ -23,7 +23,6 @@ const TelemState = ({ children }: TelemStateProps) => {
   const [data_ugv, setData_ugv] = useState({});
   const [timeofflight, settimeofflight] = useState(0);
   const [pointsdata, setchartData] = useState<any[]>([]);
-  const [image, setImage] = useState<any>(null);
 
   // Command methods
   
@@ -109,13 +108,6 @@ const TelemState = ({ children }: TelemStateProps) => {
   const flyMission = () => socket.emit("flyMission");
 
   useEffect(() => {
-    // Video listeners
-    socket.on("video_image", (payload: any) => setImage(payload));
-    socket.on("video_image_rover", (payload: any) => setImage(payload));
-    socket.on("video_image_rover2", (payload: any) => setImage(payload));
-    socket.on("video_image_rover3", (payload: any) => setImage(payload));
-
-
     // Telemetry
     socket.on("TelemFowarding", (data: any) => {
       if ((data as any).altitude > 0.1) settimeofflight((prev) => prev + 1);
@@ -240,7 +232,6 @@ const TelemState = ({ children }: TelemStateProps) => {
         stopvideo_rover2,
         startvideo_rover3,
         stopvideo_rover3,
-        image,
         set_Guided,
         flyMission,
         data,

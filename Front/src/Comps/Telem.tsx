@@ -2,13 +2,17 @@ import React from "react";
 import telemContext from "../context/home/TelemContext";
 import { Button } from "@mui/material";
 
+// Define the expected context type
+type TelemContextType = {
+    arm: () => void;
+    // Add other properties as needed, e.g.:
+    // takeoff?: () => void;
+    [key: string]: any; // fallback for other telemetry data
+};
+
 function Telem() {
-    const Data = React.useContext(telemContext);
-    React.useContext(telemContext);
-    const { 
-        arm,
-        takeoff
-    } = React.useContext(telemContext);
+    const Data = React.useContext(telemContext) as TelemContextType;
+    const { arm } = Data;
     return (
         <div>
             <div className="card">

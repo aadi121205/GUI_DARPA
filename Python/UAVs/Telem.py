@@ -39,7 +39,7 @@ class Telem:
 
         # Register event handlers
         self.sio.on("arm", self.arm, namespace="/UAV")
-        self.sio.on("Takeoff", self.Takeoff, namespace="/UAV")
+        self.sio.on("Takeoff", self.takeoff, namespace="/UAV")
         self.sio.on("RTL", self.set_rtl, namespace="/UAV")
         self.sio.on("landUav", self.land_Uav, namespace="/UAV")
         self.sio.on("fly_mission", self.flyMission, namespace="/UAV")
@@ -75,15 +75,40 @@ class Telem:
         heartbeat = self.uav_connection.messages.get("HEARTBEAT")
         if heartbeat and hasattr(heartbeat, "base_mode"):
             if heartbeat.base_mode & 0b10000000:
-                self.send_mavlink_command(mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,  [0, 0, 0, 0, 0, 0, 0, 0]) 
+                self.send_mavlink_command(
+                    mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
+                    [0, 0, 0, 0, 0, 0, 0, 0],
+                )
                 print("Drone disarmed")
             else:
-                self.send_mavlink_command(mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, [1, 0, 0, 0, 0, 0, 0, 0])
+                self.send_mavlink_command(
+                    mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
+                    [1, 0, 0, 0, 0, 0, 0, 0],
+                )
                 print("Drone armed")
         else:
             print("HEARTBEAT message not received yet.")
 
-    def Takeoff(self, altitude=15):
+    def takeoff(self, altitude=15):
+        # Check if drone is armed, if not, arm it
+        heartbeat = self.uav_connection.messages.get("HEARTBEAT")
+        if heartbeat and hasattr(heartbeat, "base_mode"):
+            if not (heartbeat.base_mode & 0b10000000):
+                self.send_mavlink_command(
+                    mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,
+                    [1, 0, 0, 0, 0, 0, 0, 0],
+                )
+                print("Drone armed for takeoff")
+                time.sleep(2)
+        else:
+            print("HEARTBEAT message not received yet.")
+            return
+
+        # Set mode to GUIDED before takeoff
+        self.uav_connection.set_mode_guided()
+        print("Mode set to GUIDED")
+
+        # Send takeoff command
         self.send_mavlink_command(
             mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, [0, 0, 0, 0, 0, 0, altitude]
         )

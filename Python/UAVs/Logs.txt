@@ -1,7 +1,0 @@
-Trying to connect UAV...
-[UAV] Connected to UAV
-Telemetry error:  'GLOBAL_POSITION_INT'
-Trying to connect UAV...
-error:  /Data is not a connected namespace.
- * Serving Flask app 'UAV'
- * Debug mode: off
