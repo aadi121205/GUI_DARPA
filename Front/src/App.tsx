@@ -4,7 +4,7 @@ import { TelemState } from "./context/home/TelemState";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Home from "./Comps/Home";
-import Telem from "./Comps/Telem";
+import Drone from "./Comps/Drone";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
             <Routes>
               {/* Nested routes can be added here if needed */}
               <Route path="/" element={<Home />} />
-              <Route path="/telem" element={<Telem />} />
+              <Route path="/drone" element={<Drone />} />
               {/* Add more routes as needed */}
             </Routes>
           </Router>

@@ -10,7 +10,7 @@ type TelemContextType = {
     [key: string]: any; // fallback for other telemetry data
 };
 
-function Telem() {
+function Drone() {
     const Data = React.useContext(telemContext) as TelemContextType;
     const { arm } = Data;
     const { telemetryData } = Data;
@@ -38,4 +38,4 @@ function Telem() {
         </div>
     );
 }
-export default Telem;
+export default Drone;
