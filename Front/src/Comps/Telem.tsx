@@ -7,7 +7,7 @@ function Telem() {
     React.useContext(telemContext);
     const { 
         arm,
-        Takeoff
+        takeoff
     } = React.useContext(telemContext);
     return (
         <div>

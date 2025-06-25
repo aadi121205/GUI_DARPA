@@ -26,14 +26,22 @@ const TelemState = ({ children }: TelemStateProps) => {
   const [image, setImage] = useState<any>(null);
 
   // Command methods
+  
+
 
   // new commands
   const arm = () => {
     socket.emit("arm");
     console.log("Arm command sent");
   };
-  const Takeoff = () => socket.emit("Takeoff");
-  const RTL = () => socket.emit("RTL");
+  const takeoff = () => {
+    socket.emit("takeoff");
+    console.log("Takeoff command sent");
+  };
+  const rtl = () => {
+    socket.emit("rtl");
+    console.log("RTL command sent");
+  };
 
   const goto_command = () => socket.emit("mission_goto");
   const goto_command_rover = () => socket.emit("mission_goto_rover");
@@ -166,8 +174,8 @@ const TelemState = ({ children }: TelemStateProps) => {
     <telemContext.Provider
       value={{
         arm,
-        Takeoff,
-        RTL,
+        takeoff,
+        rtl,
 
 
         goto_command,
