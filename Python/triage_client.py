@@ -12,6 +12,8 @@ HEADERS_AUTH = {
     "Authorization": f"Bearer {AUTH_TOKEN}"
 }
 
+# === 
+
 # === 1. GET /api/status ===
 def get_status():
     url = f"http://{SERVER}/api/status"
