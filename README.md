@@ -33,9 +33,9 @@ This project is a graphical user interface (GUI) built with React and Vite. It i
 
 Before you begin, ensure you have the following installed:
 
-- **Node.js** (v18 or later)
-- **npm** (v9 or later) or **Yarn** (v1.22 or later)
-- **Python** (v3.8 or later) with DroneKit installed
+- **Node.js** (v20 or later)
+- **npm** (v10 or later) or **Yarn** (v1.22 or later)
+- **Python** (v3.10 or later) with DroneKit installed
 - **SITL** (Optional) for testing before deployment
 - **Socket.io** backend server setup
 
