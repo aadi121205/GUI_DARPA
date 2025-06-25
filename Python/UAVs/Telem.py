@@ -15,6 +15,7 @@ def haversine(lon1, lat1, lon2, lat2):
     c = 2 * asin(sqrt(a))
     return c * 6371 * 1000
 
+
 MAV_STATE_MAPPING = {
     0: "UNINIT",
     1: "BOOT",
@@ -24,8 +25,9 @@ MAV_STATE_MAPPING = {
     5: "CRITICAL",
     6: "EMERGENCY",
     7: "POWEROFF",
-    8: "FLIGHT_TERMINATION"
+    8: "FLIGHT_TERMINATION",
 }
+
 
 class Telem:
     def __init__(self, sio):
@@ -36,8 +38,8 @@ class Telem:
         self.goto_mission = "waypoints.txt"
 
         # Register event handlers
-        self.sio.on("ToggelArm", self.ToggelArm, namespace="/UAV")
-        self.sio.on("takeoff", self.takeoff, namespace="/UAV")
+        self.sio.on("arm", self.arm, namespace="/UAV")
+        self.sio.on("Takeoff", self.Takeoff, namespace="/UAV")
         self.sio.on("RTL", self.set_rtl, namespace="/UAV")
         self.sio.on("landUav", self.land_Uav, namespace="/UAV")
         self.sio.on("fly_mission", self.flyMission, namespace="/UAV")
@@ -68,15 +70,20 @@ class Telem:
             *params,
         )
 
-    def ToggelArm(self):
-        if self.uav_connection.messages["HEARTBEAT"].base_mode & 0b10000000:
-            self.send_mavlink_command(mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, [0])
-            print("Drone disarmed")
+    def arm(self, data):
+        print(data)
+        heartbeat = self.uav_connection.messages.get("HEARTBEAT")
+        if heartbeat and hasattr(heartbeat, "base_mode"):
+            if heartbeat.base_mode & 0b10000000:
+                self.send_mavlink_command(mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM,  [0, 0, 0, 0, 0, 0, 0, 0]) 
+                print("Drone disarmed")
+            else:
+                self.send_mavlink_command(mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, [1, 0, 0, 0, 0, 0, 0, 0])
+                print("Drone armed")
         else:
-            self.send_mavlink_command(mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, [1])
-            print("Drone armed")
+            print("HEARTBEAT message not received yet.")
 
-    def takeoff(self, altitude=15):
+    def Takeoff(self, altitude=15):
         self.send_mavlink_command(
             mavutil.mavlink.MAV_CMD_NAV_TAKEOFF, [0, 0, 0, 0, 0, 0, altitude]
         )
@@ -123,11 +130,12 @@ class Telem:
                         != 0,
                         "mode": self.uav_connection.flightmode,
                         "heading": self.uav_connection.messages["VFR_HUD"].heading,
-                        "Status": MAV_STATE_MAPPING[self.uav_connection.messages["HEARTBEAT"].system_status],
+                        "Status": MAV_STATE_MAPPING[
+                            self.uav_connection.messages["HEARTBEAT"].system_status
+                        ],
                     }
                     self.sio.emit("Telem", telemetry_data, namespace="/UAV")
-                    msg = self.uav_connection.recv_match(blocking=True
-                    )
+                    msg = self.uav_connection.recv_match(blocking=True)
 
                 else:
                     self.connect_uav()

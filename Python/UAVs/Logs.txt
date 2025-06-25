@@ -1,9 +1,7 @@
 Trying to connect UAV...
 [UAV] Connected to UAV
-Telemetry error:  /UAV is not a connected namespace.
+Telemetry error:  'GLOBAL_POSITION_INT'
 Trying to connect UAV...
 error:  /Data is not a connected namespace.
  * Serving Flask app 'UAV'
  * Debug mode: off
-[UAV] Connected to UAV
-Connected to GUI  IP/PORT: 127.0.0.1:7000

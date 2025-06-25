@@ -48,7 +48,6 @@ UAVNamespace.on("connection", (socket) => {
   socket.on("Telem", (data) => {
     counter = 1; // Reset counter (if needed)
     ReactNamespace.emit("TelemFowarding", data);
-    console.log("Received telemetry data:", data);
   });
 
   socket.on("disconnect", () => {
@@ -56,13 +55,13 @@ UAVNamespace.on("connection", (socket) => {
   });
 });
 
+// Data namespace
 DataNamespace.on("connection", (socket) => {
   console.log("A Python client connected to Data Namespace");
 
   socket.on("Data", (data) => {
     counter = 1; // Reset counter (if needed)
     ReactNamespace.emit("DataFowarding", data);
-    console.log("Received data:", data);
   });
 
   socket.on("disconnect", () => {
@@ -75,6 +74,17 @@ ReactNamespace.on("connection", (socket) => {
   console.log("A React client connected to React Namespace");
   socket.on("disconnect", () => {
     console.log("A React client disconnected from React Namespace");
+  });
+
+  // Handle any additional events for React clients here
+  const emitEventToNamespace = (event, namespace, payload) => {
+    console.log(`${event} event received`);
+    namespace.emit(event, payload);
+  };
+
+  // Socket Control For UAV
+  socket.on("arm", () => {
+    emitEventToNamespace("arm", UAVNamespace);
   });
 });
 

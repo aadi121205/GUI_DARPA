@@ -1,4 +1,5 @@
 git+https://github.com/dronekit/dronekit-python.git
+pymavlink
 Flask
 Flask-SocketIO
 eventlet

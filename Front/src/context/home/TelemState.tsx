@@ -26,6 +26,15 @@ const TelemState = ({ children }: TelemStateProps) => {
   const [image, setImage] = useState<any>(null);
 
   // Command methods
+
+  // new commands
+  const arm = () => {
+    socket.emit("arm");
+    console.log("Arm command sent");
+  };
+  const Takeoff = () => socket.emit("Takeoff");
+  const RTL = () => socket.emit("RTL");
+
   const goto_command = () => socket.emit("mission_goto");
   const goto_command_rover = () => socket.emit("mission_goto_rover");
   const goto_command_rover2 = () => socket.emit("mission_goto_rover2");
@@ -69,7 +78,6 @@ const TelemState = ({ children }: TelemStateProps) => {
   const saveMission_rover2 = () => socket.emit("saveMission_rover2");
   const saveMission_rover3 = () => socket.emit("saveMission_rover3");
 
-  const RTL = () => socket.emit("setRTL");
   const RTL_rover = () => socket.emit("setRTL_rover");
   const RTL_rover2 = () => socket.emit("setRTL_rover2");
   const RTL_rover3 = () => socket.emit("setRTL_rover3");
@@ -157,6 +165,11 @@ const TelemState = ({ children }: TelemStateProps) => {
   return (
     <telemContext.Provider
       value={{
+        arm,
+        Takeoff,
+        RTL,
+
+
         goto_command,
         goto_command_rover,
         goto_command_rover2,
@@ -166,7 +179,6 @@ const TelemState = ({ children }: TelemStateProps) => {
         auto_command_rover2,
         auto_command_rover3,
         landUAV,
-        RTL,
         RTL_rover,
         RTL_rover2,
         RTL_rover3,
