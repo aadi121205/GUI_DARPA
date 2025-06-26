@@ -1,45 +1,93 @@
 import * as React from "react";
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Row, Col, Card, Table } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from "@mui/material";
 
 const Teleminfo = ({ vehicle }) => {
-  const stylee = vehicle.con ? { color: "green", fontSize: "40px" } : { color: "red", fontSize: "30px" };
-  let stylet = { color: "White", margin: "0px" };
-  if (vehicle.throttle === "DISARMED") {
-    stylet.color = "red";
-  } else {
-    stylet.color = "green";
-  }
-  
-  return (
-    <div>
-      <Container style={{display: "flex", justifyContent: "flex-start", alignItems: "left", paddingLeft: "50px", paddingRight: "40px", paddingBottom: "10px", paddingTop: "10px", margin: "5px"}}>
-        <Row>
-          <Col>
-            <Card style={{ width: '18rem', backgroundColor: 'black', color: 'white' }}>
-              <Card.Body>
-                <Card.Title>UAV Telemetry</Card.Title>
-                <Card.Text>
-                  <strong>Status:</strong> {vehicle.status}<br />
-                  <strong>alltitude:</strong> {vehicle.altitude} m<br />
-                  <strong>Mode:</strong> {vehicle.mode}<br />
-                  <strong>Battery:</strong> {vehicle.battery}%<br />
-                  <strong>Signal Strength:</strong> {vehicle.signalStrength} dBm<br />
-                  <strong>Throttle:</strong> <span style={stylet}>{vehicle.throttle}</span><br />
-                  <strong>Arm Status:</strong> {vehicle.armed ? "Armed" : "Disarmed"}<br />
-                </Card.Text>
-                <Button variant="primary" onClick={vehicle.armed ? vehicle.armed : vehicle.armed}>
-                  {vehicle.arm ? "Disarm UAV" : "Arm UAV"}
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
+  const stylet = {
+    color: vehicle.throttle === "DISARMED" ? "red" : "limegreen",
+    fontWeight: "bold",
+    fontSize: "1.5rem",
+    margin: 0,
+  };
 
-    </Container>
-    </div>
+  const tableCellStyle = {
+    fontSize: "1.5rem",
+    padding: "1rem",
+    color: "white",
+    borderColor: "#444",
+    verticalAlign: "middle",
+  };
+
+  const labelStyle = {
+    ...tableCellStyle,
+    fontWeight: "bold",
+    width: "40%",
+    backgroundColor: "#222",
+  };
+
+  const valueStyle = {
+    ...tableCellStyle,
+    width: "60%",
+    backgroundColor: "#111",
+  };
+
+  return (
+    <Row className="justify-content-center">
+      <Col md="auto">
+        <Card style={{ width: '28rem', backgroundColor: '#181818', color: 'white', borderRadius: "1rem", boxShadow: "0 4px 24px #0008" }}>
+          <Card.Body>
+            <Card.Title style={{ fontSize: "2.2rem", fontWeight: "bold", textAlign: "center", marginBottom: "1.5rem" }}>
+              UAV Telemetry
+            </Card.Title>
+            <Table bordered style={{ backgroundColor: "transparent", marginBottom: "2rem" }}>
+              <tbody>
+                <tr>
+                  <td style={labelStyle}>Status</td>
+                  <td style={valueStyle}>{vehicle.status}</td>
+                </tr>
+                <tr>
+                  <td style={labelStyle}>Altitude</td>
+                  <td style={valueStyle}>{vehicle.altitude} m</td>
+                </tr>
+                <tr>
+                  <td style={labelStyle}>Mode</td>
+                  <td style={valueStyle}>{vehicle.mode}</td>
+                </tr>
+                <tr>
+                  <td style={labelStyle}>Battery</td>
+                  <td style={valueStyle}>{vehicle.battery}%</td>
+                </tr>
+                <tr>
+                  <td style={labelStyle}>Signal Strength</td>
+                  <td style={valueStyle}>{vehicle.signalStrength} dBm</td>
+                </tr>
+                <tr>
+                  <td style={labelStyle}>Throttle</td>
+                  <td style={{ ...valueStyle, ...stylet }}>{vehicle.throttle}</td>
+                </tr>
+                <tr>
+                  <td style={labelStyle}>Arm Status</td>
+                  <td style={valueStyle}>{vehicle.armed ? "Armed" : "Disarmed"}</td>
+                </tr>
+              </tbody>
+            </Table>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                variant="contained"
+                color={vehicle.armed ? "error" : "success"}
+                size="large"
+                style={{ fontSize: "1.3rem", fontWeight: "bold", minWidth: "180px" }}
+                onClick={vehicle.arm}
+              >
+                {vehicle.armed ? "Disarm UAV" : "Arm UAV"}
+              </Button>
+            </div>
+          </Card.Body>
+        </Card>
+      </Col>
+    </Row>
   );
-}
+};
 
 export default Teleminfo;

@@ -12,12 +12,7 @@ export default function Map() {
   const [lng, setLng] = useState(-83.750673);
   const [lat, setLat] = useState(32.504375);
   const [zoom, setZoom] = useState(19.5);
-  const {
-    telemetryData,
-    telemetryData_rover,
-    telemetryData_rover2,
-    telemetryData_rover3,
-  } = useContext(telemContext);
+  const { telemetryData } = useContext(telemContext);
   const [uavMarker, setUavMarker] = useState(null);
   const [uavPointMarkers, setUavPointMarkers] = useState([]);
   const [uavPointsVisible, setUavPointsVisible] = useState(false);

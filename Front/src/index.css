@@ -1,50 +1,49 @@
 .map-container {
-    height:97.25vh;
-    width: 100%;
-    overflow: hidden;
-    /* top: 5vh; */
-  }
+  height: 97.25vh;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 30px;
+  /* top: 5vh; */
+}
 
 .tab {
-    height: 80%;
-    width: 99.5%;
-
+  height: 80%;
+  width: 99.5%;
 }
 
 .sidebar {
-    background-color: rgb(35 55 75 / 75%);
-    color: #fff;
-    font-family: monospace;
-    z-index: 1;
-    position: absolute;
-    margin: 2px;
-    border-radius: 2px;
-    padding: 5px;
-  }
+  background-color: rgb(35 55 75 / 75%);
+  color: #fff;
+  font-family: monospace;
+  z-index: 1;
+  position: absolute;
+  margin: 20px;
+  border-radius: 7px;
+  padding: 5px;
+}
 
 .sidebars {
-    background-color: rgb(35 55 75 / 75%);
-    color: #fff;
-    font-family: monospace;
-    z-index: 1;
-    position: absolute;
-    width: 10%;
-    height: 10%;
-  }
+  background-color: rgb(35 55 75 / 75%);
+  color: #fff;
+  font-family: monospace;
+  z-index: 1;
+  position: absolute;
+  width: 10%;
+  height: 10%;
+}
 
+.button-primary-active {
+  background-color: green;
+  color: white;
+}
 
-  .button-primary-active {
-    background-color: green;
-    color: white;
-  }
-  
-  .button-primary-inactive {
-    background-color: red;
-    color: white;
-  }
+.button-primary-inactive {
+  background-color: red;
+  color: white;
+}
 
-  body {
-    background-color: #000000;
-    margin: 0;
-    padding: 0;
-  }
+body {
+  background-color: #000000;
+  margin: 0;
+  padding: 0;
+}

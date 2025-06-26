@@ -53,34 +53,11 @@ function Telemexp() {
           overflow: "hidden",
         }}
       >
-        <Col style={{ padding: "5px", backgroundColor: "black" }}>
-          <Container
-            bg="dark"
-            style={{
-              padding: "2px",
-              justifyContent: "flex-start",
-              alignItems: "left",
-              paddingLeft: "0px",
-              backgroundColor: "black",
-              color: "white",
-            }}
-          >
-            <Teleminfo vehicle={UAVvehicleData} />
-          </Container>
+        <Col style={{ padding: "5px", backgroundColor: "black" }} xs={12} md={4}>
+          <Teleminfo vehicle={UAVvehicleData} />
         </Col>
-        <Col>
-          <Container
-            style={{
-              padding: "0px",
-              overflow: "hidden",
-              margin: "0px",
-              paddingLeft: "0px",
-              backgroundColor: "black",
-              borderRadius: "12px",
-            }}
-          >
-            {<Map />}{" "}
-          </Container>
+        <Col xs={12} md={8} style={{ backgroundColor: "black" }}>
+          <Map />
         </Col>
       </Row>
     </div>
