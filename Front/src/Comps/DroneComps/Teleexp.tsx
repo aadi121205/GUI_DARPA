@@ -43,14 +43,13 @@ function Telemexp() {
   const scaledValue = Dts(telemetryData.heartbeat);
 
   const UAVvehicleData = {
-    name: "UAV",
     con: telemetryData.heartbeat ?? 0,
     altitude: telemetryData.altitude ?? 0,
-    mode: telemetryData.mode ?? "Unknown",
+    mode: telemetryData.mode,
     velocity: groundspeed,
     battery: telemetryData.battery ?? 0,
-    status: telemetryData.status ?? "Unknown",
-    throttle: telemetryData.armed ? telemetryData.throttle ?? 0 : "DISARMED",
+    status: telemetryData.Status,
+    throttle: telemetryData.armed ? telemetryData.throttle ?? "ARMED" : "DISARMED",
     signalStrength: scaledValue,
     state: telemetryData.armed ?? false,
     arm,

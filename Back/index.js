@@ -48,6 +48,7 @@ UAVNamespace.on("connection", (socket) => {
   socket.on("Telem", (data) => {
     counter = 1; // Reset counter (if needed)
     ReactNamespace.emit("TelemFowarding", data);
+    console.log("Telem data received:", data);
   });
 
   socket.on("disconnect", () => {

@@ -9,8 +9,8 @@ interface Vehicle {
   battery: number;
   signalStrength: number;
   throttle: string;
-  armed: boolean;
   arm: () => void;
+  velocity: number;
 }
 
 interface TeleminfoProps {
@@ -19,7 +19,12 @@ interface TeleminfoProps {
 
 const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
   const stylet = {
-    color: vehicle.throttle === "DISARMED" ? "red" : "limegreen",
+    color:
+      vehicle.throttle === "DISARMED"
+        ? "red"
+        : vehicle.throttle === "ARMED"
+        ? "limegreen"
+        : "red",
     fontWeight: "bold",
     fontSize: "1.5rem",
     margin: 0,
@@ -29,7 +34,9 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
     fontSize: "1.5rem",
     padding: "1rem",
     color: "white",
-    borderColor: "#444",
+    borderColor: "#000",
+    borderWidth: "1px",
+    borderStyle: "solid",
     verticalAlign: "middle",
   };
 
@@ -51,11 +58,11 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
       <Col md="auto">
         <Card
           style={{
-            width: "24rem",
+            width: "50rem",
             backgroundColor: "#181818",
             color: "white",
-            borderRadius: "1rem",
-            boxShadow: "0 4px 24px #0008",
+            borderRadius: "2rem",
+            boxShadow: "0 9px 44px #0000",
           }}
         >
           <Card.Body>
@@ -91,6 +98,12 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
                   <td style={valueStyle}>{vehicle.battery}%</td>
                 </tr>
                 <tr>
+                  <td style={labelStyle}>Ground Speed</td>
+                  <td style={valueStyle}>
+                    {vehicle.velocity} m/s
+                  </td>
+                </tr>
+                <tr>
                   <td style={labelStyle}>Signal Strength</td>
                   <td style={valueStyle}>{vehicle.signalStrength} dBm</td>
                 </tr>
@@ -103,7 +116,7 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
                 <tr>
                   <td style={labelStyle}>Arm Status</td>
                   <td style={valueStyle}>
-                    {vehicle.armed ? "Armed" : "Disarmed"}
+                    {vehicle.throttle ? "ARMED" : "Disarmed"}
                   </td>
                 </tr>
               </tbody>
@@ -111,7 +124,7 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
             <div style={{ display: "flex", justifyContent: "center" }}>
               <Button
                 variant="contained"
-                color={vehicle.armed ? "error" : "success"}
+                color={vehicle.throttle === "ARMED" ? "error" : "success"}
                 size="large"
                 style={{
                   fontSize: "1.3rem",
@@ -120,11 +133,22 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
                 }}
                 onClick={vehicle.arm}
               >
-                {vehicle.armed ? "Disarm UAV" : "Arm UAV"}
+                {vehicle.throttle === "ARMED" ? "Disarm UAV" : "Arm UAV"}
               </Button>
             </div>
           </Card.Body>
         </Card>
+        <span
+          style={{
+            color: "white",
+            fontSize: "1.2rem",
+            textAlign: "center",
+            display: "block",
+            marginTop: "1rem",
+          }}
+        >
+          <pre>{JSON.stringify(vehicle, null, 2)}</pre>
+        </span>
       </Col>
     </Row>
   );
