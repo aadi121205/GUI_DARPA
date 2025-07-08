@@ -1,9 +1,23 @@
-import * as React from "react";
-import { Row, Col, Card, Table } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Row, Col, Card, Table } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "@mui/material";
 
-const Teleminfo = ({ vehicle }) => {
+interface Vehicle {
+  status: string;
+  altitude: number;
+  mode: string;
+  battery: number;
+  signalStrength: number;
+  throttle: string;
+  armed: boolean;
+  arm: () => void;
+}
+
+interface TeleminfoProps {
+  vehicle: Vehicle;
+}
+
+const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
   const stylet = {
     color: vehicle.throttle === "DISARMED" ? "red" : "limegreen",
     fontWeight: "bold",
@@ -35,12 +49,30 @@ const Teleminfo = ({ vehicle }) => {
   return (
     <Row className="justify-content-center">
       <Col md="auto">
-        <Card style={{ width: '28rem', backgroundColor: '#181818', color: 'white', borderRadius: "1rem", boxShadow: "0 4px 24px #0008" }}>
+        <Card
+          style={{
+            width: "24rem",
+            backgroundColor: "#181818",
+            color: "white",
+            borderRadius: "1rem",
+            boxShadow: "0 4px 24px #0008",
+          }}
+        >
           <Card.Body>
-            <Card.Title style={{ fontSize: "2.2rem", fontWeight: "bold", textAlign: "center", marginBottom: "1.5rem" }}>
+            <Card.Title
+              style={{
+                fontSize: "2.2rem",
+                fontWeight: "bold",
+                textAlign: "center",
+                marginBottom: "1.5rem",
+              }}
+            >
               UAV Telemetry
             </Card.Title>
-            <Table bordered style={{ backgroundColor: "transparent", marginBottom: "2rem" }}>
+            <Table
+              bordered
+              style={{ backgroundColor: "transparent", marginBottom: "2rem" }}
+            >
               <tbody>
                 <tr>
                   <td style={labelStyle}>Status</td>
@@ -64,11 +96,15 @@ const Teleminfo = ({ vehicle }) => {
                 </tr>
                 <tr>
                   <td style={labelStyle}>Throttle</td>
-                  <td style={{ ...valueStyle, ...stylet }}>{vehicle.throttle}</td>
+                  <td style={{ ...valueStyle, ...stylet }}>
+                    {vehicle.throttle}
+                  </td>
                 </tr>
                 <tr>
                   <td style={labelStyle}>Arm Status</td>
-                  <td style={valueStyle}>{vehicle.armed ? "Armed" : "Disarmed"}</td>
+                  <td style={valueStyle}>
+                    {vehicle.armed ? "Armed" : "Disarmed"}
+                  </td>
                 </tr>
               </tbody>
             </Table>
@@ -77,7 +113,11 @@ const Teleminfo = ({ vehicle }) => {
                 variant="contained"
                 color={vehicle.armed ? "error" : "success"}
                 size="large"
-                style={{ fontSize: "1.3rem", fontWeight: "bold", minWidth: "180px" }}
+                style={{
+                  fontSize: "1.3rem",
+                  fontWeight: "bold",
+                  minWidth: "180px",
+                }}
                 onClick={vehicle.arm}
               >
                 {vehicle.armed ? "Disarm UAV" : "Arm UAV"}

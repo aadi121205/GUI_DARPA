@@ -1,24 +1,43 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
-import mapboxgl from "mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
+import {
+  useRef,
+  useEffect,
+  useState,
+  useContext,
+} from "react";
+import mapboxgl, { Map as MapboxMap, Marker } from "mapbox-gl";
 import telemContext from "../../context/home/TelemContext";
 import "mapbox-gl/dist/mapbox-gl.css";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXl1c2gxMDIiLCJhIjoiY2xycTRtZW4xMDE0cTJtbno5dnU0dG12eCJ9.L9xmYztXX2yOahZoKDBr6g";
 
-export default function Map() {
-  const mapContainer = useRef();
-  const map = useRef();
-  const [lng, setLng] = useState(-83.750673);
-  const [lat, setLat] = useState(32.504375);
-  const [zoom, setZoom] = useState(19.5);
-  const { telemetryData } = useContext(telemContext);
-  const [uavMarker, setUavMarker] = useState(null);
-  const [uavPointMarkers, setUavPointMarkers] = useState([]);
-  const [uavPointsVisible, setUavPointsVisible] = useState(false);
+// Define types for telemetryData
+type TelemetryData = {
+  latitude?: number;
+  longitude?: number;
+  locations?: [number, number, number][];
+  [key: string]: any;
+};
 
+export default function Map() {
+  // Strict typing for refs and state
+  const mapContainer = useRef<HTMLDivElement | null>(null);
+  const map = useRef<MapboxMap | null>(null);
+  const [lng, setLng] = useState<number>(-83.750673);
+  const [lat, setLat] = useState<number>(32.504375);
+  const [zoom, setZoom] = useState<number>(19.5);
+
+  const { telemetryData }: { telemetryData: TelemetryData } =
+    useContext(telemContext);
+
+  const [uavMarker, setUavMarker] = useState<Marker | null>(null);
+  const [uavPointMarkers, setUavPointMarkers] = useState<Marker[]>([]);
+  const [uavPointsVisible, setUavPointsVisible] = useState<boolean>(false);
+
+  // Setup map
   useEffect(() => {
-    if (map.current) return;
+    if (map.current || !mapContainer.current) return;
+
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/satellite-v9",
@@ -27,12 +46,14 @@ export default function Map() {
     });
 
     map.current.on("move", () => {
-      setLng(map.current.getCenter().lng.toFixed(4));
-      setLat(map.current.getCenter().lat.toFixed(4));
-      setZoom(map.current.getZoom().toFixed(2));
+      if (!map.current) return;
+      setLng(Number(map.current.getCenter().lng.toFixed(6)));
+      setLat(Number(map.current.getCenter().lat.toFixed(6)));
+      setZoom(Number(map.current.getZoom().toFixed(2)));
     });
 
     map.current.on("load", () => {
+      if (!map.current) return;
       map.current.addSource("dtuCampus", {
         type: "geojson",
         data: {
@@ -74,11 +95,16 @@ export default function Map() {
     });
   }, []);
 
+  // UAV Marker effect
   useEffect(() => {
     if (uavMarker) {
       uavMarker.remove();
     }
-    if (!telemetryData || !telemetryData.latitude || !telemetryData.longitude)
+    if (
+      !telemetryData ||
+      typeof telemetryData.latitude !== "number" ||
+      typeof telemetryData.longitude !== "number"
+    )
       return;
 
     const { latitude, longitude } = telemetryData;
@@ -103,22 +129,24 @@ export default function Map() {
 
     const newUavMarker = new mapboxgl.Marker(uavElement)
       .setLngLat([longitude, latitude])
-      .addTo(map.current);
+      .addTo(map.current!);
 
     setUavMarker(newUavMarker);
 
-    map.current.flyTo({
+    // Optionally, pan the map to the UAV
+    map.current?.flyTo({
       center: [longitude, latitude],
       zoom: 19.5,
       essential: true,
     });
+
+    // eslint-disable-next-line
   }, [telemetryData]);
 
-  // New useEffect for handling multiple UAV point markers
+  // UAV Point Markers (multiple points)
   useEffect(() => {
-    if (uavPointMarkers) {
-      uavPointMarkers.forEach((marker) => marker.remove());
-    }
+    // Remove existing markers
+    uavPointMarkers.forEach((marker) => marker.remove());
 
     if (
       uavPointsVisible &&
@@ -126,11 +154,11 @@ export default function Map() {
       telemetryData.locations.length > 0
     ) {
       const newMarkers = telemetryData.locations.map(
-        ([latitude, longitude, altitude]) => {
+        ([latitude, longitude, altitude]: [number, number, number]) => {
           const uavElement = document.createElement("div");
           uavElement.className = "marker";
           uavElement.style.backgroundImage =
-            "url(https://iili.io/d0YXcEF.md.png)";
+            "url('https://iili.io/d0YXcEF.md.png')";
           uavElement.style.width = "20px";
           uavElement.style.height = "20px";
           uavElement.style.backgroundSize = "100%";
@@ -146,12 +174,15 @@ export default function Map() {
 
           return new mapboxgl.Marker(uavElement)
             .setLngLat([longitude, latitude])
-            .addTo(map.current);
+            .addTo(map.current!);
         }
       );
 
       setUavPointMarkers(newMarkers);
+    } else {
+      setUavPointMarkers([]);
     }
+    // eslint-disable-next-line
   }, [telemetryData.locations, uavPointsVisible]);
 
   return (

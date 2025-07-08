@@ -1,9 +1,6 @@
-import Telemexp from "./DroneComps/Teleexp.jsx";
+import Telemexp from "./DroneComps/Teleexp.js";
 
 function Telem() {
-
-    return (
-        <Telemexp>  </Telemexp>
-    );
+  return <Telemexp />;
 }
 export default Telem;
