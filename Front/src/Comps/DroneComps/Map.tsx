@@ -2,7 +2,6 @@ import { useRef, useEffect, useState, useContext } from "react";
 import mapboxgl, { Map as MapboxMap, Marker } from "mapbox-gl";
 import telemContext from "../../context/home/TelemContext";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { TbDrone } from "react-icons/tb";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXl1c2gxMDIiLCJhIjoiY2xycTRtZW4xMDE0cTJtbno5dnU0dG12eCJ9.L9xmYztXX2yOahZoKDBr6g";

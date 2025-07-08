@@ -45,7 +45,7 @@ function Telemexp() {
   const UAVvehicleData = {
     con: telemetryData.heartbeat ?? 0,
     altitude: telemetryData.altitude ?? 0,
-    mode: telemetryData.mode,
+    mode: telemetryData.mode ?? "",
     velocity: groundspeed,
     battery: telemetryData.battery ?? 0,
     status: telemetryData.Status,

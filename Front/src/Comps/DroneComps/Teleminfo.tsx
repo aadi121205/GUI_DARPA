@@ -46,7 +46,7 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
     };
   };
 
-  const tableCellStyle = {
+  const tableCellStyle: React.CSSProperties = {
     fontSize: "1.5rem",
     padding: "1rem",
     color: "white",
@@ -63,13 +63,13 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
     backgroundColor: "#222",
   };
 
-  const valueStyle = {
+  const valueStyle: React.CSSProperties = {
     ...tableCellStyle,
     width: "70%",
     backgroundColor: "#111",
     fontSize: "2rem",
     color: "white",
-    textAlign: "center",
+    textAlign: "center" as const,
     fontWeight: "normal",
   };
 
