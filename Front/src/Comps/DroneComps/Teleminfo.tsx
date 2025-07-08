@@ -11,6 +11,7 @@ interface Vehicle {
   throttle: string;
   arm: () => void;
   velocity: number;
+  lastHeartbeat?: string; // Optional field for last heartbeat time
 }
 
 interface TeleminfoProps {
@@ -26,8 +27,23 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
         ? "limegreen"
         : "red",
     fontWeight: "bold",
-    fontSize: "1.5rem",
-    margin: 0,
+  };
+
+  // Define styles for the table cells
+  const getModesStyle = () => {
+    let color;
+    if (vehicle.mode === "AUTO") {
+      color = "green";
+    } else if (vehicle.mode === "STABILIZE") {
+      color = "skyblue";
+    } else if (vehicle.mode === "RTL") {
+      color = "orange";
+    } else {
+      color = "gray";
+    }
+    return {
+      color: color,
+    };
   };
 
   const tableCellStyle = {
@@ -43,16 +59,21 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
   const labelStyle = {
     ...tableCellStyle,
     fontWeight: "bold",
-    width: "40%",
+    width: "30%",
     backgroundColor: "#222",
   };
 
   const valueStyle = {
     ...tableCellStyle,
-    width: "60%",
+    width: "70%",
     backgroundColor: "#111",
+    fontSize: "2rem",
+    color: "white",
+    textAlign: "center",
+    fontWeight: "normal",
   };
 
+  // Ensure the vehicle object has all required properties
   return (
     <Row className="justify-content-center">
       <Col md="auto">
@@ -63,6 +84,8 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
             color: "white",
             borderRadius: "2rem",
             boxShadow: "0 9px 44px #0000",
+            paddingLeft: "2rem",
+            paddingRight: "2rem",
           }}
         >
           <Card.Body>
@@ -91,21 +114,21 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
                 </tr>
                 <tr>
                   <td style={labelStyle}>Mode</td>
-                  <td style={valueStyle}>{vehicle.mode}</td>
-                </tr>
-                <tr>
-                  <td style={labelStyle}>Battery</td>
-                  <td style={valueStyle}>{vehicle.battery}%</td>
-                </tr>
-                <tr>
-                  <td style={labelStyle}>Ground Speed</td>
-                  <td style={valueStyle}>
-                    {vehicle.velocity} m/s
+                  <td style={{ ...valueStyle, ...getModesStyle() }}>
+                    {vehicle.mode}
                   </td>
                 </tr>
                 <tr>
+                  <td style={labelStyle}>Battery</td>
+                  <td style={valueStyle}>{vehicle.battery} V</td>
+                </tr>
+                <tr>
+                  <td style={labelStyle}>Ground Speed</td>
+                  <td style={valueStyle}>{vehicle.velocity} m/s</td>
+                </tr>
+                <tr>
                   <td style={labelStyle}>Signal Strength</td>
-                  <td style={valueStyle}>{vehicle.signalStrength} dBm</td>
+                  <td style={valueStyle}>{vehicle.lastHeartbeat} %</td>
                 </tr>
                 <tr>
                   <td style={labelStyle}>Throttle</td>
@@ -113,29 +136,86 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
                     {vehicle.throttle}
                   </td>
                 </tr>
+              </tbody>
+            </Table>
+
+            <Table bordered style={{ marginBottom: "2rem" }}>
+              <tbody style={{ textAlign: "center", backgroundColor: "#000" }}>
                 <tr>
-                  <td style={labelStyle}>Arm Status</td>
-                  <td style={valueStyle}>
-                    {vehicle.throttle ? "ARMED" : "Disarmed"}
+                  <td style={labelStyle}>
+                    <Button
+                      variant="contained"
+                      color={vehicle.throttle === "ARMED" ? "error" : "success"}
+                      size="large"
+                      style={{
+                        marginTop: "0.5rem",
+                        fontSize: "1.3rem",
+                        fontWeight: "bold",
+                        minWidth: "180px",
+                      }}
+                      onClick={vehicle.arm}
+                    >
+                      {vehicle.throttle === "ARMED" ? "Disarm UAV" : "Arm UAV"}
+                    </Button>
+                  </td>
+                  <td style={labelStyle}>
+                    <Button
+                      variant="contained"
+                      color={vehicle.throttle === "ARMED" ? "error" : "success"}
+                      size="large"
+                      style={{
+                        marginTop: "0.5rem",
+                        fontSize: "1.3rem",
+                        fontWeight: "bold",
+                        minWidth: "180px",
+                      }}
+                      onClick={vehicle.arm}
+                    >
+                      {vehicle.throttle === "ARMED" ? "Disarm UAV" : "Arm UAV"}
+                    </Button>
+                  </td>
+                </tr>
+                <tr>
+                  <td style={labelStyle}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      size="large"
+                      style={{
+                        marginTop: "0.5rem",
+                        fontSize: "1.3rem",
+                        fontWeight: "bold",
+                        minWidth: "180px",
+                      }}
+                      onClick={() => {
+                        // Placeholder for additional functionality
+                        console.log("Additional action triggered");
+                      }}
+                    >
+                      Additional Action
+                    </Button>
+                  </td>
+                  <td style={labelStyle}>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      size="large"
+                      style={{
+                        marginTop: "0.5rem",
+                        fontSize: "1.3rem",
+                        fontWeight: "bold",
+                        minWidth: "180px",
+                      }}
+                      onClick={() => {
+                        console.log("Another action triggered");
+                      }}
+                    >
+                      Another Action
+                    </Button>
                   </td>
                 </tr>
               </tbody>
             </Table>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <Button
-                variant="contained"
-                color={vehicle.throttle === "ARMED" ? "error" : "success"}
-                size="large"
-                style={{
-                  fontSize: "1.3rem",
-                  fontWeight: "bold",
-                  minWidth: "180px",
-                }}
-                onClick={vehicle.arm}
-              >
-                {vehicle.throttle === "ARMED" ? "Disarm UAV" : "Arm UAV"}
-              </Button>
-            </div>
           </Card.Body>
         </Card>
         <span
@@ -144,7 +224,7 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
             fontSize: "1.2rem",
             textAlign: "center",
             display: "block",
-            marginTop: "1rem",
+            marginTop: "3rem",
           }}
         >
           <pre>{JSON.stringify(vehicle, null, 2)}</pre>

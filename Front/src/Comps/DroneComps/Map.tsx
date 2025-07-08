@@ -1,12 +1,8 @@
-import {
-  useRef,
-  useEffect,
-  useState,
-  useContext,
-} from "react";
+import { useRef, useEffect, useState, useContext } from "react";
 import mapboxgl, { Map as MapboxMap, Marker } from "mapbox-gl";
 import telemContext from "../../context/home/TelemContext";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { TbDrone } from "react-icons/tb";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoiYXl1c2gxMDIiLCJhIjoiY2xycTRtZW4xMDE0cTJtbno5dnU0dG12eCJ9.L9xmYztXX2yOahZoKDBr6g";
@@ -23,8 +19,8 @@ export default function Map() {
   // Strict typing for refs and state
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<MapboxMap | null>(null);
-  const [lng, setLng] = useState<number>(-83.750673);
-  const [lat, setLat] = useState<number>(32.504375);
+  const [lng, setLng] = useState<number>(77.115481);
+  const [lat, setLat] = useState<number>(28.753619);
   const [zoom, setZoom] = useState<number>(19.5);
 
   const { telemetryData }: { telemetryData: TelemetryData } =
@@ -115,12 +111,15 @@ export default function Map() {
 
     const uavElement = document.createElement("div");
     uavElement.className = "marker";
-    uavElement.style.backgroundImage = "url('https://iili.io/d0YXcEF.md.png')";
+    uavElement.style.backgroundImage =
+      "url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Simple_drone.svg/440px-Simple_drone.svg.png')";
+    uavElement.style.backgroundColor = "transparent";
+    uavElement.style.backgroundRepeat = "no-repeat";
     uavElement.style.width = "35px";
     uavElement.style.height = "35px";
     uavElement.style.backgroundSize = "100%";
     uavElement.style.border = "none";
-    uavElement.style.borderRadius = "50%";
+    uavElement.style.borderRadius = "5%";
     uavElement.style.cursor = "pointer";
 
     uavElement.addEventListener("click", () => {

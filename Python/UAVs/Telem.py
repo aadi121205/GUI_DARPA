@@ -36,6 +36,8 @@ class Telem:
         self.uav_connected = False
         self.uav_connection = None
         self.goto_mission = "waypoints.txt"
+        self.heartbeat_time = time.time()
+        self.timesince_last_heartbeat = 0
 
         # Register event handlers
         self.sio.on("arm", self.arm, namespace="/UAV")
@@ -131,6 +133,7 @@ class Telem:
             try:
                 if self.uav_connected:
                     self.uav_connection.wait_heartbeat()
+                    self.timesince_last_heartbeat = time.time() - self.heartbeat_time
                     telemetry_data = {
                         "latitude": self.uav_connection.messages[
                             "GLOBAL_POSITION_INT"
@@ -149,7 +152,8 @@ class Telem:
                         ].groundspeed,
                         "battery": self.uav_connection.messages[
                             "SYS_STATUS"
-                        ].battery_remaining,
+                        ].voltage_battery
+                        / 1000.0,
                         "armed": self.uav_connection.messages["HEARTBEAT"].base_mode
                         & 0b10000000
                         != 0,
@@ -158,7 +162,9 @@ class Telem:
                         "Status": MAV_STATE_MAPPING[
                             self.uav_connection.messages["HEARTBEAT"].system_status
                         ],
+                        "Last_Heartbeat": self.timesince_last_heartbeat,
                     }
+                    self.heartbeat_time = time.time()
                     self.sio.emit("Telem", telemetry_data, namespace="/UAV")
                     msg = self.uav_connection.recv_match(blocking=True)
 

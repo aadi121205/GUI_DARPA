@@ -6,14 +6,15 @@ import { Row, Col } from "react-bootstrap";
 
 // Utility to convert delay to signal bars (0-5)
 const Dts = (delaySec?: number) => {
+  console.log("Delay in seconds:", delaySec);
   if (delaySec === undefined || delaySec === null) return 0;
-  const minDelaySec = 0;
-  const maxDelaySec = 1; // 1 second delay = 0 bars, 0 = 5 bars
+  const minDelaySec = 0.9;
+  const maxDelaySec = 5; // 1 second delay = 0 bars, 0 = 5 bars
   // Clamp
   delaySec = Math.max(minDelaySec, Math.min(maxDelaySec, delaySec));
   // Invert bars (lower delay = higher bars)
   const bars = ((delaySec - minDelaySec) * 5) / (maxDelaySec - minDelaySec);
-  return Math.round(5 - bars);
+  return Math.round((5 - bars) * 20); // Round to 2 decimal places
 };
 
 type TelemetryData = {
@@ -23,7 +24,6 @@ type TelemetryData = {
   groundspeed?: number;
   battery?: number;
   status?: string;
-  throttle?: number | string;
   armed?: boolean;
   [key: string]: any;
 };
@@ -40,7 +40,7 @@ function Telemexp() {
       ? Math.round(telemetryData.groundspeed * 100) / 100
       : 0;
 
-  const scaledValue = Dts(telemetryData.heartbeat);
+  const scaledValue = Dts(telemetryData.Last_Heartbeat);
 
   const UAVvehicleData = {
     con: telemetryData.heartbeat ?? 0,
@@ -49,9 +49,10 @@ function Telemexp() {
     velocity: groundspeed,
     battery: telemetryData.battery ?? 0,
     status: telemetryData.Status,
-    throttle: telemetryData.armed ? telemetryData.throttle ?? "ARMED" : "DISARMED",
+    throttle: telemetryData.armed ? "ARMED" : "DISARMED",
     signalStrength: scaledValue,
     state: telemetryData.armed ?? false,
+    lastHeartbeat: scaledValue,
     arm,
   };
 

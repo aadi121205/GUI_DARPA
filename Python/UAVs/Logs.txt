@@ -2,6 +2,6 @@ Trying to connect UAV...
 [UAV] Connected to UAV
 Telemetry error:  /UAV is not a connected namespace.
 Trying to connect UAV...
-error:  /Data is not a connected namespace. * Serving Flask app 'UAV'
-
+error:  /Data is not a connected namespace.
+ * Serving Flask app 'UAV'
  * Debug mode: off
