@@ -12,7 +12,14 @@ HEADERS_AUTH = {
     "Authorization": f"Bearer {AUTH_TOKEN}"
 }
 
-# === 
+# === 0. Post /api/run/start ===
+def start_run():
+    url = f"http://{SERVER}/api/run/start"
+    res = requests.get(url, headers=HEADERS_AUTH)
+    if res.status_code == 200:
+        print("✅ Run started successfully:", res.json())
+    else:
+        print(f"❌ Start Run Error {res.status_code}: {res.text}")
 
 # === 1. GET /api/status ===
 def get_status():
@@ -29,18 +36,17 @@ def submit_initial_report():
     url = f"http://{SERVER}/api/initial_report"
     payload = {
         "casualty_id": 5,
-        "team": "TEST_TEAM",
+        "team": "UAS_DTU",
         "system": "UGV_1",
         "location": {
             "latitude": 0.0,
             "longitude": 0.0,
-            "time_ago": 0
+            "time_ago": 2
         },
-        "severe_hemorrhage": {"value": 1, "time_ago": 0},
-        "respiratory_distress": {"value": 1, "time_ago": 0},
+        "severe_hemorrhage": {"value": 1, "time_ago": 1},
+        "respiratory_distress": {"value": 1, "time_ago": 1},
         "hr": {"value": 72, "time_ago": 5},
         "rr": {"value": 16, "time_ago": 5},
-        "temp": {"value": 98, "time_ago": 5},
         "trauma_head": 1,
         "trauma_torso": 0,
         "trauma_lower_ext": 0,
@@ -61,7 +67,7 @@ def submit_update_report():
     url = f"http://{SERVER}/api/update_report"
     payload = {
         "casualty_id": 5,
-        "team": "TEST_TEAM",
+        "team": "UAS_DTU",
         "system": "UGV_1",
         "location": {
             "latitude": 0.0,
@@ -88,7 +94,7 @@ def submit_casualty_image(image_path="casualty.jpg"):
     url = f"http://{SERVER}/api/casualty_image"
     data = {
         "casualty_id": 5,
-        "team": "TEST_TEAM",
+        "team": "UAS_DTU",
         "system": "UGV_1",
         "time_ago": 1
     }
@@ -99,6 +105,7 @@ def submit_casualty_image(image_path="casualty.jpg"):
         print("✅ IMAGE SUBMITTED:", res.json())
     else:
         print(f"❌ Image Error {res.status_code}: {res.text}")
+
 
 
 # === CLI-style Interface ===
@@ -119,5 +126,7 @@ if __name__ == "__main__":
     elif choice == "4":
         path = input("Enter image path [default: casualty.jpg]: ").strip() or "casualty.jpg"
         submit_casualty_image(path)
+    elif choice == "0":
+        start_run()
     else:
         print("❌ Invalid choice.")
