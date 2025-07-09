@@ -41,6 +41,10 @@ const TelemState = ({ children }: TelemStateProps) => {
     socket.emit("rtl");
     console.log("RTL command sent");
   };
+  const flyMission = () => {
+    socket.emit("fly_mission");
+    console.log("Fly mission command sent");
+  };
 
   const goto_command = () => socket.emit("mission_goto");
   const goto_command_rover = () => socket.emit("mission_goto_rover");
@@ -105,7 +109,6 @@ const TelemState = ({ children }: TelemStateProps) => {
   const stopvideo_rover3 = () => { socket.emit("stopvideo_rover3"); console.log("stop emit_rover3"); };
 
   // Not defined in your code, but referenced in your context value
-  const flyMission = () => socket.emit("flyMission");
 
   useEffect(() => {
     // Telemetry
@@ -168,6 +171,7 @@ const TelemState = ({ children }: TelemStateProps) => {
         arm,
         takeoff,
         rtl,
+        flyMission,
 
 
         goto_command,
@@ -233,7 +237,6 @@ const TelemState = ({ children }: TelemStateProps) => {
         startvideo_rover3,
         stopvideo_rover3,
         set_Guided,
-        flyMission,
         data,
         data_ugv,
       }}

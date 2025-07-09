@@ -12,6 +12,8 @@ interface Vehicle {
   arm: () => void;
   velocity: number;
   lastHeartbeat?: string; // Optional field for last heartbeat time
+  rtl: () => void;
+  flyMission: () => void; // Function to start the mission
 }
 
 interface TeleminfoProps {
@@ -161,17 +163,17 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
                   <td style={labelStyle}>
                     <Button
                       variant="contained"
-                      color={vehicle.throttle === "ARMED" ? "error" : "success"}
                       size="large"
                       style={{
+                        color: "pink",
                         marginTop: "0.5rem",
                         fontSize: "1.3rem",
                         fontWeight: "bold",
                         minWidth: "180px",
                       }}
-                      onClick={vehicle.arm}
+                      onClick={vehicle.rtl}
                     >
-                      {vehicle.throttle === "ARMED" ? "Disarm UAV" : "Arm UAV"}
+                      RTL
                     </Button>
                   </td>
                 </tr>
@@ -188,11 +190,10 @@ const Teleminfo: React.FC<TeleminfoProps> = ({ vehicle }) => {
                         minWidth: "180px",
                       }}
                       onClick={() => {
-                        // Placeholder for additional functionality
-                        console.log("Additional action triggered");
+                        vehicle.flyMission();
                       }}
                     >
-                      Additional Action
+                      Start Mission
                     </Button>
                   </td>
                   <td style={labelStyle}>

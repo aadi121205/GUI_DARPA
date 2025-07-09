@@ -87,6 +87,16 @@ ReactNamespace.on("connection", (socket) => {
   socket.on("arm", () => {
     emitEventToNamespace("arm", UAVNamespace);
   });
+  socket.on("rtl", () => {
+    emitEventToNamespace("RTL", UAVNamespace);
+  });
+  socket.on("takeoff", () => {
+    emitEventToNamespace("Takeoff", UAVNamespace);
+  });
+  socket.on("fly_mission", () => {
+    emitEventToNamespace("fly_mission", UAVNamespace);
+  });
+
 });
 
 const PORT = process.env.PORT || 7000;

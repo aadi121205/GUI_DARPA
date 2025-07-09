@@ -2,11 +2,10 @@ import { useContext } from "react";
 import telemContext from "../../context/home/TelemContext";
 import Teleminfo from "./Teleminfo";
 import Map from "./Map";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 
 // Utility to convert delay to signal bars (0-5)
 const Dts = (delaySec?: number) => {
-  console.log("Delay in seconds:", delaySec);
   if (delaySec === undefined || delaySec === null) return 0;
   const minDelaySec = 0.9;
   const maxDelaySec = 5; // 1 second delay = 0 bars, 0 = 5 bars
@@ -29,9 +28,16 @@ type TelemetryData = {
 };
 
 function Telemexp() {
-  const { telemetryData = {}, arm } = useContext(telemContext) as {
+  const {
+    telemetryData = {},
+    arm,
+    rtl,
+    flyMission,
+  } = useContext(telemContext) as {
     telemetryData: TelemetryData;
     arm: () => void;
+    rtl: () => void;
+    flyMission: () => void;
   };
 
   // Protect against undefined
@@ -54,6 +60,8 @@ function Telemexp() {
     state: telemetryData.armed ?? false,
     lastHeartbeat: scaledValue,
     arm,
+    rtl,
+    flyMission, // <-- Use snake_case here to match Teleminfo.tsx
   };
 
   return (
@@ -68,6 +76,7 @@ function Telemexp() {
           <Map />
         </Col>
       </Row>
+
     </div>
   );
 }

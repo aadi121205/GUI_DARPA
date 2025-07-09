@@ -4,7 +4,8 @@ from pymavlink import mavutil
 import time
 import socketio
 from math import radians, cos, sin, asin, sqrt
-
+import subprocess
+import os
 
 def haversine(lon1, lat1, lon2, lat2):
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
@@ -14,7 +15,6 @@ def haversine(lon1, lat1, lon2, lat2):
     )
     c = 2 * asin(sqrt(a))
     return c * 6371 * 1000
-
 
 MAV_STATE_MAPPING = {
     0: "UNINIT",
@@ -27,7 +27,6 @@ MAV_STATE_MAPPING = {
     7: "POWEROFF",
     8: "FLIGHT_TERMINATION",
 }
-
 
 class Telem:
     def __init__(self, sio):
@@ -43,7 +42,6 @@ class Telem:
         self.sio.on("arm", self.arm, namespace="/UAV")
         self.sio.on("Takeoff", self.takeoff, namespace="/UAV")
         self.sio.on("RTL", self.set_rtl, namespace="/UAV")
-        self.sio.on("landUav", self.land_Uav, namespace="/UAV")
         self.sio.on("fly_mission", self.flyMission, namespace="/UAV")
         self.sio.on("auto_mission", self.set_auto, namespace="/UAV")
 
@@ -116,13 +114,12 @@ class Telem:
         )
         print("Takeoff initiated")
 
-    def set_rtl(self):
-        self.send_mavlink_command(mavutil.mavlink.MAV_CMD_NAV_RETURN_TO_LAUNCH)
+    def set_rtl(self, data):
+        self.send_mavlink_command(
+            mavutil.mavlink.MAV_CMD_NAV_RETURN_TO_LAUNCH,
+            [1, 0, 0, 0, 0, 0, 0, 0]
+        )
         print("Returning to launch")
-
-    def land_Uav(self):
-        self.send_mavlink_command(mavutil.mavlink.MAV_CMD_NAV_LAND)
-        print("Landing initiated")
 
     def set_auto(self):
         self.uav_connection.set_mode_auto()
@@ -178,16 +175,17 @@ class Telem:
                 self.connect_uav()
                 time.sleep(10)
 
-    def flyMission(self):
-        if self.uav_connection.messages["HEARTBEAT"].base_mode & 0b10000000:
-            with open("waypoints.txt", "r") as file:
-                for line in file:
-                    lat, lon, alt = line.strip().split(",")
-                    self.send_mavlink_command(
-                        mavutil.mavlink.MAV_CMD_NAV_WAYPOINT,
-                        [0, 0, 0, 0, float(lat), float(lon), float(alt)],
-                    )
-                    time.sleep(10)
-            print("Mission completed")
-        else:
-            print("Drone not armed")
+    def flyMission(self, data=None):
+        # Starts a new tmux session with your script
+        session_name = "fly_mission"
+        script_path = os.path.join(os.path.dirname(__file__), "mission.sh")
+        cmd = [
+            "tmux",
+            "new-session",
+            "-d",                   # start detached
+            "-s", session_name,     # session name
+            f"bash {script_path}; exec bash"
+        ]
+        subprocess.run(cmd, check=True)
+        print(f"Started tmux session '{session_name}' running ")
+

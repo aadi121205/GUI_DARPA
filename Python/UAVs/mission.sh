@@ -1,0 +1,1 @@
+echo "i will be executed in the terminal"

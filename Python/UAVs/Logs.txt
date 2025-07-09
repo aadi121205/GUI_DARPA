@@ -5,3 +5,6 @@ Trying to connect UAV...
 error:  /Data is not a connected namespace.
  * Serving Flask app 'UAV'
  * Debug mode: off
+[UAV] Connected to UAV
+Connected to GUI  IP/PORT: 127.0.0.1:7000
+Started tmux session 'fly_mission' running 
